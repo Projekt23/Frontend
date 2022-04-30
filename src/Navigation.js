@@ -1,6 +1,7 @@
 import { Navbar } from 'react-bootstrap';
 import { Nav } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
+import { FormControl } from 'react-bootstrap';
 import App from './App';
 
 export default function Navigation(){
@@ -21,6 +22,12 @@ export default function Navigation(){
           <Nav.Link href="/">Home</Nav.Link>
           <Nav.Link href="features">Features</Nav.Link>
           <Nav.Link href="pricing">Pricing</Nav.Link>
+            <FormControl
+                type="search"
+                placeholder="Search"
+                className="me-2"
+                aria-label="Search"
+            />
         </Nav>
         </Container>
       </Navbar>
