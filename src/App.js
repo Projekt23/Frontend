@@ -24,10 +24,13 @@ const TestFeaturesComponent = ({}) => {
 
 
 const App = () =>
-(
-
+ {
+  
+  localStorage.setItem('theme', "light");
+  
+  return(
   <Router>
-    <Navigation sticky="top" />
+    <Navigation sticky="top"/>
     <Routes>
       <Route path="/" element={<Home />}></Route>
       <Route path="/features" element={<TestFeaturesComponent />}></Route>
@@ -35,7 +38,7 @@ const App = () =>
   </Router>
   
   
-);  
+)}  
 
 
 export default App;

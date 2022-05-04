@@ -8,13 +8,14 @@ import React, { useState } from 'react';
 const StyledApp = styled.div``;
 
 export default function Navigation(){
-  const [theme, setTheme] = useState("light");
+  
   
   const themeToggler = () => {
-    theme ==="light" ? setTheme("dark") : setTheme("light");
+    localStorage.getItem("theme") ==="light" ? localStorage.setItem('theme', "dark") : localStorage.setItem('theme', "light");
   }  
 
   return(
+   
     <>
       <Navbar bg="dark" variant="dark">
         <Container>
@@ -37,7 +38,7 @@ export default function Navigation(){
                 className="me-2"
                 aria-label="Search"
             />
-        <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
+        <ThemeProvider theme={localStorage.getItem("theme") === "light" ? lightTheme : darkTheme }>
         <GlobalStyles />
         <StyledApp><button onClick={() => themeToggler()}>Change theme</button></StyledApp>
         </ThemeProvider>
