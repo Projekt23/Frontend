@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import Navigation from './Components/Navigation';
 import Home from './Components/Home'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-
+import styled, { ThemeProvider } from 'styled-components';
+import {lightTheme, darkTheme, GlobalStyles} from "./Components/themes.js";
 
 
 import './App.css';
@@ -22,21 +23,20 @@ const TestFeaturesComponent = ({}) => {
 }
 
 
-const App = () => (
-  <Router>
+const App = () =>
+(
 
+  <Router>
     <Navigation sticky="top" />
     <Routes>
-      
       <Route path="/" element={<Home />}></Route>
       <Route path="/features" element={<TestFeaturesComponent />}></Route>
-      
     </Routes>
-    
-    
-
   </Router>
-);
+  
+  
+);  
+
 
 export default App;
 

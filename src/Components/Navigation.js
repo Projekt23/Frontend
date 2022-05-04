@@ -1,10 +1,20 @@
-import { Navbar } from 'react-bootstrap';
-import { Nav } from 'react-bootstrap';
+import { Navbar, Nav, FormControl } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
-import { FormControl } from 'react-bootstrap';
+
+import styled, { ThemeProvider } from 'styled-components';
+import {lightTheme, darkTheme, GlobalStyles} from "./themes.js";
+import React, { useState } from 'react';
+
+const StyledApp = styled.div``;
 
 export default function Navigation(){
-    return(
+  const [theme, setTheme] = useState("light");
+  
+  const themeToggler = () => {
+    theme ==="light" ? setTheme("dark") : setTheme("light");
+  }  
+
+  return(
     <>
       <Navbar bg="dark" variant="dark">
         <Container>
@@ -27,6 +37,10 @@ export default function Navigation(){
                 className="me-2"
                 aria-label="Search"
             />
+        <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
+        <GlobalStyles />
+        <StyledApp><button onClick={() => themeToggler()}>Change theme</button></StyledApp>
+        </ThemeProvider>
         </Nav>
         </Container>
       </Navbar>
