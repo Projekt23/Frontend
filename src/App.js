@@ -1,25 +1,42 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import Navigation from './Components/Navigation';
+import Home from './Components/Home'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import styled, { ThemeProvider } from 'styled-components';
+import {lightTheme, darkTheme, GlobalStyles} from "./Components/themes.js";
+
+
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+
+//const TestHomeComponent = ({}) => {
+//  return(
+//    
+//  )
+//}
+
+const TestFeaturesComponent = ({}) => {
+  return(
+    <h1>Features</h1>
+  )
 }
 
+
+const App = () =>
+(
+
+  <Router>
+    <Navigation sticky="top" />
+    <Routes>
+      <Route path="/" element={<Home />}></Route>
+      <Route path="/features" element={<TestFeaturesComponent />}></Route>
+    </Routes>
+  </Router>
+  
+  
+);  
+
+
 export default App;
+
