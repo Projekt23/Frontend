@@ -1,4 +1,4 @@
-name: frontend_push
+name: frontend_push_dev
 
 on:
   workflow_dispatch:
