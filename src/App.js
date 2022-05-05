@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Navigation from './Components/Navigation';
 import Home from './Components/Home'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import styled, { ThemeProvider } from 'styled-components';
-import {lightTheme, darkTheme, GlobalStyles} from "./Components/themes.js";
-
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { Box } from '@mui/system';
 
 import './App.css';
+import { MusicNote } from '@material-ui/icons';
 
 
 
@@ -16,27 +16,46 @@ import './App.css';
 //  )
 //}
 
-const TestFeaturesComponent = ({}) => {
+const TestFeaturesComponent = () => {
   return(
     <h1>Features</h1>
   )
 }
-
-
+var themeVar;
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+  },
+});
+const lightTheme = createTheme({
+  palette: {
+    mode: 'light',
+  },
+});
 const App = () =>
  {
   
   localStorage.setItem('theme', "light");
-  
+  if(localStorage.getItem('theme') === "light"){
+    themeVar = lightTheme;
+  }
+  else{
+    themeVar = darkTheme;
+  }
   return(
-  <Router>
+    <ThemeProvider theme={themeVar}>
+   <div>
     <Navigation sticky="top"/>
-    <Routes>
-      <Route path="/" element={<Home />}></Route>
-      <Route path="/features" element={<TestFeaturesComponent />}></Route>
-    </Routes>
-  </Router>
-  
+    
+      
+        <Routes>
+          <Route path="/home" element={<Home />}></Route>
+          <Route path="/features" element={<TestFeaturesComponent />}></Route>
+        </Routes>
+      
+    
+  </div>
+  </ThemeProvider>
   
 )}  
 
