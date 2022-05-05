@@ -100,7 +100,7 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
                   <Typography  textAlign="center">
-                    <Link style={{textDecoration: "none", color: "white"}} to={`/${page}`} color="inherit">{page}</Link>
+                    <Link style={{textDecoration: "none", color: "black"}} to={`/${page}`} color="inherit">{page}</Link>
                     </Typography>
                 </MenuItem>
               ))}
