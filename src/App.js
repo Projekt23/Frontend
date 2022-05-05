@@ -1,6 +1,7 @@
 import React from 'react';
 import Navigation from './Components/Navigation';
-import Home from './Components/Home'
+import Home from './Components/Home';
+import Login from './Components/Login';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { Box } from '@mui/system';
@@ -46,14 +47,11 @@ const App = () =>
     <ThemeProvider theme={themeVar}>
    <div>
     <Navigation sticky="top"/>
-    
-      
         <Routes>
           <Route path="/home" element={<Home />}></Route>
           <Route path="/features" element={<TestFeaturesComponent />}></Route>
+          <Route path="/login" element={<Login />}/>
         </Routes>
-      
-    
   </div>
   </ThemeProvider>
   

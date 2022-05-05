@@ -22,7 +22,7 @@ import App from '../App.js';
 
 
 function Navigation(){
-  const pages = ['Home', 'Features', 'Pricing'];
+  const pages = ['Home', 'Features', 'Pricing', 'Login'];
   
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
   const themeToggler = () => {
