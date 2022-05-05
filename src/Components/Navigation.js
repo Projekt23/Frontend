@@ -2,7 +2,7 @@ import { Navbar, Nav, FormControl, NavLink } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 import styled, { ThemeProvider } from 'styled-components';
 import {lightTheme, darkTheme, GlobalStyles} from "./themes.js";
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -21,15 +21,21 @@ import { FormControlLabel } from '@mui/material';
 import App from '../App.js';
 
 
+<<<<<<< HEAD
 function Navigation(){
   const pages = ['Home', 'Features', 'Pricing', 'Login'];
+=======
+function Navigation({ setTheme, theme }){
+  const pages = ['Home', 'Features', 'Pricing'];
+>>>>>>> dev_2
   
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
   const themeToggler = () => {
-    if(localStorage.getItem("theme") ==="light"){
+    if(theme){
+      setTheme(false);
       localStorage.setItem('theme', "dark");
-    }
-    else{
+    }else{
+      setTheme(true);
       localStorage.setItem('theme', "light");
     }
   }  
@@ -160,8 +166,8 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
               ))}
             </Menu>
           </Box><Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-          <FormControlLabel control={<Switch   />} label="
-          Darkmode" onClick={() => themeToggler()}/></Box>
+          <FormControlLabel control={<Switch onChange={() => themeToggler()}  />} label="
+          Darkmode" /></Box>
           <Box sx={{ flexGrow: 4, display: { xs: 'none', md: 'flex' } }}>
           <TextField  fullWidth id="outlined-basic" label="Search..." variant="filled"  /></Box>
         <ThemeProvider backgroundColor = "white" theme={localStorage.getItem("theme") === "light" ? lightTheme : darkTheme }>

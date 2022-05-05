@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Navigation from './Components/Navigation';
 import Home from './Components/Home';
 import Login from './Components/Login';
@@ -22,32 +22,35 @@ const TestFeaturesComponent = () => {
     <h1>Features</h1>
   )
 }
-var themeVar;
 const darkTheme = createTheme({
   palette: {
     mode: 'dark',
-  },
+  }
 });
 const lightTheme = createTheme({
   palette: {
     mode: 'light',
-  },
+  }
 });
 const App = () =>
  {
+
+  const [theme, setTheme] = useState(true);
   
-  localStorage.setItem('theme', "light");
-  if(localStorage.getItem('theme') === "light"){
-    themeVar = lightTheme;
-  }
-  else{
-    themeVar = darkTheme;
-  }
   return(
-    <ThemeProvider theme={themeVar}>
+  <ThemeProvider theme={theme ?  lightTheme : darkTheme}>
+    
    <div>
+<<<<<<< HEAD
     <Navigation sticky="top"/>
+=======
+     
+    <Navigation setTheme={setTheme} theme={theme} sticky="top"/>
+    
+      
+>>>>>>> dev_2
         <Routes>
+        <Route path="/" element={<Home />}></Route>
           <Route path="/home" element={<Home />}></Route>
           <Route path="/features" element={<TestFeaturesComponent />}></Route>
           <Route path="/login" element={<Login />}/>
