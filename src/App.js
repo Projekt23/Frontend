@@ -41,14 +41,10 @@ const App = () =>
   <ThemeProvider theme={theme ?  lightTheme : darkTheme}>
     
    <div>
-<<<<<<< HEAD
-    <Navigation sticky="top"/>
-=======
      
     <Navigation setTheme={setTheme} theme={theme} sticky="top"/>
     
       
->>>>>>> dev_2
         <Routes>
         <Route path="/" element={<Home />}></Route>
           <Route path="/home" element={<Home />}></Route>

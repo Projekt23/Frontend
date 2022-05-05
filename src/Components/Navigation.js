@@ -21,13 +21,8 @@ import { FormControlLabel } from '@mui/material';
 import App from '../App.js';
 
 
-<<<<<<< HEAD
-function Navigation(){
+function Navigation({setTheme, theme}){
   const pages = ['Home', 'Features', 'Pricing', 'Login'];
-=======
-function Navigation({ setTheme, theme }){
-  const pages = ['Home', 'Features', 'Pricing'];
->>>>>>> dev_2
   
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
   const themeToggler = () => {
