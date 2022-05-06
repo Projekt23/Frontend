@@ -18,13 +18,15 @@ import MenuItem from '@mui/material/MenuItem';
 import { TextField } from '@mui/material';
 import { Switch } from '@mui/material';
 import { FormControlLabel } from '@mui/material';
-import App from '../App.js';
-
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { Radio, RadioGroup, FormLabel } from '@mui/material';
+import { InputBase } from '@mui/material';
+import SearchBar from "material-ui-search-bar";
 
 function Navigation({setTheme, theme}){
   const pages = ['Home', 'Features', 'Pricing', 'Login'];
   
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+  const settings = ['Profil verwalten', 'Nutzer einladen', 'Logout'];
   const themeToggler = () => {
     if(theme){
       setTheme(false);
@@ -36,11 +38,13 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
   }  
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-
+  const [searchValue, setsearchValue] = React.useState();
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
-
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
@@ -49,8 +53,8 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
     setAnchorElUser(null);
   };
   return(
-    <AppBar position="static" color ="secondary">
-    <Container maxWidth="xl">
+    <AppBar position="static" color ="primary" >
+ 
       <Toolbar disableGutters>
         <Typography
          
@@ -66,7 +70,7 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
           className="d-inline-block align-top"
           alt="React Bootstrap logo"
           
-        />Projekt23
+        />
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
@@ -122,9 +126,9 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
           className="d-inline-block align-top"
           alt="React Bootstrap logo"
           
-        />Projekt23
+        />
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+          <Box sx={{ flexGrow: 0, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
                 key={page}
@@ -136,40 +140,84 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
               </Button>
             ))}
           </Box>
-          <Box sx={{ flexGrow: 0 }}>
+          <SearchBar style={{
+        margin: '0 auto',
+        maxWidth: 800
+      }} onChange={(value) => setsearchValue(value)} onRequestSearch={() => console.log({searchValue})}/>
+        <ThemeProvider  theme={localStorage.getItem("theme") === "light" ? lightTheme : darkTheme }></ThemeProvider>
+        
+        
+        <Box sx={{ flexGrow: 1}}>
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="user-appbar"
+              aria-haspopup="true"
+              onClick={handleOpenUserMenu}
+
+              color="inherit"
+            >
+              <AccountCircleIcon sx={{ fontSize: 40 }} />
+            </IconButton>
             
             <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
+             id="user-appbar"
+             
+             anchorEl={anchorElUser}
               keepMounted
               transformOrigin={{
                 vertical: 'top',
                 horizontal: 'right',
               }}
+              
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
+              sx={{
+                display: { xs: 'block', md: 'block' },
+              }}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
+              
+              <MenuItem key="Profilverwaltung" onClick={handleCloseUserMenu}>
+                
+                  
+                  <Typography
+                  variant="h6"
+                  noWrap
+                  component={Link}
+                  to="/profile"
+                  color="textPrimary"
+                  >Profil verwalten
+                  </Typography>
+                  
+              </MenuItem>
+              <MenuItem key="Nutzereinladung" onClick={handleCloseUserMenu}>
+                  <Typography
+                  variant="h6"
+                  noWrap
+                  component={Link}
+                  to="/invite"
+                  color="textPrimary"
+                  >Nutzer einladen</Typography>
+              </MenuItem>
+              
+                <FormLabel id="demo-controlled-radio-buttons-group">Darstellung</FormLabel>
+                  <RadioGroup defaultValue="light" onChange={() => themeToggler()}
+                    >
+                      <FormControlLabel value="light" control={<Radio />} label="helles Design" />
+                      <FormControlLabel value="dark" control={<Radio />} label="dunkles Design" />
+                  </RadioGroup>
+                  <MenuItem key="Logout" onClick={handleCloseUserMenu}>
+                  <Typography
+                  variant="h6"
+                  noWrap
+                  component={Link}
+                  to="/login"
+                  color="red"
+                  >Logout</Typography>
+              </MenuItem>
             </Menu>
-          </Box><Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-          <FormControlLabel control={<Switch onChange={() => themeToggler()}  />} label="
-          Darkmode" /></Box>
-          <Box sx={{ flexGrow: 4, display: { xs: 'none', md: 'flex' } }}>
-          <TextField  fullWidth id="outlined-basic" label="Search..." variant="filled"  /></Box>
-        <ThemeProvider backgroundColor = "white" theme={localStorage.getItem("theme") === "light" ? lightTheme : darkTheme }>
-        
-        </ThemeProvider>
+            </Box>
         </Toolbar>
-        </Container>
       </AppBar>
       
     

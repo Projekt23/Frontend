@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { Box } from '@mui/system';
 
+import { Link } from 'react-router-dom';
 import './App.css';
 import { MusicNote } from '@material-ui/icons';
 
@@ -25,12 +26,24 @@ const TestFeaturesComponent = () => {
 const darkTheme = createTheme({
   palette: {
     mode: 'dark',
-  }
+    },
+    components: {
+      // Name of the component
+      Link: {
+        color: "white"
+      },
+    },
 });
 const lightTheme = createTheme({
   palette: {
     mode: 'light',
-  }
+    },
+    components: {
+      // Name of the component
+      Link: {
+        color: "black"
+      },
+    },
 });
 const App = () =>
  {
