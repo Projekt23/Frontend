@@ -26,18 +26,26 @@ const TestFeaturesComponent = () => {
 const darkTheme = createTheme({
   palette: {
     mode: 'dark',
+    background: {
+      default: "#222222"
+    }
     },
     components: {
       // Name of the component
       Link: {
         color: "white"
       },
+      
     },
 });
 const lightTheme = createTheme({
   palette: {
     mode: 'light',
+    background: {
+      default: "#e4f0e2",
     },
+  },
+    
     components: {
       // Name of the component
       Link: {
@@ -59,8 +67,9 @@ const App = () =>
     
       
         <Routes>
-        <Route path="/" element={<Home />}></Route>
+          <Route path="/" element={<Home />}></Route>
           <Route path="/home" element={<Home />}></Route>
+          <Route path="/startseite" element={<Home />}></Route>
           <Route path="/features" element={<TestFeaturesComponent />}></Route>
           <Route path="/login" element={<Login />}/>
         </Routes>

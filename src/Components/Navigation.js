@@ -22,9 +22,10 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Radio, RadioGroup, FormLabel } from '@mui/material';
 import { InputBase } from '@mui/material';
 import SearchBar from "material-ui-search-bar";
+import LogoutIcon from '@mui/icons-material/Logout';
 
 function Navigation({setTheme, theme}){
-  const pages = ['Home', 'Features', 'Pricing', 'Login'];
+  const pages = ['Startseite', 'Lexikon'];
   
   const settings = ['Profil verwalten', 'Nutzer einladen', 'Logout'];
   const themeToggler = () => {
@@ -60,7 +61,7 @@ function Navigation({setTheme, theme}){
          
             variant="h6"
             component="div"
-            sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
+            sx={{mr: 2, ml:2, display: { xs: 'none', md: 'flex' } }}
             href= "/"
           ><img
           src="logo-lila.png"
@@ -72,7 +73,23 @@ function Navigation({setTheme, theme}){
           
         />
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+          <Box>
+            <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{mr: 2,  ml:2, flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
+          >
+            <img
+          src="logo-lila.png"
+          width="30"
+          height="30"
+          
+          className="d-inline-block align-top"
+          alt="React Bootstrap logo"
+          
+        /></Typography></Box>
+          <Box sx={{mr: 10, flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -98,59 +115,63 @@ function Navigation({setTheme, theme}){
               }}
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
-              sx={{
+              sx={{mr: 10,
                 display: { xs: 'block', md: 'none' },
               }}
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography  textAlign="center">
-                    <Link style={{textDecoration: "none", color: "black"}} to={`/${page}`} color="inherit">{page}</Link>
+                  <Typography  textAlign="center" variant="h6"
+                  noWrap
+                  component={Link}
+                  to={`/${page}`}
+                  color="textPrimary"
+                  >
+                  {page}
                     </Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
           
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
-          >
-            <img
-          src="logo-lila.png"
-          width="30"
-          height="30"
           
-          className="d-inline-block align-top"
-          alt="React Bootstrap logo"
           
-        />
-          </Typography>
-          <Box sx={{ flexGrow: 0, display: { xs: 'none', md: 'flex' } }}>
+          <Box sx={{mr: 10, flexGrow: 0, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                
-                <Link style={{textDecoration: "none", color: "white"}}  to={`/${page}`} color="inherit">{page}</Link>
+                <Typography sx={{textDecorationLine: 'none'}} textAlign="center" variant="h6"
+                  noWrap
+                  component={Link}
+                  to={`/${page}`}
+                  color="white"
+                  >
+                  {page}
+                    </Typography>
               </Button>
             ))}
           </Box>
+          <Box sx={{mr: 10, width: 1000}}>
           <SearchBar style={{
-        margin: '0 auto',
-        maxWidth: 800
-      }} onChange={(value) => setsearchValue(value)} onRequestSearch={() => console.log({searchValue})}/>
+        margin: '0 auto'
+      }} onChange={(value) => setsearchValue(value)} onRequestSearch={() => 
+
+        // ------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        // hier muss die Suche hin
+        console.log({searchValue})
+        // ------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      
+      }/></Box>
+        <Box>
         <ThemeProvider  theme={localStorage.getItem("theme") === "light" ? lightTheme : darkTheme }></ThemeProvider>
+        </Box>
         
-        
-        <Box sx={{ flexGrow: 1}}>
+        <Box sx={{flexGrow: 1}}>
             <IconButton
               size="large"
-              aria-label="account of current user"
               aria-controls="user-appbar"
               aria-haspopup="true"
               onClick={handleOpenUserMenu}
@@ -181,6 +202,7 @@ function Navigation({setTheme, theme}){
                 
                   
                   <Typography
+                  sx={{textDecorationLine: 'none'}}
                   variant="h6"
                   noWrap
                   component={Link}
@@ -192,6 +214,7 @@ function Navigation({setTheme, theme}){
               </MenuItem>
               <MenuItem key="Nutzereinladung" onClick={handleCloseUserMenu}>
                   <Typography
+                  sx={{textDecorationLine: 'none'}}
                   variant="h6"
                   noWrap
                   component={Link}
@@ -200,20 +223,23 @@ function Navigation({setTheme, theme}){
                   >Nutzer einladen</Typography>
               </MenuItem>
               
-                <FormLabel id="demo-controlled-radio-buttons-group">Darstellung</FormLabel>
-                  <RadioGroup defaultValue="light" onChange={() => themeToggler()}
+                <FormLabel  id="demo-controlled-radio-buttons-group"><Typography textAlign="center">Darstellung</Typography></FormLabel>
+                  <RadioGroup  defaultValue="light" onChange={() => themeToggler()}
                     >
                       <FormControlLabel value="light" control={<Radio />} label="helles Design" />
                       <FormControlLabel value="dark" control={<Radio />} label="dunkles Design" />
                   </RadioGroup>
+                  <FormControlLabel control={<Switch onChange={() => themeToggler()}  />} label="
+                     dunkles Design" />
                   <MenuItem key="Logout" onClick={handleCloseUserMenu}>
                   <Typography
+                  sx={{textDecorationLine: 'none'}}
                   variant="h6"
                   noWrap
                   component={Link}
                   to="/login"
                   color="red"
-                  >Logout</Typography>
+                  > <LogoutIcon/> Abmelden</Typography>
               </MenuItem>
             </Menu>
             </Box>
