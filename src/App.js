@@ -65,7 +65,6 @@ const App = () =>
      
     <Navigation setTheme={setTheme} theme={theme} sticky="top"/>
     
-      
         <Routes>
           <Route path="/" element={<Home />}></Route>
           <Route path="/home" element={<Home />}></Route>

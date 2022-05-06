@@ -8,6 +8,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import moment from 'moment';
 
 
 
@@ -20,10 +21,10 @@ function createData(designation, date, favorite) {
 // Hier muss noch aufruf backend stattfinden. // String, String, Bool
 
 const rows = [
-  createData('Abrechnungsbelegarten', 'vor 20 Minuten', true),
-  createData('Debitorenkonditionen', 'vor 23 Minuten', false),
-  createData('Reparaturschema', 'gestern', false),
-  createData('Skonto', '02.05.', true),
+  createData('Abrechnungsbelegarten', '2022-05-06 4:30', true),
+  createData('Debitorenkonditionen', '2010-10-20 4:30', false),
+  createData('Reparaturschema', '2022-05-06 10:30', false),
+  createData('Skonto', '2022-05-06 10:30', true),
 ];
 
 export default function History() {
@@ -56,7 +57,7 @@ export default function History() {
   );
 }
 
-
+// checks if object is marked as favorite
 function checkFavorite(favorite) {
     if (favorite === true){
         return(<FavoriteIcon/>)
@@ -65,8 +66,9 @@ function checkFavorite(favorite) {
     }
 }
 
-function timeCalculator(date){
-   return(date);
+// calculates the past time with 
+function timeCalculator(date){   
+   return(moment(date, "YYYY-MM-DD HH:mm"). fromNow());
 }
 
 
