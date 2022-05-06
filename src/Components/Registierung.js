@@ -5,11 +5,9 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import {purple} from "@mui/material/colors";
 import { styled } from '@mui/material/styles';
-import { useNavigate } from "react-router-dom";
 
 
-const Login= () => {
-
+const Registierung= () => {
     const gridStyle = {height : "100%", width: "100%"}
     const paperStyle = {padding : 20, height: '65vh', width: "25vw", margin: "80px auto"}
     const logoStyle = {display:"flex", justifyContent:"center", alignItems:"center",}
@@ -24,8 +22,6 @@ const Login= () => {
         },
         marginBottom: "15px"
     }));
-    
-    const navigate = useNavigate();
 
     return(
         <Card style={paperStyle}>
@@ -43,30 +39,20 @@ const Login= () => {
                     </div>
                 </Grid>
                 <Grid item>
-                    <Typography variant="h5" secondary>Anmeldung</Typography>
-                    <TextField variant="standard" fullWidth style = {textfieldStyle} label='username' placeholder='Enter Username ...'/>
-                    <TextField variant="standard" fullWidth style = {textfieldStyle} type="password" label='password' placeholder='Enter Password ...'/>
+                    <Typography variant="h5" secondary>Registrierung</Typography>
+                    <TextField variant="standard" fullWidth style = {textfieldStyle} label='Benutzername' placeholder='Enter Username ...'/>
+                    <TextField variant="standard" fullWidth style = {textfieldStyle} type="password" label='Passwort' placeholder='Enter Password ...'/>
+                    <TextField variant="standard" fullWidth style = {textfieldStyle} type="password" label='Passwort wiederholen' placeholder='Confirm Password ...'/>
                     <FormControlLabel control={<Checkbox size="small"/>} label="Benutzername merken"/>
                 </Grid>
                 <Grid item style={divloginbtn}>
-                        <ColorButton
-                            type="submit"
-                            color="primary"
-                            variant="contained"
-                            fullWidth
-                            onClick={() => navigate("/home")}
-                        >
-                            Login
-                        </ColorButton>
-                    
-
+                    <ColorButton type="submit" color="primary" variant="contained" fullWidth>Login</ColorButton>
                     <div style={linksStyle}>
                         <Typography variant="caption">
                             <Link href="#">Passwort vergessen?</Link>
                         </Typography>
                         <Typography variant="caption">
-                            Neu hier?
-                            <Link href="/register"> Anmeldelink anfordern</Link>
+                            <Link href="/login"> Zum Login wechseln</Link>
                         </Typography>
                     </div>
                 </Grid>
@@ -75,4 +61,4 @@ const Login= () => {
     )
 }
 
-export default Login
+export default Registierung
