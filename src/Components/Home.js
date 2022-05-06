@@ -6,7 +6,7 @@ import Bookmarks from './HomeComponents/Bookmarks';
 import { styled } from '@mui/material/styles';
 import { Grid, Paper, Container, Typography, Divider } from "@mui/material";
 import Button from '@mui/material/Button';
-
+import History from './HomeComponents/History';
 
 
 export default function Home() {
@@ -45,7 +45,18 @@ export default function Home() {
           </Item>
         </Grid>
         <Grid item xs={6}>
-          <Item>2</Item>
+          <Item>
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                m: 1,
+              }}>
+              <Typography align='left' variant="h5" component="h3"> Zuletzt angesehen: </Typography>
+            </Box>
+            <Divider sx={{ marginBottom: 2 }} />
+            <History />
+          </Item>
         </Grid>
         <Grid item xs={6}>
           <Item>3</Item>
