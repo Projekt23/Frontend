@@ -1,0 +1,19 @@
+.containerMain {
+    margin: 30px;
+}
+
+.cardDefault {
+    margin-bottom: 15px;
+}
+
+.alphabetButton {
+    max-width: 50px;
+    max-height: 50px;
+    min-width: 30px;
+    min-height: 30px;
+    margin: 3px;
+}
+
+.alphabetDiv {
+    margin-top: 20px;
+}

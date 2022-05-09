@@ -10,9 +10,9 @@ import Home from './Home';
 const Views = () => {
     return (
         <Routes>
-            <Route index element={<Login />} />
-            <Route path="/register" element={<Registrierung />} />
-            <Route path="/home" element={<Home />} />
+            <Route index element={<Login/>} />
+            <Route path="/home" element={<Home/>}/>
+            <Route path="/login" element={<Login />}/>
             <Route path="*" element={<div>404 Not Found!</div>} />
 
             {/*Nested Route example*/}
