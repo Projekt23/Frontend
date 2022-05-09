@@ -23,7 +23,7 @@ export default function DidYouKnow() {
 
     <Divider sx={{  marginBottom: 2 }}/>
 
-    <Typography align='center' variant="h5" component="h3" > <b>Begriffsabgrenzung:</b>  {desc} </Typography>
+    <Typography align='center' variant="h5" component="h3" > <b>Begriffsabgrenzung:</b> <br />  {desc} </Typography>
     </TableContainer>
     </>
     );
