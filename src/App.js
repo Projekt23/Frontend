@@ -1,83 +1,74 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import Navigation from './Components/Navigation';
 import Home from './Components/Home';
 import Login from './Components/Login';
-import SearchResult from './Components/SearchResult';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { Box } from '@mui/system';
-import { Link } from 'react-router-dom';
+import Lexikon from "./Components/Lexikon";
+import Profil from './Components/SettingsComponents/Profil';
+import {Route, Routes} from 'react-router-dom';
+import {createTheme, ThemeProvider} from '@mui/material/styles';
 import './App.css';
-import { MusicNote } from '@material-ui/icons';
+import Invite from './Components/SettingsComponents/Invite';
+import Settings from './Components/Settings';
+
+import { CssBaseline } from '@mui/material/';
 
 
-
-//const TestHomeComponent = ({}) => {
-//  return(
-//    
-//  )
-//}
-
-const TestFeaturesComponent = () => {
-  return(
-    <h1>Features</h1>
-  )
-}
 const darkTheme = createTheme({
-  palette: {
-    mode: 'dark',
-    background: {
-      default: "#222222"
-    }
+    palette: {
+        background: {
+            default: '#1A2027',
+            paper: '#1A2027',
+          },
+        mode: 'dark',
+        primary: {
+          main: '#004ea5',
+        },
     },
     components: {
-      // Name of the component
-      Link: {
-        color: "white"
-      },
-      
+        Link: {
+            color: "white"
+        }
+
     },
 });
 const lightTheme = createTheme({
-  palette: {
-    mode: 'light',
-    background: {
-      default: "#e4f0e2",
+    palette: {
+        background: {
+            default: 'white',
+            paper: 'white',
+          },
+        mode: 'light',
+        primary: {
+          main: '#004ea5',
+        },
     },
-  },
-    
+
     components: {
-      // Name of the component
-      Link: {
-        color: "black"
-      },
-    },
+        Link: {
+            color: "black"
+        }}
+    
 });
 const App = () =>
- {
+{
 
-  const [theme, setTheme] = useState(true);
-  
-  return(
-  <ThemeProvider theme={theme ?  lightTheme : darkTheme}>
+ 
+    const [theme, setTheme] = useState(true);
     
-   <div>
-     
-    <Navigation setTheme={setTheme} theme={theme} sticky="top"/>
-    
-        <Routes>
-          <Route path="/" element={<Home />}></Route>
-          <Route path="/home" element={<Home />}></Route>
-          <Route path="/startseite" element={<Home />}></Route>
-          <Route path="/features" element={<TestFeaturesComponent />}></Route>
-          <Route path="/login" element={<Login />}/>
-          <Route path="/result" element={<SearchResult />}/>
-        </Routes>
-  </div>
-  </ThemeProvider>
-  
-)}  
-
-
+    return(
+        <ThemeProvider theme={theme ?  lightTheme : darkTheme}>
+            <CssBaseline/>
+                    <Navigation setTheme={setTheme} theme={theme} sticky="top"/>
+                    <Routes>
+                        <Route index element={<Login/>} />
+                        <Route path="/startseite" element={<Home/>}/>
+                        <Route path="/login" element={<Login />}/>
+                        <Route path="/lexikon" element={<Lexikon />}/>
+                        <Route path="/settings" element={<Settings />}/>
+                        <Route path="/invite" element={<Invite />}/>
+                        <Route path="/profile" element={<Profil />}/>
+                        <Route path="*" element={<div>404 Not Found!</div>} />
+                    </Routes>
+        </ThemeProvider>
+    )}
 export default App;
-
