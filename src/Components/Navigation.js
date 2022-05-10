@@ -199,7 +199,7 @@ function Navigation({setTheme, theme}) {
                                 variant="h6"
                                 noWrap
                                 component={Link}
-                                to="/settings#profile"
+                                to="/profile"
                                 color="textPrimary"
                             >Profil verwalten
                             </Typography>
@@ -211,7 +211,7 @@ function Navigation({setTheme, theme}) {
                                 variant="h6"
                                 noWrap
                                 component={Link}
-                                to="/settings#invite"
+                                to="/invite"
                                 color="textPrimary"
                             >Nutzer einladen</Typography>
                         </MenuItem>
