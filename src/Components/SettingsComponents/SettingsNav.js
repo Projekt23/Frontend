@@ -16,7 +16,7 @@ export default function SettingsNav() {
         height: '450%'
       }));
 return(
-<Item  sx={{backgroundColor: '#004ea5', color: 'white'}}>
+<Item  sx={{backgroundColor: '#004ea5', color: 'white', flexGrow: 1}}>
                     
     <Typography color="white" align='left' variant="h5" component="h3" sx={{ fontWeight: 'bold' }}>&nbsp; Einstellungen </Typography>
     <Divider sx={{  marginBottom: 2, borderBottomWidth: 3,  color: 'white' }}/>

@@ -46,7 +46,7 @@ function Navigation({setTheme, theme}) {
         setAnchorElUser(null);
     };
     return (
-        <AppBar position="static">
+        <AppBar sx={{bgcolor: '#004ea5'}} position="static">
 
             <Toolbar disableGutters>
                 <Typography

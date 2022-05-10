@@ -10,9 +10,15 @@ import './App.css';
 import Invite from './Components/SettingsComponents/Invite';
 import Settings from './Components/Settings';
 
+import { CssBaseline } from '@mui/material/';
+
 
 const darkTheme = createTheme({
     palette: {
+        background: {
+            default: '#1A2027',
+            paper: '#1A2027',
+          },
         mode: 'dark',
         primary: {
           main: '#004ea5',
@@ -21,12 +27,16 @@ const darkTheme = createTheme({
     components: {
         Link: {
             color: "white"
-        },
+        }
 
     },
 });
 const lightTheme = createTheme({
     palette: {
+        background: {
+            default: 'white',
+            paper: 'white',
+          },
         mode: 'light',
         primary: {
           main: '#004ea5',
@@ -36,16 +46,17 @@ const lightTheme = createTheme({
     components: {
         Link: {
             color: "black"
-        },
-    },
+        }}
+    
 });
 const App = () =>
 {
 
     const [theme, setTheme] = useState(true);
-
+    
     return(
         <ThemeProvider theme={theme ?  lightTheme : darkTheme}>
+            <CssBaseline/>
                     <Navigation setTheme={setTheme} theme={theme} sticky="top"/>
                     <Routes>
                         <Route index element={<Login/>} />
