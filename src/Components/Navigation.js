@@ -46,7 +46,7 @@ function Navigation({setTheme, theme}) {
         setAnchorElUser(null);
     };
     return (
-        <AppBar position="static" color="primary">
+        <AppBar position="static">
 
             <Toolbar disableGutters>
                 <Typography
@@ -199,7 +199,7 @@ function Navigation({setTheme, theme}) {
                                 variant="h6"
                                 noWrap
                                 component={Link}
-                                to="/profile"
+                                to="/settings#profile"
                                 color="textPrimary"
                             >Profil verwalten
                             </Typography>
@@ -211,7 +211,7 @@ function Navigation({setTheme, theme}) {
                                 variant="h6"
                                 noWrap
                                 component={Link}
-                                to="/invite"
+                                to="/settings#invite"
                                 color="textPrimary"
                             >Nutzer einladen</Typography>
                         </MenuItem>
