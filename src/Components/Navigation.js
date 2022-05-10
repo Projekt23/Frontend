@@ -47,10 +47,8 @@ function Navigation({setTheme, theme}) {
     };
     return (
         <AppBar sx={{bgcolor: '#004ea5'}} position="static">
-
             <Toolbar disableGutters>
                 <Typography
-
                     variant="h6"
                     component="div"
                     sx={{mr: 2, ml: 2, display: {xs: 'none', md: 'flex'}}}
@@ -62,7 +60,6 @@ function Navigation({setTheme, theme}) {
 
                     className="d-inline-block align-top"
                     alt="React Bootstrap logo"
-
                 />
                 </Typography>
                 <Box>
@@ -70,8 +67,7 @@ function Navigation({setTheme, theme}) {
                         variant="h6"
                         noWrap
                         component="div"
-                        sx={{mr: 2, ml: 2, flexGrow: 1, display: {xs: 'flex', md: 'none'}}}
-                    >
+                        sx={{mr: 2, ml: 2, flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
                         <img
                             src="logo-lila.png"
                             width="30"
@@ -79,9 +75,9 @@ function Navigation({setTheme, theme}) {
 
                             className="d-inline-block align-top"
                             alt="React Bootstrap logo"
-
-                        /></Typography></Box>
-                <Box sx={{mr: 10, flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
+                        />
+                    </Typography></Box>
+                <Box sx={{ flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
                     <IconButton
                         size="large"
                         aria-label="account of current user"
@@ -146,7 +142,7 @@ function Navigation({setTheme, theme}) {
                         </Button>
                     ))}
                 </Box>
-                <Box sx={{mr: 10, width: 1000}}>
+                <Box sx={{width: 1000, minWidth: 200}}>
                     <SearchBar style={{
                         margin: '0 auto'
                     }} onChange={(value) => setsearchValue(value)} onRequestSearch={() =>
