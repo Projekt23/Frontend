@@ -33,6 +33,7 @@ export default function Profil() {
     <Box sx={{ m: 2}}>
 
         <Grid container rowSpacing={1}  columnSpacing={{ xs: 0, sm: 0, md: 0 }} >
+            {/* Display SettingsNav only in Desktop Version */}
             <Grid  sx={{ml: 2, display: {xs: 'none', md:'block'}}} item xs={1.5}>
                 <SettingsNav />   
             </Grid>
@@ -41,6 +42,7 @@ export default function Profil() {
                 <Typography align='left' variant="h5" component="h3" sx={{ fontWeight: 'bold' }}>Profil </Typography>
                 <Divider sx={{  marginBottom: 2, borderBottomWidth: 3,  color: 'primary' }}/>
                 <Grid container rowSpacing={1}  columnSpacing={{ xs: 0, sm: 0, md: 0 }} >
+                    {/* Display only in Desktop Version */}
                     <Box sx={{mr: 15, marginTop: 3, flexGrow: 0, display: {xs: 'none', md:'block'}} }>
                         <Typography align='left' variant="h6">Benutzername</Typography>
                         <Typography sx={{marginTop: 2.5}} align='left' variant="h6">E-Mail Adresse</Typography>
@@ -54,6 +56,7 @@ export default function Profil() {
                         <TextField fullWidth id="lastName" label="Nachname" variant="standard"></TextField><br/><br/>
                         <Button size= "small" variant="contained">Bearbeiten</Button>&nbsp;<Button size= "small" disabled variant="contained">Speichern</Button>
                     </Box>
+                    {/* Display only in Mobile Version */}
                     <Box sx={{marginTop: 3, flexGrow: 0.3, display: { md: 'none'}}}>
                         <Typography align='left' variant="h6">Benutzername</Typography>
                         <TextField fullWidth id="email" label="E-Mail-Adresse" variant="standard"></TextField><br/>
@@ -67,6 +70,7 @@ export default function Profil() {
                 <Typography align='left' variant="h5" component="h3" sx={{ fontWeight: 'bold' }}>Passwort ändern </Typography>
                 <Divider sx={{  marginBottom: 2, borderBottomWidth: 3,  color: 'primary' }}/>
                 <Grid container rowSpacing={1}  columnSpacing={{ xs: 0, sm: 0, md: 0 }} >
+                    {/* Display only in Desktop Version */}
                     <Box sx={{mr: 15, marginTop: 3, flexGrow: 0, display: {xs: 'none', md:'block'}}}>
                             <Typography align='left' variant="h6">Aktuelles Passwort</Typography>
                             <Typography sx={{marginTop: 2.5}} align='left' variant="h6">Neues Passwort</Typography>
@@ -78,6 +82,7 @@ export default function Profil() {
                         <TextField sx={{marginTop: 2.5}} fullWidth id="firstName" variant="standard" type="password"></TextField><br/><br/>
                         <Button  size= "small"  variant="contained">Speichern</Button>
                     </Box>
+                    {/* Display only in Mobile Version */}
                     <Box  sx={{marginTop: 2.5, flexGrow: 0.3, display: {md: 'none'}}}>
                         <TextField fullWidth label="Aktuelles Passwort" id="email" variant="standard" type="password"></TextField><br/>
                         <TextField sx={{marginTop: 2.5}} label="Neues Passwort" fullWidth id="email"  variant="standard" type="password"></TextField><br/>

@@ -19,7 +19,6 @@ import LogoutIcon from '@mui/icons-material/Logout';
 function Navigation({setTheme, theme}) {
     const pages = ['Startseite', 'Lexikon'];
 
-    const settings = ['Profil verwalten', 'Nutzer einladen', 'Logout'];
     const themeToggler = () => {
         if (theme) {
             setTheme(false);
@@ -48,6 +47,7 @@ function Navigation({setTheme, theme}) {
     return (
         <AppBar sx={{bgcolor: '#004ea5'}} position="static">
             <Toolbar disableGutters>
+                {/* Display only in Desktop Version -------------------------------------------------------------------------------------------------------------------*/}
                 <Typography
                     variant="h6"
                     component="div"
@@ -62,6 +62,7 @@ function Navigation({setTheme, theme}) {
                     alt="React Bootstrap logo"
                 />
                 </Typography>
+                {/* Display only in Mobile Version -------------------------------------------------------------------------------------------------------------------*/}
                 <Box>
                     <Typography
                         variant="h6"
@@ -77,6 +78,7 @@ function Navigation({setTheme, theme}) {
                             alt="React Bootstrap logo"
                         />
                     </Typography></Box>
+                {/* Display only in Mobile Version -------------------------------------------------------------------------------------------------------------------*/}
                 <Box sx={{ flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
                     <IconButton
                         size="large"
@@ -89,6 +91,7 @@ function Navigation({setTheme, theme}) {
                     >
                         <MenuIcon/>
                     </IconButton>
+                    {/* Display only in Mobile Version -------------------------------------------------------------------------------------------------------------------*/}
                     <Menu
                         id="menu-appbar"
                         anchorEl={anchorElNav}
@@ -122,8 +125,7 @@ function Navigation({setTheme, theme}) {
                         ))}
                     </Menu>
                 </Box>
-
-
+                {/* Display only in Desktop Version -------------------------------------------------------------------------------------------------------------------*/}
                 <Box sx={{mr: 10, flexGrow: 0, display: {xs: 'none', md: 'flex'}}}>
                     {pages.map((page) => (
                         <Button
@@ -142,6 +144,7 @@ function Navigation({setTheme, theme}) {
                         </Button>
                     ))}
                 </Box>
+                {/* The searchbar is displayed in Mobile and Desktop Version -------------------------------------------------------------------------------------------------------------------*/}
                 <Box sx={{width: 1000, minWidth: 200}}>
                     <SearchBar style={{
                         margin: '0 auto'
@@ -154,11 +157,10 @@ function Navigation({setTheme, theme}) {
 
                     }/></Box>
                 <Box>
-                    <ThemeProvider
-    theme={localStorage.getItem("theme") === "light" ? lightTheme : darkTheme}/>
+                    <ThemeProvider theme={localStorage.getItem("theme") === "light" ? lightTheme : darkTheme}/>
                 </Box>
-
-                <Box sx={{flexGrow: 1, }} >
+                {/* The Profile Settings Button and Menu is displayed in Mobile and Desktop Version -------------------------------------------------------------------------------------------------------------------*/}
+                <Box sx={{flexGrow: 1 }} >
                     <IconButton
                         size="large"
                         aria-controls="user-appbar"
@@ -168,27 +170,21 @@ function Navigation({setTheme, theme}) {
                     >
                         <AccountCircleIcon sx={{fontSize: 40}}/>
                     </IconButton>
-
                     <Menu
                         id="user-appbar"
-
                         anchorEl={anchorElUser}
                         keepMounted
                         transformOrigin={{
                             vertical: 'top',
                             horizontal: 'right',
                         }}
-
                         open={Boolean(anchorElUser)}
                         onClose={handleCloseUserMenu}
                         sx={{
                             display: {xs: 'block', md: 'block'},
                         }}
                     >
-
                         <MenuItem key="Profilverwaltung" onClick={handleCloseUserMenu}>
-
-
                             <Typography
                                 sx={{textDecorationLine: 'none'}}
                                 variant="h6"
@@ -198,7 +194,6 @@ function Navigation({setTheme, theme}) {
                                 color="textPrimary"
                             >Profil verwalten
                             </Typography>
-
                         </MenuItem>
                         <MenuItem key="Nutzereinladung" onClick={handleCloseUserMenu}>
                             <Typography
@@ -210,11 +205,9 @@ function Navigation({setTheme, theme}) {
                                 color="textPrimary"
                             >Nutzer einladen</Typography>
                         </MenuItem>
-
                         <FormLabel id="demo-controlled-radio-buttons-group"><Typography
                             textAlign="center">Darstellung</Typography></FormLabel>
-                        <RadioGroup defaultValue="light" onChange={() => themeToggler()}
-                        >
+                        <RadioGroup defaultValue="light" onChange={() => themeToggler()}>
                             <FormControlLabel value="light" control={<Radio/>} label="helles Design"/>
                             <FormControlLabel value="dark" control={<Radio/>} label="dunkles Design"/>
                         </RadioGroup>
