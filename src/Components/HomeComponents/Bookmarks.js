@@ -7,9 +7,10 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import IconButton from '@mui/material/IconButton';
 
 function createData(designation, describtion, favorite) {
-  return {designation, describtion, favorite};
+  return { designation, describtion, favorite };
 }
 
 
@@ -25,8 +26,8 @@ const rows = [
 
 export default function Bookmarks() {
   return (
-<TableContainer component={Paper}>
-      <Table  aria-label="simple table">
+    <TableContainer component={Paper}>
+      <Table aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell>Bezeichnung:</TableCell>
@@ -44,7 +45,10 @@ export default function Bookmarks() {
                 {row.designation}
               </TableCell>
               <TableCell >{row.describtion}</TableCell>
-              <TableCell align="right"><FavoriteIcon/></TableCell>
+              <TableCell align="right">
+                <IconButton aria-label="delete">
+                  <FavoriteIcon />
+                </IconButton></TableCell>
             </TableRow>
           ))}
         </TableBody>
