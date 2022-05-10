@@ -33,8 +33,7 @@ export default function Profil() {
     <Box sx={{ m: 2}}>
 
         <Grid container rowSpacing={1}  columnSpacing={{ xs: 0, sm: 0, md: 0 }} >
-            <Grid  sx={{ml: 2}} item xs={1.5}>
-                
+            <Grid  sx={{ml: 2, display: {xs: 'none', md:'block'}}} item xs={1.5}>
                 <SettingsNav />   
             </Grid>
             <Grid item xs={10} maxWidth>
@@ -42,13 +41,20 @@ export default function Profil() {
                 <Typography align='left' variant="h5" component="h3" sx={{ fontWeight: 'bold' }}>Profil </Typography>
                 <Divider sx={{  marginBottom: 2, borderBottomWidth: 3,  color: 'primary' }}/>
                 <Grid container rowSpacing={1}  columnSpacing={{ xs: 0, sm: 0, md: 0 }} >
-                    <Box sx={{mr: 15, marginTop: 3, flexGrow: 0}}>
+                    <Box sx={{mr: 15, marginTop: 3, flexGrow: 0, display: {xs: 'none', md:'block'}} }>
                         <Typography align='left' variant="h6">Benutzername</Typography>
                         <Typography sx={{marginTop: 2.5}} align='left' variant="h6">E-Mail Adresse</Typography>
                         <Typography sx={{marginTop: 2.5}} align='left' variant="h6">Vorname</Typography>
                         <Typography sx={{marginTop: 2.5}} align='left' variant="h6">Nachname</Typography>
                     </Box>
-                    <Box sx={{marginTop: 3, ml: 14, flexGrow: 0.3}}>
+                    <Box sx={{marginTop: 3, ml: 14, flexGrow: 0.3, display: {xs: 'none', md:'block'}}}>
+                        <Typography align='left' variant="h6">Benutzername</Typography>
+                        <TextField fullWidth id="email" label="E-Mail-Adresse" variant="standard"></TextField><br/>
+                        <TextField fullWidth id="firstName" label="Vorname" variant="standard" ></TextField><br/>
+                        <TextField fullWidth id="lastName" label="Nachname" variant="standard"></TextField><br/><br/>
+                        <Button size= "small" variant="contained">Bearbeiten</Button>&nbsp;<Button size= "small" disabled variant="contained">Speichern</Button>
+                    </Box>
+                    <Box sx={{marginTop: 3, flexGrow: 0.3, display: { md: 'none'}}}>
                         <Typography align='left' variant="h6">Benutzername</Typography>
                         <TextField fullWidth id="email" label="E-Mail-Adresse" variant="standard"></TextField><br/>
                         <TextField fullWidth id="firstName" label="Vorname" variant="standard" ></TextField><br/>
@@ -61,15 +67,21 @@ export default function Profil() {
                 <Typography align='left' variant="h5" component="h3" sx={{ fontWeight: 'bold' }}>Passwort ändern </Typography>
                 <Divider sx={{  marginBottom: 2, borderBottomWidth: 3,  color: 'primary' }}/>
                 <Grid container rowSpacing={1}  columnSpacing={{ xs: 0, sm: 0, md: 0 }} >
-                <Box sx={{mr: 15, marginTop: 3, flexGrow: 0}}>
-                        <Typography align='left' variant="h6">Aktuelles Passwort</Typography>
-                        <Typography sx={{marginTop: 2.5}} align='left' variant="h6">Neues Passwort</Typography>
-                        <Typography sx={{marginTop: 2.5}} align='left' variant="h6">Neues Passwort bestätigen</Typography>
+                    <Box sx={{mr: 15, marginTop: 3, flexGrow: 0, display: {xs: 'none', md:'block'}}}>
+                            <Typography align='left' variant="h6">Aktuelles Passwort</Typography>
+                            <Typography sx={{marginTop: 2.5}} align='left' variant="h6">Neues Passwort</Typography>
+                            <Typography sx={{marginTop: 2.5}} align='left' variant="h6">Neues Passwort bestätigen</Typography>
                     </Box>
-                    <Box  sx={{marginTop: 2.5, flexGrow: 0.3}}>
+                    <Box  sx={{marginTop: 2.5, flexGrow: 0.3, display: {xs: 'none', md:'block'}}}>
                         <TextField fullWidth id="email" variant="standard" type="password"></TextField><br/>
                         <TextField sx={{marginTop: 2.5}} fullWidth id="email"  variant="standard" type="password"></TextField><br/>
                         <TextField sx={{marginTop: 2.5}} fullWidth id="firstName" variant="standard" type="password"></TextField><br/><br/>
+                        <Button  size= "small"  variant="contained">Speichern</Button>
+                    </Box>
+                    <Box  sx={{marginTop: 2.5, flexGrow: 0.3, display: {md: 'none'}}}>
+                        <TextField fullWidth label="Aktuelles Passwort" id="email" variant="standard" type="password"></TextField><br/>
+                        <TextField sx={{marginTop: 2.5}} label="Neues Passwort" fullWidth id="email"  variant="standard" type="password"></TextField><br/>
+                        <TextField sx={{marginTop: 2.5}} label="Neues Passwort bestätigen" fullWidth id="firstName" variant="standard" type="password"></TextField><br/><br/>
                         <Button  size= "small"  variant="contained">Speichern</Button>
                     </Box>
                 </Grid>

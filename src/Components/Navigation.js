@@ -158,13 +158,12 @@ function Navigation({setTheme, theme}) {
     theme={localStorage.getItem("theme") === "light" ? lightTheme : darkTheme}/>
                 </Box>
 
-                <Box sx={{flexGrow: 1}}>
+                <Box sx={{flexGrow: 1, }} >
                     <IconButton
                         size="large"
                         aria-controls="user-appbar"
                         aria-haspopup="true"
                         onClick={handleOpenUserMenu}
-
                         color="inherit"
                     >
                         <AccountCircleIcon sx={{fontSize: 40}}/>
