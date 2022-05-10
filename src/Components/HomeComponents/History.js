@@ -8,6 +8,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import IconButton from '@mui/material/IconButton';
 import moment from 'moment';
 
 
@@ -59,11 +60,19 @@ export default function History() {
 
 // checks if object is marked as favorite
 function checkFavorite(favorite) {
-    if (favorite === true){
-        return(<FavoriteIcon/>)
-    }else{
-        return(<FavoriteBorderIcon/>)
-    }
+  if (favorite === true) {
+    return (
+        <IconButton  aria-label="delete"> 
+            <FavoriteIcon />
+        </IconButton>
+    )
+} else {
+    return (
+        <IconButton  aria-label="delete">
+            <FavoriteBorderIcon />
+        </IconButton>
+    )
+}
 }
 
 // calculates the past time with 
