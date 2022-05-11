@@ -12,7 +12,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import {FormControlLabel, FormLabel, Radio, RadioGroup, Switch} from '@mui/material';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { Avatar } from '@mui/material';
 import SearchBar from "material-ui-search-bar";
 import LogoutIcon from '@mui/icons-material/Logout';
 
@@ -146,7 +146,7 @@ function Navigation({setTheme, theme}) {
                     ))}
                 </Box>
                 {/* The searchbar is displayed in Mobile and Desktop Version -------------------------------------------------------------------------------------------------------------------*/}
-                <Box  sx={{minWidth: 200,  width: 2000}}>
+                <Box  sx={{minWidth: 200,  width: 2000, alignContent: 'center'}}>
                     <SearchBar style={{
                         margin: '0 auto'
                     }} onChange={(value) => setsearchValue(value)} onRequestSearch={() =>
@@ -168,8 +168,7 @@ function Navigation({setTheme, theme}) {
                         aria-haspopup="true"
                         onClick={handleOpenUserMenu}
                         color="inherit"
-                    >
-                        <AccountCircleIcon sx={{fontSize: 40}}/>
+                    ><Avatar src="Profilbild.png" />
                     </IconButton>
                     <Menu
                         id="user-appbar"
@@ -208,7 +207,7 @@ function Navigation({setTheme, theme}) {
                         </MenuItem>
                         <FormLabel id="demo-controlled-radio-buttons-group"><Typography
                             textAlign="center">Darstellung</Typography></FormLabel>
-                        <RadioGroup defaultValue="light" value={value} onChange={themeToggler}>
+                        <RadioGroup defaultValue="light" onChange={themeToggler}>
                             <FormControlLabel value="light" control={<Radio/>} label="helles Design"/>
                             <FormControlLabel value="dark" control={<Radio/>} label="dunkles Design"/>
                             <FormControlLabel value="standard" control={<Radio/>} label="Gerätestandard"/>
