@@ -19,15 +19,16 @@ import LogoutIcon from '@mui/icons-material/Logout';
 function Navigation({setTheme, theme}) {
     const pages = ['Startseite', 'Lexikon'];
 
-    const themeToggler = () => {
-        if (theme) {
+    const themeToggler = (event) => {
+        if (event.target.value ==="dark") {
             setTheme(false);
             localStorage.setItem('theme', "dark");
-        } else {
+        } else if(event.target.value ==="light") {
             setTheme(true);
             localStorage.setItem('theme', "light");
         }
     }
+    const [value, setValue] = React.useState('');
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const [searchValue, setsearchValue] = React.useState();
@@ -45,7 +46,7 @@ function Navigation({setTheme, theme}) {
         setAnchorElUser(null);
     };
     return (
-        <AppBar sx={{bgcolor: '#004ea5'}} position="static">
+        <AppBar sx={{bgcolor: '#004ea5'}} position="static" >
             <Toolbar disableGutters>
                 {/* Display only in Desktop Version -------------------------------------------------------------------------------------------------------------------*/}
                 <Typography
@@ -145,7 +146,7 @@ function Navigation({setTheme, theme}) {
                     ))}
                 </Box>
                 {/* The searchbar is displayed in Mobile and Desktop Version -------------------------------------------------------------------------------------------------------------------*/}
-                <Box sx={{width: 1000, minWidth: 200}}>
+                <Box  sx={{minWidth: 200,  width: 2000}}>
                     <SearchBar style={{
                         margin: '0 auto'
                     }} onChange={(value) => setsearchValue(value)} onRequestSearch={() =>
@@ -156,7 +157,7 @@ function Navigation({setTheme, theme}) {
                         // ------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
                     }/></Box>
-                <Box>
+                <Box sx={{width: 1}}>
                     <ThemeProvider theme={localStorage.getItem("theme") === "light" ? lightTheme : darkTheme}/>
                 </Box>
                 {/* The Profile Settings Button and Menu is displayed in Mobile and Desktop Version -------------------------------------------------------------------------------------------------------------------*/}
@@ -207,12 +208,11 @@ function Navigation({setTheme, theme}) {
                         </MenuItem>
                         <FormLabel id="demo-controlled-radio-buttons-group"><Typography
                             textAlign="center">Darstellung</Typography></FormLabel>
-                        <RadioGroup defaultValue="light" onChange={() => themeToggler()}>
+                        <RadioGroup defaultValue="light" value={value} onChange={themeToggler}>
                             <FormControlLabel value="light" control={<Radio/>} label="helles Design"/>
                             <FormControlLabel value="dark" control={<Radio/>} label="dunkles Design"/>
+                            <FormControlLabel value="standard" control={<Radio/>} label="Gerätestandard"/>
                         </RadioGroup>
-                        <FormControlLabel control={<Switch onChange={() => themeToggler()}/>} label="
-                     dunkles Design"/>
                         <MenuItem key="Logout" onClick={handleCloseUserMenu}>
                             <Typography
                                 sx={{textDecorationLine: 'none'}}

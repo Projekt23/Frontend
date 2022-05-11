@@ -13,7 +13,7 @@ export default function SettingsNav() {
         ...theme.typography.body2,
         padding: theme.spacing(2),
         textAlign: 'center',
-        height: '130%'
+        height: '100%'
       }));
 return(
 <Item  sx={{backgroundColor: '#004ea5', color: 'white', flexGrow: 1, display: {xs: 'none', md:'block'}}}>

@@ -25,7 +25,7 @@ export default function Profil() {
         ...theme.typography.body2,
         padding: theme.spacing(2),
         textAlign: 'center',
-        height: '130%'
+        justifyContent: "center"
       }));
      
   return (
@@ -37,8 +37,8 @@ export default function Profil() {
             <Grid  sx={{ml: 2, display: {xs: 'none', md:'block'}}} item xs={1.5}>
                 <SettingsNav />   
             </Grid>
-            <Grid item xs={10} maxWidth>
-                <Item>
+            <Grid item xs={10} maxWidth >
+                <Item >
                 <Typography align='left' variant="h5" component="h3" sx={{ fontWeight: 'bold' }}>Profil </Typography>
                 <Divider sx={{  marginBottom: 2, borderBottomWidth: 3,  color: 'primary' }}/>
                 <Grid container rowSpacing={1}  columnSpacing={{ xs: 0, sm: 0, md: 0 }} >
