@@ -25,7 +25,7 @@ export default function Profil() {
         ...theme.typography.body2,
         padding: theme.spacing(2),
         textAlign: 'center',
-        height: '450%'
+        height: '130%'
       }));
      
   return (

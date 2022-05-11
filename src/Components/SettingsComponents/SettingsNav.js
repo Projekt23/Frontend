@@ -13,10 +13,10 @@ export default function SettingsNav() {
         ...theme.typography.body2,
         padding: theme.spacing(2),
         textAlign: 'center',
-        height: '450%'
+        height: '130%'
       }));
 return(
-<Item  sx={{backgroundColor: '#004ea5', color: 'white', flexGrow: 1}}>
+<Item  sx={{backgroundColor: '#004ea5', color: 'white', flexGrow: 1, display: {xs: 'none', md:'block'}}}>
                     
     <Typography color="white" align='left' variant="h5" component="h3" sx={{ fontWeight: 'bold' }}>&nbsp; Einstellungen </Typography>
     <Divider sx={{  marginBottom: 2, borderBottomWidth: 3,  color: 'white' }}/>
