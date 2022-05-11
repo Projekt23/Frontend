@@ -4,7 +4,7 @@ import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Button from "@mui/material/Button";
 import LexikonAkkordeon from "./Lexikon.Akkordeon";
-
+import { Link } from "react-router-dom";
 
 export default function () {
 
@@ -80,7 +80,7 @@ export default function () {
                             <Typography>{data.details}</Typography>
                         </div>
                         <Divider/>
-                        <Button variant={"contained"} style={AccordionDetailsButtons}>Zur Detailseite</Button>
+                        <Button variant={"contained"} component={Link} style={AccordionDetailsButtons} to="/result">Zur Detailseite</Button>
                     </AccordionDetails>
                 </Accordion>
                 ))}

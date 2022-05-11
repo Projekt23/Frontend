@@ -11,6 +11,7 @@ import Invite from './Components/SettingsComponents/Invite';
 import Settings from './Components/Settings';
 
 import { CssBaseline } from '@mui/material/';
+import SearchResult from './Components/SearchResult';
 
 
 const darkTheme = createTheme({
@@ -67,6 +68,7 @@ const App = () =>
                         <Route path="/settings" element={<Settings />}/>
                         <Route path="/invite" element={<Invite />}/>
                         <Route path="/profile" element={<Profil />}/>
+                        <Route path="/result" element={<SearchResult />}/>
                         <Route path="*" element={<div>404 Not Found!</div>} />
                     </Routes>
         </ThemeProvider>
