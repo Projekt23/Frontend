@@ -15,6 +15,10 @@ import {FormControlLabel, FormLabel, Radio, RadioGroup, Switch} from '@mui/mater
 import { Avatar } from '@mui/material';
 import SearchBar from "material-ui-search-bar";
 import LogoutIcon from '@mui/icons-material/Logout';
+import LightModeIcon from '@mui/icons-material/LightMode';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
+import DevicesIcon from '@mui/icons-material/Devices';
+import { Divider } from '@mui/material';
 
 function Navigation({setTheme, theme}) {
     const pages = ['Startseite', 'Lexikon'];
@@ -26,6 +30,13 @@ function Navigation({setTheme, theme}) {
         } else if(event.target.value ==="light") {
             setTheme(true);
             localStorage.setItem('theme', "light");
+        }else{
+            if(window.matchMedia("(prefers-color-scheme: dark)").matches === false){
+                setTheme(true);
+              }
+              else{
+                setTheme(false);
+              }
         }
     }
     const [value, setValue] = React.useState('');
@@ -114,7 +125,7 @@ function Navigation({setTheme, theme}) {
                     >
                         {pages.map((page) => (
                             <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                <Typography textAlign="center" variant="h6"
+                                <Typography sx={{textDecorationLine: 'none', "&:hover": { color: "white" }}} textAlign="center" variant="h6"
                                             noWrap
                                             component={Link}
                                             to={`/${page}`}
@@ -134,7 +145,7 @@ function Navigation({setTheme, theme}) {
                             onClick={handleCloseNavMenu}
                             sx={{my: 2, color: 'white', display: 'block'}}
                         >
-                            <Typography sx={{textDecorationLine: 'none'}} textAlign="center" variant="h6"
+                            <Typography sx={{textDecorationLine: 'none', "&:hover": { color: "white" }}} textAlign="center" variant="h6"
                                         noWrap
                                         component={Link}
                                         to={`/${page}`}
@@ -171,6 +182,7 @@ function Navigation({setTheme, theme}) {
                     ><Avatar src="Profilbild.png" />
                     </IconButton>
                     <Menu
+                        
                         id="user-appbar"
                         anchorEl={anchorElUser}
                         keepMounted
@@ -182,11 +194,12 @@ function Navigation({setTheme, theme}) {
                         onClose={handleCloseUserMenu}
                         sx={{
                             display: {xs: 'block', md: 'block'},
+                            width:'200%'
                         }}
                     >
                         <MenuItem key="Profilverwaltung" onClick={handleCloseUserMenu}>
                             <Typography
-                                sx={{textDecorationLine: 'none'}}
+                                sx={{textDecorationLine: 'none', "&:hover": { color: "inherit" }}}
                                 variant="h6"
                                 noWrap
                                 component={Link}
@@ -197,7 +210,7 @@ function Navigation({setTheme, theme}) {
                         </MenuItem>
                         <MenuItem key="Nutzereinladung" onClick={handleCloseUserMenu}>
                             <Typography
-                                sx={{textDecorationLine: 'none'}}
+                                sx={{textDecorationLine: 'none', "&:hover": { color: "inherit" }}}
                                 variant="h6"
                                 noWrap
                                 component={Link}
@@ -205,22 +218,28 @@ function Navigation({setTheme, theme}) {
                                 color="textPrimary"
                             >Nutzer einladen</Typography>
                         </MenuItem>
-                        <FormLabel id="demo-controlled-radio-buttons-group"><Typography
-                            textAlign="center">Darstellung</Typography></FormLabel>
-                        <RadioGroup defaultValue="light" onChange={themeToggler}>
-                            <FormControlLabel value="light" control={<Radio/>} label="helles Design"/>
-                            <FormControlLabel value="dark" control={<Radio/>} label="dunkles Design"/>
-                            <FormControlLabel value="standard" control={<Radio/>} label="Gerätestandard"/>
+                        <Divider sx={{  marginBottom: 2, borderBottomWidth: 3,  color: 'primary' }}/>
+                        <Typography
+                            sx={{ml:0.5}} variant="h6">Darstellung</Typography>
+                        <RadioGroup defaultValue="light" onChange={themeToggler} sx={{ml:1.5}} >
+                            <Box >
+                                <Box><FormControlLabel value="light"  control={<Radio/>} label="helles Design"/><LightModeIcon sx={{ml:1.5, mr:2}}/></Box>
+                                <Box><FormControlLabel value="dark" control={<Radio/>} label="dunkles Design"/><DarkModeIcon /></Box>
+                                <Box><FormControlLabel value="standard" control={<Radio/>} label="Gerätestandard"/><DevicesIcon /></Box>
+                            </Box>
                         </RadioGroup>
+                        <Divider sx={{  marginBottom: 2, borderBottomWidth: 3,  color: 'primary' }}/>
                         <MenuItem key="Logout" onClick={handleCloseUserMenu}>
                             <Typography
-                                sx={{textDecorationLine: 'none'}}
+                                sx={{textDecorationLine: 'none', "&:hover": { color: "red" }}}
                                 variant="h6"
                                 noWrap
                                 component={Link}
                                 to="/login"
                                 color="red"
-                            > <LogoutIcon/> Abmelden</Typography>
+                            >
+                            
+                            <LogoutIcon/> Abmelden</Typography>
                         </MenuItem>
                     </Menu>
                 </Box>

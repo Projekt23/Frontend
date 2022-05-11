@@ -21,10 +21,10 @@ return(
     <Typography color="white" align='left' variant="h5" component="h3" sx={{ fontWeight: 'bold' }}>&nbsp; Einstellungen </Typography>
     <Divider sx={{  marginBottom: 2, borderBottomWidth: 3,  color: 'white' }}/>
         
-    <ListItemButton component={Link} to="/profile">
+    <ListItemButton sx={{"&:hover": { color: "white" }}} component={Link} to="/profile">
         <ManageAccountsIcon />&nbsp;<ListItemText  primary="Profil verwalten" />
     </ListItemButton>
-    <ListItemButton component={Link} to="/invite">
+    <ListItemButton sx={{"&:hover": { color: "white" }}} component={Link} to="/invite">
         <PersonAddAlt1Icon/>&nbsp;<ListItemText  primary="Nutzer einladen" />
     </ListItemButton>
 
