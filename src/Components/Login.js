@@ -15,6 +15,7 @@ const Login = () => {
     const logoStyle = {display: "flex", justifyContent: "center", alignItems: "center",}
     const textfieldStyle = {margin: "5px"}
     const divloginbtn = {width: "100%", display: "flex", alignItems: "center", flexDirection: "column",}
+    const loginbtn = {marginBottom: "15px"}
     const linksStyle = {display: "flex", justifyContent: "space-between", width: "100%"}
     const ColorButton = styled(Button)(({theme}) => ({
         color: theme.palette.getContrastText(purple[500]),
@@ -56,7 +57,8 @@ const Login = () => {
                         //color="primary"
                         variant="contained"
                         fullWidth
-                        onClick={() => navigate("/home")}
+                        onClick={() => navigate("/startseite")}
+                        style={loginbtn}
                     >
                         Login
                     </Button>

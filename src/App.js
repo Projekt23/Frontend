@@ -3,6 +3,7 @@ import Navigation from './Components/Navigation';
 import Home from './Components/Home';
 import Login from './Components/Login';
 import Lexikon from "./Components/Lexikon";
+import ObjektAnlegen from "./Components/ObjektAnlegen";
 import Profil from './Components/SettingsComponents/Profil';
 import {Route, Routes} from 'react-router-dom';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
@@ -71,6 +72,7 @@ const App = () =>
                         <Route path="/startseite" element={<Home/>}/>
                         <Route path="/login" element={<Login />}/>
                         <Route path="/lexikon" element={<Lexikon />}/>
+                        <Route path="/objekt_anlegen" element={<ObjektAnlegen />}/>
                         <Route path="/settings" element={<Settings />}/>
                         <Route path="/invite" element={<Invite />}/>
                         <Route path="/profile" element={<Profil />}/>

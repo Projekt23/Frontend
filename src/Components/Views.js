@@ -14,7 +14,6 @@ const Views = () => {
             <Route path="/home" element={<Home/>}/>
             <Route path="/login" element={<Login />}/>
             <Route path="*" element={<div>404 Not Found!</div>} />
-
             {/*Nested Route example*/}
             <Route path="/post">
                 <Route path="1" element={<div>Post 1</div>} />

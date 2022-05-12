@@ -138,16 +138,12 @@ export default function () {
                         Sortierung
                     </InputLabel>
                     <NativeSelect
-                        defaultValue={30}
-                        inputProps={{
-                            name: 'age',
-                            id: 'uncontrolled-native',
-                        }}
+                        defaultValue={3}
                     >
                         <option value={1}>Relevanz (aufsteigend)</option>
                         <option value={2}>Relevanz (absteigend)</option>
                         <option value={3}>Alphabetisch (A -> Z)</option>
-                        <option value={3}>Alphabetisch (Z -> A)</option>
+                        <option value={4}>Alphabetisch (Z -> A)</option>
                     </NativeSelect>
                 </FormControl>
 
