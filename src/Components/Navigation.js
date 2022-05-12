@@ -1,6 +1,6 @@
 import {ThemeProvider} from 'styled-components';
 import {darkTheme, lightTheme} from "./themes.js";
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -22,7 +22,23 @@ import { Divider } from '@mui/material';
 
 function Navigation({setTheme, theme}) {
     const pages = ['Startseite', 'Lexikon'];
-
+    const themeStart = () => {
+        if (localStorage.getItem('theme') ==="dark") {
+            setTheme(false);
+            localStorage.setItem('theme', "dark");
+        } else if(localStorage.getItem('theme') ==="light") {
+            setTheme(true);
+            localStorage.setItem('theme', "light");
+        }else{
+            localStorage.setItem('theme', "standard");
+            if(window.matchMedia("(prefers-color-scheme: dark)").matches === false){
+                setTheme(true);
+              }
+              else{
+                setTheme(false);
+              }
+        }
+    }
     const themeToggler = (event) => {
         if (event.target.value ==="dark") {
             setTheme(false);
@@ -31,6 +47,7 @@ function Navigation({setTheme, theme}) {
             setTheme(true);
             localStorage.setItem('theme', "light");
         }else{
+            localStorage.setItem('theme', "standard");
             if(window.matchMedia("(prefers-color-scheme: dark)").matches === false){
                 setTheme(true);
               }
@@ -56,23 +73,21 @@ function Navigation({setTheme, theme}) {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
+    useEffect(() => {
+        // write your code here, it's like componentWillMount
+        themeStart();
+    }, [])
+    
     return (
-        <AppBar sx={{bgcolor: '#004ea5'}} position="static" >
-            <Toolbar disableGutters>
+        <AppBar sx={{bgcolor: '#004ea5',  height: '65px'}} position="static" >
+            <Toolbar disableGutters >
                 {/* Display only in Desktop Version -------------------------------------------------------------------------------------------------------------------*/}
                 <Typography
                     variant="h6"
                     component="div"
                     sx={{mr: 2, ml: 2, display: {xs: 'none', md: 'flex'}}}
                     href="/"
-                ><img
-                    src="logo-lila.png"
-                    width="30"
-                    height="30"
-
-                    className="d-inline-block align-top"
-                    alt="React Bootstrap logo"
-                />
+                ><Avatar src="logo-white.png" variant="square" component={Link} to='/Startseite' />
                 </Typography>
                 {/* Display only in Mobile Version -------------------------------------------------------------------------------------------------------------------*/}
                 <Box>
@@ -81,14 +96,7 @@ function Navigation({setTheme, theme}) {
                         noWrap
                         component="div"
                         sx={{mr: 2, ml: 2, flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
-                        <img
-                            src="logo-lila.png"
-                            width="30"
-                            height="30"
-
-                            className="d-inline-block align-top"
-                            alt="React Bootstrap logo"
-                        />
+                        <Avatar src="logo-white.png" variant="square" component={Link} to='/Startseite' />
                     </Typography></Box>
                 {/* Display only in Mobile Version -------------------------------------------------------------------------------------------------------------------*/}
                 <Box sx={{ flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
@@ -155,12 +163,12 @@ function Navigation({setTheme, theme}) {
                             </Typography>
                         </Button>
                     ))}
-                </Box>
+                </Box><Box sx={{width: 0.5}}></Box>
                 {/* The searchbar is displayed in Mobile and Desktop Version -------------------------------------------------------------------------------------------------------------------*/}
-                <Box  sx={{minWidth: 200,  width: 2000, alignContent: 'center'}}>
-                    <SearchBar style={{
-                        margin: '0 auto'
-                    }} onChange={(value) => setsearchValue(value)} onRequestSearch={() =>
+                <Box  sx={{minWidth: 200,  width: 1500}}>
+                    <SearchBar
+                       sx={{height: '50%'}}
+                       onChange={(value) => setsearchValue(value)} onRequestSearch={() =>
 
                         // ------------------------------------------------------------------------------------------------------------------------------------------------------------------
                         // hier muss die Suche hin
@@ -221,7 +229,7 @@ function Navigation({setTheme, theme}) {
                         <Divider sx={{  marginBottom: 2, borderBottomWidth: 3,  color: 'primary' }}/>
                         <Typography
                             sx={{ml:0.5}} variant="h6">Darstellung</Typography>
-                        <RadioGroup defaultValue="light" onChange={themeToggler} sx={{ml:1.5}} >
+                        <RadioGroup defaultValue={localStorage.getItem("theme")} onChange={themeToggler} onLoad={themeToggler} sx={{ml:1.5}} >
                             <Box >
                                 <Box><FormControlLabel value="light"  control={<Radio/>} label="helles Design"/><LightModeIcon sx={{ml:1.5, mr:2}}/></Box>
                                 <Box><FormControlLabel value="dark" control={<Radio/>} label="dunkles Design"/><DarkModeIcon /></Box>

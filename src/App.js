@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Navigation from './Components/Navigation';
 import Home from './Components/Home';
 import Login from './Components/Login';
@@ -52,7 +52,13 @@ const lightTheme = createTheme({
 });
 const App = () =>
 {
-
+    useEffect(() => {
+        // write your code here, it's like componentWillMount
+        if(localStorage.getItem('theme') === null){
+            localStorage.setItem('theme', 'light');
+        }
+            
+    }, [])
  
     const [theme, setTheme] = useState(true);
     
