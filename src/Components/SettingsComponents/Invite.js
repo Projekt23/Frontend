@@ -34,12 +34,12 @@ export default function Invite() {
                         <Typography sx={{marginTop: 4}} align='left' variant="h6">E-Mail Adresse</Typography>
                     </Box>
                     <Box sx={{marginTop: 3, ml: 14, flexGrow: 0.3, display: {xs: 'none', md:'block'}}}>
-                        <TextField label="E-Mail-Adresse" fullWidth id="email" variant="filled"></TextField><br/><br/>
+                        <TextField label="E-Mail-Adresse" fullWidth id="email" variant="filled"/><br/><br/>
                         <Button size= "small" variant="contained">Senden</Button>
                     </Box>
                     {/* Display only in Mobile Version */}
                     <Box sx={{marginTop: 3, flexGrow: 0.3, display: { md: 'none'}}}>
-                        <TextField fullWidth id="email" label="E-Mail-Adresse" variant="standard"></TextField><br/><br/>
+                        <TextField fullWidth id="email" label="E-Mail-Adresse" variant="standard"/><br/><br/>
                         <Button size= "small" variant="contained">Senden</Button>
                     </Box>
                     

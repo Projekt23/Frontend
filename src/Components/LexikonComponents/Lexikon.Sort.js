@@ -1,13 +1,34 @@
 import React from "react";
 import {Divider, FormControl, InputLabel, NativeSelect, Stack, ToggleButton, ToggleButtonGroup} from "@mui/material";
 import Button from "@mui/material/Button";
+import data from "./LexikonData";
 
-export default function () {
+export default function ({handleSort, handleSort2}) {
     const [entries, setEntries] = React.useState('left');
 
     const handleEntries = (event, newEntrie) => {
         setEntries(newEntrie);
     }
+
+    //Nativ Select call Sort Function in Lexikon
+    const handleChange = (event) => {
+        switch (event.target.value) {
+            case "3":
+                handleSort()
+                break;
+            case "4":
+                handleSort2()
+                break;
+            default:
+                console.log("default sort")
+        }
+    }
+
+    const expandAll = () => (isExpanded) => {
+        for (var i = 0; i < data.length; i++) {
+
+        }
+    };
 
     const alphabetButton = {
         maxWidth: "50px",
@@ -29,6 +50,11 @@ export default function () {
 
     const selectOptions = {
         marginLeft: "50px"
+    }
+
+    const AccordionExpandButtons = {
+        marginTop: "30px",
+        marginBottom: "30px",
     }
 
     return (
@@ -114,7 +140,6 @@ export default function () {
                     Z
                 </Button>
             </div>
-
             <div style={sortingButtons}>
                 <ToggleButtonGroup
                     color={"primary"}
@@ -123,17 +148,17 @@ export default function () {
                     onChange={handleEntries}
                     variant="contained"
                 >
-                    <Stack spacing={2} direction = "row">
+                    <Stack spacing={2} direction="row">
                         <ToggleButton value="all">
-                        Alle Einträge
-                    </ToggleButton>
+                            Alle Einträge
+                        </ToggleButton>
                         <ToggleButton value="bookmarks">
                             Merkliste
                         </ToggleButton>
                     </Stack>
                 </ToggleButtonGroup>
 
-                <FormControl style = {selectOptions}>
+                <FormControl style={selectOptions} onChange={handleChange}>
                     <InputLabel variant="standard" htmlFor="uncontrolled-native">
                         Sortierung
                     </InputLabel>
@@ -149,6 +174,12 @@ export default function () {
 
             </div>
             <Divider/>
+            <div style={AccordionExpandButtons}>
+                <Stack spacing={2} direction="row">
+                    <Button variant={"contained"} onClick={expandAll}>Alle aufklappen</Button>
+                    <Button variant={"contained"}>Alle zuklappen</Button>
+                </Stack>
+            </div>
         </div>
 
     )

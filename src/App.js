@@ -14,6 +14,9 @@ import Settings from './Components/Settings';
 import { CssBaseline } from '@mui/material/';
 import SearchResult from './Components/SearchResult';
 
+// Test Data
+import data from "./Components/LexikonComponents/LexikonData";
+
 
 const darkTheme = createTheme({
     palette: {
@@ -71,7 +74,7 @@ const App = () =>
                         <Route index element={<Login/>} />
                         <Route path="/startseite" element={<Home/>}/>
                         <Route path="/login" element={<Login />}/>
-                        <Route path="/lexikon" element={<Lexikon />}/>
+                        <Route path="/lexikon" element={<Lexikon lexikonData={data}/>}/>
                         <Route path="/objekt_anlegen" element={<ObjektAnlegen />}/>
                         <Route path="/settings" element={<Settings />}/>
                         <Route path="/invite" element={<Invite />}/>
