@@ -3,12 +3,15 @@ import {Divider, FormControl, InputLabel, NativeSelect, Stack, ToggleButton, Tog
 import Button from "@mui/material/Button";
 import data from "./LexikonData";
 
-export default function ({handleSort, handleSort2}) {
-    const [entries, setEntries] = React.useState('left');
-
-    const handleEntries = (event, newEntrie) => {
-        setEntries(newEntrie);
+export default function ({handleSort, handleSort2, ansicht, setAnsicht}) {
+    const [entries, setEntries] = React.useState('all');
+    const ansichtToggler = (event) => {
+        setAnsicht(event.target.value);
     }
+    const [alignment, setAlignment] = React.useState('left');
+    const handleAlignment = (event, newAlignment) => {
+        setAlignment(newAlignment);
+      };
 
     //Nativ Select call Sort Function in Lexikon
     const handleChange = (event) => {
@@ -143,19 +146,17 @@ export default function ({handleSort, handleSort2}) {
             <div style={sortingButtons}>
                 <ToggleButtonGroup
                     color={"primary"}
-                    value={entries}
+                    defaultValue="all"
                     exclusive
-                    onChange={handleEntries}
-                    variant="contained"
+                    onChange={handleAlignment}
+                    value={ansicht}
                 >
-                    <Stack spacing={2} direction="row">
-                        <ToggleButton value="all">
+                        <ToggleButton value="all" onClick={ansichtToggler} >
                             Alle Einträge
                         </ToggleButton>
-                        <ToggleButton value="bookmarks">
+                        <ToggleButton value="favorites" onClick={ansichtToggler}>
                             Merkliste
                         </ToggleButton>
-                    </Stack>
                 </ToggleButtonGroup>
 
                 <FormControl style={selectOptions} onChange={handleChange}>

@@ -10,7 +10,7 @@ import {Link} from "react-router-dom";
 export default function Lexikon(props) {
 
     const [lexikonData, setLexikonData] = useState([])
-
+    const [ansicht, setAnsicht] = useState("all")
     useEffect(() => {
         setLexikonData(props.lexikonData)
     }, [])
@@ -30,8 +30,9 @@ export default function Lexikon(props) {
         })
         setLexikonData(sortedData)
     }
-
-    const listData = lexikonData.map((object) => {
+    var listData;
+    if(ansicht === "all"){
+        listData = lexikonData.map((object) => {
 
         return <LexikonList
             id = {object.id}
@@ -43,6 +44,22 @@ export default function Lexikon(props) {
             favorite={object.favorite}
         />
     })
+    }
+    else if(ansicht==="favorites"){
+        listData = lexikonData.map((object) => {
+            if (object.favorite ===true){
+            return <LexikonList
+                id = {object.id}
+                key={object.id}
+                title={object.title}
+                description={object.description}
+                details={object.details}
+                systems={object.system}
+                favorite={object.favorite}
+            />}
+        }) 
+    }
+    
 
     return (<div className={style.containerMain}>
             <div className={style.headerRow}>
@@ -57,7 +74,7 @@ export default function Lexikon(props) {
                     Eintrag hinzufügen
                 </Button>
             </div>
-            <LexikonSort handleSort={handleSort} handleSort2={handleSort2}/>
+            <LexikonSort handleSort={handleSort} handleSort2={handleSort2} ansicht={ansicht} setAnsicht={setAnsicht}/>
             <Stack spacing={1} direction={"column"}>
                 {listData}
             </Stack>

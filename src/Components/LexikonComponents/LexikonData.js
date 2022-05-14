@@ -19,7 +19,7 @@ const data = [{
     }, {
         systemID: 2, systemName: "Salesforce CRM"
     }],
-    favorite: false,
+    favorite: true,
 }, {
     id: 2,
     title: "Y Test",
