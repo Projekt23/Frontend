@@ -34,6 +34,7 @@ export default function Lexikon(props) {
     const listData = lexikonData.map((object) => {
 
         return <LexikonList
+            id = {object.id}
             key={object.id}
             title={object.title}
             description={object.description}

@@ -12,7 +12,7 @@ import { ViewModule } from "@material-ui/icons";
 
 
 export default function (props) {
-
+    console.log(props)
     const [expanded, setExpanded] = React.useState(false);
     const [fav, setFav] = React.useState(props.favorite);
     const handleChange = (panel) => (event, isExpanded) => {
@@ -87,7 +87,7 @@ export default function (props) {
                         </div>
                         <Divider/>
                         <div style={AccordionFooter}>
-                            <Button variant={"contained"} component={Link} to="/result">Zur Detailseite</Button>
+                            <Button variant={"contained"} component={Link} to={{pathname: "/result", hash: String(props.id)}}>Zur Detailseite</Button>
                             {/*                            <div>
                                 <Stack direction={"row"} spacing={1}>
                                     {props.systems.map(system => (
