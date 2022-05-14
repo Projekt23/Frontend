@@ -12,7 +12,6 @@ import { ViewModule } from "@material-ui/icons";
 
 
 export default function (props) {
-    console.log(props)
     const [expanded, setExpanded] = React.useState(false);
     const [fav, setFav] = React.useState(props.favorite);
     const handleChange = (panel) => (event, isExpanded) => {

@@ -11,9 +11,14 @@ export default function Lexikon(props) {
 
     const [lexikonData, setLexikonData] = useState([])
     const [ansicht, setAnsicht] = useState("all")
+    const[startLetter, setStartLetter] = useState(null);
     useEffect(() => {
         setLexikonData(props.lexikonData)
     }, [])
+
+    function startsWith(str, word) {
+        return str.lastIndexOf(word, 0) === 0;
+    }
 
     function handleSort() {
         console.log("Sorting ...")
@@ -30,24 +35,12 @@ export default function Lexikon(props) {
         })
         setLexikonData(sortedData)
     }
+    
     var listData;
-    if(ansicht === "all"){
-        listData = lexikonData.map((object) => {
+    if (startLetter === null){
+        if(ansicht === "all"){
+            listData = lexikonData.map((object) => {
 
-        return <LexikonList
-            id = {object.id}
-            key={object.id}
-            title={object.title}
-            description={object.description}
-            details={object.details}
-            systems={object.system}
-            favorite={object.favorite}
-        />
-    })
-    }
-    else if(ansicht==="favorites"){
-        listData = lexikonData.map((object) => {
-            if (object.favorite ===true){
             return <LexikonList
                 id = {object.id}
                 key={object.id}
@@ -56,8 +49,53 @@ export default function Lexikon(props) {
                 details={object.details}
                 systems={object.system}
                 favorite={object.favorite}
-            />}
-        }) 
+            />
+        })
+        }
+        else if(ansicht==="favorites"){
+            listData = lexikonData.map((object) => {
+                if (object.favorite ===true){
+                return <LexikonList
+                    id = {object.id}
+                    key={object.id}
+                    title={object.title}
+                    description={object.description}
+                    details={object.details}
+                    systems={object.system}
+                    favorite={object.favorite}
+                />}
+            }) 
+        }
+    }
+    else{
+        if(ansicht === "all"){
+            listData = lexikonData.map((object) => {
+                if (startsWith(object.title, startLetter)){
+                    return <LexikonList
+                        id = {object.id}
+                        key={object.id}
+                        title={object.title}
+                        description={object.description}
+                        details={object.details}
+                        systems={object.system}
+                        favorite={object.favorite}
+                    />}
+        })
+        }
+        else if(ansicht==="favorites"){
+            listData = lexikonData.map((object) => {
+                if (object.favorite ===true && startsWith(object.title, startLetter)){
+                    return <LexikonList
+                        id = {object.id}
+                        key={object.id}
+                        title={object.title}
+                        description={object.description}
+                        details={object.details}
+                        systems={object.system}
+                        favorite={object.favorite}
+                    />}
+            }) 
+        }
     }
     
 
@@ -74,7 +112,7 @@ export default function Lexikon(props) {
                     Eintrag hinzufügen
                 </Button>
             </div>
-            <LexikonSort handleSort={handleSort} handleSort2={handleSort2} ansicht={ansicht} setAnsicht={setAnsicht}/>
+            <LexikonSort handleSort={handleSort} handleSort2={handleSort2} ansicht={ansicht} setAnsicht={setAnsicht} startLetter = {startLetter} setStartLetter ={setStartLetter}/>
             <Stack spacing={1} direction={"column"}>
                 {listData}
             </Stack>

@@ -3,7 +3,9 @@ import {Divider, FormControl, InputLabel, NativeSelect, Stack, ToggleButton, Tog
 import Button from "@mui/material/Button";
 import data from "./LexikonData";
 
-export default function ({handleSort, handleSort2, ansicht, setAnsicht}) {
+export default function ({handleSort, handleSort2, ansicht, setAnsicht, startLetter, setStartLetter}) {
+    const letters = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
+    var tempLetter = null;
     const [entries, setEntries] = React.useState('all');
     const ansichtToggler = (event) => {
         setAnsicht(event.target.value);
@@ -12,7 +14,19 @@ export default function ({handleSort, handleSort2, ansicht, setAnsicht}) {
     const handleAlignment = (event, newAlignment) => {
         setAlignment(newAlignment);
       };
+      const handleLetterChange = (event) => {
+        if(startLetter === event.target.value.toUpperCase()){
+            setStartLetter(null)
+            document.getElementById(event.target.value).style.background='#004ea5';
+        }
+        else{
+            setStartLetter(event.target.value.toUpperCase())
+            document.getElementById(event.target.value).style.background="grey";
+            console.log(event.target.value)
+        }
 
+      };
+      
     //Nativ Select call Sort Function in Lexikon
     const handleChange = (event) => {
         switch (event.target.value) {
@@ -23,6 +37,7 @@ export default function ({handleSort, handleSort2, ansicht, setAnsicht}) {
                 handleSort2()
                 break;
             default:
+                
                 console.log("default sort")
         }
     }
@@ -64,84 +79,11 @@ export default function ({handleSort, handleSort2, ansicht, setAnsicht}) {
         <div>
             <Divider/>
             <div style={alphabetDiv}>
-                <Button variant="contained" style={alphabetButton}>
-                    A
-                </Button>
-                <Button variant="contained" style={alphabetButton}>
-                    B
-                </Button>
-                <Button variant="contained" style={alphabetButton}>
-                    C
-                </Button>
-                <Button variant="contained" style={alphabetButton}>
-                    D
-                </Button>
-                <Button variant="contained" style={alphabetButton}>
-                    E
-                </Button>
-                <Button variant="contained" style={alphabetButton}>
-                    F
-                </Button>
-                <Button variant="contained" style={alphabetButton}>
-                    G
-                </Button>
-                <Button variant="contained" style={alphabetButton}>
-                    H
-                </Button>
-                <Button variant="contained" style={alphabetButton}>
-                    I
-                </Button>
-                <Button variant="contained" style={alphabetButton}>
-                    J
-                </Button>
-                <Button variant="contained" style={alphabetButton}>
-                    K
-                </Button>
-                <Button variant="contained" style={alphabetButton}>
-                    L
-                </Button>
-                <Button variant="contained" style={alphabetButton}>
-                    M
-                </Button>
-                <Button variant="contained" style={alphabetButton}>
-                    N
-                </Button>
-                <Button variant="contained" style={alphabetButton}>
-                    O
-                </Button>
-                <Button variant="contained" style={alphabetButton}>
-                    P
-                </Button>
-                <Button variant="contained" style={alphabetButton}>
-                    Q
-                </Button>
-                <Button variant="contained" style={alphabetButton}>
-                    R
-                </Button>
-                <Button variant="contained" style={alphabetButton}>
-                    S
-                </Button>
-                <Button variant="contained" style={alphabetButton}>
-                    T
-                </Button>
-                <Button variant="contained" style={alphabetButton}>
-                    U
-                </Button>
-                <Button variant="contained" style={alphabetButton}>
-                    V
-                </Button>
-                <Button variant="contained" style={alphabetButton}>
-                    W
-                </Button>
-                <Button variant="contained" style={alphabetButton}>
-                    X
-                </Button>
-                <Button variant="contained" style={alphabetButton}>
-                    Y
-                </Button>
-                <Button variant="contained" style={alphabetButton}>
-                    Z
-                </Button>
+                {letters.map((letter) => (
+                            <Button id={letter} value={letter} variant="contained" onClick = {(event) => handleLetterChange(event)} style={alphabetButton}>
+                            {letter.toUpperCase()}
+                        </Button>
+                        ))}
             </div>
             <div style={sortingButtons}>
                 <ToggleButtonGroup
