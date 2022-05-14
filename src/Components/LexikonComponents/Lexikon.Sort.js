@@ -167,8 +167,8 @@ export default function ({handleSort, handleSort2}) {
                     >
                         <option value={1}>Relevanz (aufsteigend)</option>
                         <option value={2}>Relevanz (absteigend)</option>
-                        <option value={3}>Alphabetisch (A -> Z)</option>
-                        <option value={4}>Alphabetisch (Z -> A)</option>
+                        <option value={3}>Alphabetisch (A &rarr; Z)</option>
+                        <option value={4}>Alphabetisch (Z &rarr; A)</option>
                     </NativeSelect>
                 </FormControl>
 
