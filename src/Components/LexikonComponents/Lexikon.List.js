@@ -14,6 +14,7 @@ import { ViewModule } from "@material-ui/icons";
 export default function (props) {
     const [expand, setExpand] = React.useState(false);
     const toggleAcordion = () => {
+        
       setExpand((prev) => !prev);
     };
 
@@ -35,14 +36,14 @@ export default function (props) {
     function checkFavorite(favorite, accordionId) {
         if (favorite === true) {
             return (
-                <IconButton aria-label="delete" onClick={() => {changeFavorite(favorite, accordionId);}}>
-                    <FavoriteIcon/>
+                <IconButton aria-label="delete" onClick={() => {changeFavorite(favorite, accordionId);toggleAcordion()}}>
+                    <FavoriteIcon />
                 </IconButton>
             )
         } else {
             return (
-                <IconButton aria-label="delete" onClick={() => {changeFavorite(favorite, accordionId);}}>
-                    <FavoriteBorderIcon/>
+                <IconButton aria-label="delete" onClick={() => {changeFavorite(favorite, accordionId);toggleAcordion()}}>
+                    <FavoriteBorderIcon />
                 </IconButton>
             )
         }
@@ -69,7 +70,7 @@ export default function (props) {
     return (
         <div>
             <div>
-                <Accordion id={props.id} key={props.id} expanded={expand} onChange={handleChange(props.id)}>
+                <Accordion id={props.id} key={props.id} expanded={expand} onChange={handleChange(props.id)} onClick= {toggleAcordion}>
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon onClick= {toggleAcordion}/>}
                         aria-controls={props.id}
