@@ -12,13 +12,19 @@ import { ViewModule } from "@material-ui/icons";
 
 
 export default function (props) {
+    const [expand, setExpand] = React.useState(false);
+    const toggleAcordion = () => {
+      setExpand((prev) => !prev);
+    };
+
     const [expanded, setExpanded] = React.useState(false);
     const [fav, setFav] = React.useState(props.favorite);
     const handleChange = (panel) => (event, isExpanded) => {
         setExpanded(isExpanded ? panel : false);
     };
-    function changeFavorite(favorite) {
+    function changeFavorite(favorite, accordionId) {
         if(favorite === true){
+
             setFav(false);
         }
         else{
@@ -26,16 +32,16 @@ export default function (props) {
         }
     }
     // checks if object is marked as favorite
-    function checkFavorite(favorite) {
+    function checkFavorite(favorite, accordionId) {
         if (favorite === true) {
             return (
-                <IconButton aria-label="delete" onClick={() => {changeFavorite(favorite);}}>
+                <IconButton aria-label="delete" onClick={() => {changeFavorite(favorite, accordionId);}}>
                     <FavoriteIcon/>
                 </IconButton>
             )
         } else {
             return (
-                <IconButton aria-label="delete" onClick={() => {changeFavorite(favorite);}}>
+                <IconButton aria-label="delete" onClick={() => {changeFavorite(favorite, accordionId);}}>
                     <FavoriteBorderIcon/>
                 </IconButton>
             )
@@ -63,18 +69,18 @@ export default function (props) {
     return (
         <div>
             <div>
-                <Accordion key={props.id} expanded={expanded === props.id} onChange={handleChange(props.id)}>
+                <Accordion id={props.id} key={props.id} expanded={expand} onChange={handleChange(props.id)}>
                     <AccordionSummary
-                        expandIcon={<ExpandMoreIcon/>}
+                        expandIcon={<ExpandMoreIcon onClick= {toggleAcordion}/>}
                         aria-controls={props.id}
-                        id={props.id}
+                        
                     >
                         <Typography sx={{width: '33%', flexShrink: 0}}>
                             {props.title}
                         </Typography>
                         <div style={AccordionSummaryText}>
                             <Typography sx={{color: 'text.secondary'}}>Synonyme: {props.description}</Typography>
-                            {checkFavorite(fav)}
+                            {checkFavorite(fav, props.id)}
                         </div>
                     </AccordionSummary>
                     <AccordionDetails>
