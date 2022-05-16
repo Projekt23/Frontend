@@ -16,6 +16,7 @@ import SearchResult from './Components/SearchResult';
 
 // Test Data
 import data from "./Components/LexikonComponents/LexikonData";
+import Registierung from './Components/Registierung';
 
 
 
@@ -59,7 +60,7 @@ const App = () =>
 {
 
     const [theme, setTheme] = useState(true);
-    
+
     function checkLogin(){
         console.log(window.location.pathname)
         if(window.location.pathname === "/" || window.location.pathname === "/Login"){
@@ -112,6 +113,7 @@ const App = () =>
                         <Route index element={<Login/>} />
                         <Route path="/startseite" element={<Home/>}/>
                         <Route path="/login" element={<Login />}/>
+                        <Route path="/register" element={<Registierung />}/>
                         <Route path="/lexikon" element={<Lexikon lexikonData={data}/>}/>
                         <Route path="/objekt_anlegen" element={<ObjektAnlegen />}/>
                         <Route path="/settings" element={<Settings />}/>
