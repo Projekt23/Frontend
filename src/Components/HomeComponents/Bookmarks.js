@@ -3,6 +3,7 @@ import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
+import { makeStyles } from "@material-ui/core/styles";
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
@@ -13,7 +14,14 @@ function createData(designation, describtion, favorite) {
   return { designation, describtion, favorite };
 }
 
-
+const useStyles = makeStyles({
+  ellipsis: {
+    maxWidth: 200, // percentage also works
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis"
+  }
+});
 
 // Hier muss noch aufruf backend stattfinden. // String, String, Bool
 
@@ -25,6 +33,8 @@ const rows = [
 ];
 
 export default function Bookmarks() {
+  const classes = useStyles();
+
   return (
     <TableContainer component={Paper}>
       <Table aria-label="simple table">
@@ -44,7 +54,7 @@ export default function Bookmarks() {
               <TableCell component="th" scope="row">
                 {row.designation}
               </TableCell>
-              <TableCell >{row.describtion}</TableCell>
+              <TableCell className={classes.ellipsis} >{row.describtion}</TableCell>
               <TableCell align="right">
                 <IconButton aria-label="delete">
                   <FavoriteIcon />
@@ -56,7 +66,6 @@ export default function Bookmarks() {
     </TableContainer>
   );
 }
-
 
 
 

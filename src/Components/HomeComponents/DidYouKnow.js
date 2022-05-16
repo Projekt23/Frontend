@@ -17,19 +17,14 @@ export default function DidYouKnow() {
     var desc = "Der Nummernkreis beschreibt eine definierte Abfolge in einer Gruppe, in der Elemente zu ordnen sind. Er findet vor allem im Rechnungswesen bei Unternehmen seine Verwendung.";
     
     return (
-    <>
-    <Box sx={{ display: 'flex', justifyContent: 'space-between',m: 1,}}>
-        <Typography align='left' variant="h5" component="h3" sx={{ fontWeight: 'bold' }}> Wussten Sie schon? </Typography>
-        <Button component={Link} to={"/result"} variant="contained">zur Detailseite</Button>
-    </Box>
+    
 
-    <Divider sx={{  marginBottom: 2 }}/>
-    <TableContainer component={Paper}>
-        <Typography align='left' variant="h5" component="h3" sx={{ fontWeight: 'bold' }} > {name} </Typography>
+    <TableContainer>
+        <Typography align='left' variant="h6" component="h3" sx={{ fontWeight: 'bold' }} > {name} </Typography>
         <Divider sx={{  marginBottom: 2 }}/>
-        <Typography align='center' variant="h5" component="h3" > <b>Begriffsabgrenzung:</b> <br />  {desc} </Typography>
+        <Typography align='center'  component="h3" > <b>Begriffsabgrenzung:</b> <br />  {desc} </Typography>
     </TableContainer>
-    </>
+   
     );
 }
 
