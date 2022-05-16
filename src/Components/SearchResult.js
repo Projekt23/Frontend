@@ -44,7 +44,10 @@ const chips = [
 ];
 
 export default function SearchResult() {
-
+    function changeFavorite(clicked){
+        setClicked(!clicked)
+        
+    }
     const [clicked, setClicked] = useState();
     return (
         <Container maxWidth="auto">
@@ -66,7 +69,7 @@ export default function SearchResult() {
                                 sx={{
                                     mt: 1
                                 }}> <b>Auftrag</b> </Typography>
-                            <IconButton onClick={() => setClicked(!clicked)} >
+                            <IconButton onClick={() => changeFavorite(clicked)} >
                                 {clicked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
                             </IconButton>
                         </Box>
