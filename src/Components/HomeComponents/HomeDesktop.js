@@ -79,14 +79,3 @@ export default function HomeDesktop() {
     </Container >
   )
 }
-
-//retrive UserData from Backend, save to local storage
-function getUserData() {
-  //space for backend call
-
-  //create dummy for userdata
-  localStorage.setItem('UserName', "Ralf Gärtner");
-
-  //read userdata example
-  //const UserName = localStorage.getItem('UserName');
-}

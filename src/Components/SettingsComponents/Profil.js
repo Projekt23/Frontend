@@ -6,21 +6,6 @@ import SettingsNav from "./SettingsNav";
 import { TextField } from "@mui/material";
 
 
-// Beispiel GET Aufruf
-async function getUser() {
-    const server = "http://88.214.57.111:8081/api";
-    return fetch(server+'/user/2', {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS' },
-    })
-      .then(response => {
-        response.text().then(value => {
-            console.log(value);
-          }).catch(err => {
-            console.log(err);
-          });
-      });
-  }
 
 export default function Profil() {
 
@@ -38,14 +23,11 @@ export default function Profil() {
         height: '1000px',
         width: '100%'
       }));
-      useEffect(() => {
-        // write your code here, it's like componentWillMount
-        writeUser();
-    }, [])
+      
        
   return (
     
-    <Box onLoad= {() => writeUser()} sx={{ m: 2}}>
+    <Box sx={{ m: 2}}>
 
         <Grid container rowSpacing={1}  columnSpacing={{ xs: 0, sm: 0, md: 0 }} >
             {/* Display SettingsNav only in Desktop Version */}
@@ -65,9 +47,9 @@ export default function Profil() {
                         <Typography sx={{marginTop: 6}} align='left' variant="h6">Nachname</Typography>
                     </Box>
                     <Box sx={{marginTop: 3, ml:29, flexGrow: 0.3, display: {xs: 'none', md:'block'}}}>
-                        <TextField sx={{ marginTop: 3,  overflow: 'auto'}} fullWidth id="userName" label="Benutzername" variant="filled"></TextField><br/>
-                        <TextField sx={{marginTop: 3,  overflow: 'auto'}} fullWidth id="email" label="E-Mail-Adresse" variant="filled"></TextField><br/>
-                        <TextField sx={{marginTop: 3,  overflow: 'auto'}} fullWidth id="firstName" label="Vorname" variant="filled" ></TextField><br/>
+                        <TextField sx={{ marginTop: 3,  overflow: 'auto'}} fullWidth id="userName" label="Benutzername" variant="filled" defaultValue={localStorage.getItem('username')}></TextField><br/>
+                        <TextField sx={{marginTop: 3,  overflow: 'auto'}} fullWidth id="email" label="E-Mail-Adresse" variant="filled" defaultValue={localStorage.getItem('email')}></TextField><br/>
+                        <TextField sx={{marginTop: 3,  overflow: 'auto'}} fullWidth id="firstName" label="Vorname" variant="filled" defaultValue={localStorage.getItem('name')} ></TextField><br/>
                         <TextField sx={{marginTop: 3,  overflow: 'auto'}} fullWidth id="lastName" label="Nachname" variant="filled"></TextField><br/><br/>
                         <Button size= "small" variant="contained">Bearbeiten</Button>&nbsp;<Button size= "small" disabled variant="contained">Speichern</Button>
                     </Box>
@@ -111,8 +93,4 @@ export default function Profil() {
         </Grid>
     </Box>
   );
-}
-
-function writeUser(){
-
 }

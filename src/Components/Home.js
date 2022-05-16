@@ -10,6 +10,7 @@ export default function Home() {
     /* Inside of a "useEffect" hook add an event listener that updates
        the "width" state variable when the window size changes */
     window.addEventListener("resize", () => setWidth(window.innerWidth));
+    getUserData();
   }, []);
   return (
     width < breakpoint ? <MobileComponent /> : <DesktopComponent />
@@ -20,7 +21,7 @@ export default function Home() {
 async function getUserData() {
   //backend call
   //placeholer 
-  var id = "1";
+  var id = "3";
 
   const server = "http://88.214.57.111:8081/api";
   return fetch(server+'/user/'+id+'', {
@@ -39,11 +40,4 @@ async function getUserData() {
           console.log(err);
         });
     });
-
-
-  //create dummy for userdata
-  localStorage.setItem('UserName', "Ralf Gärtner");
-
-  //read userdata example
-  //const UserName = localStorage.getItem('UserName');
 }
