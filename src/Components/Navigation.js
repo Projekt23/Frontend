@@ -132,11 +132,11 @@ function Navigation({setTheme, theme}) {
                         }}
                     >
                         {pages.map((page) => (
-                            <MenuItem key={page} onClick={handleCloseNavMenu}>
+                            <MenuItem key={page} onClick={handleCloseNavMenu} component={Link}
+                            to={`/${page}`}>
                                 <Typography sx={{textDecorationLine: 'none', "&:hover": { color: "white" }}} textAlign="center" variant="h6"
                                             noWrap
-                                            component={Link}
-                                            to={`/${page}`}
+                                            
                                             color="textPrimary"
                                 >
                                     {page}
@@ -152,11 +152,12 @@ function Navigation({setTheme, theme}) {
                             key={page}
                             onClick={handleCloseNavMenu}
                             sx={{my: 2, color: 'white', display: 'block'}}
+                            component={Link}
+                            to={`/${page}`}
                         >
                             <Typography sx={{textDecorationLine: 'none', "&:hover": { color: "white" }}} textAlign="center" variant="h6"
                                         noWrap
-                                        component={Link}
-                                        to={`/${page}`}
+                                        
                                         color="white"
                             >
                                 {page}
