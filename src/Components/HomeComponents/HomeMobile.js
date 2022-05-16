@@ -28,7 +28,6 @@ export default function HomeMobile() {
                     mb: 1,
                 }}>   <Greet />
             </Item>
-
             <Item sx={{
                     mb: 1,
                 }}>
@@ -73,12 +72,9 @@ export default function HomeMobile() {
                 </Box>
                 <Divider sx={{ marginBottom: 2 }} />
                 <ChangeHistory /></Item>
-
             <Item sx={{
                     mb: 1,
                 }} ><DidYouKnow /></Item>
-
-
         </Container >
     )
 }

@@ -4,7 +4,7 @@ import MobileComponent from './HomeComponents/HomeMobile';
 
 export default function Home() {
   const [width, setWidth] = React.useState(window.innerWidth);
-  const breakpoint = 800;
+  const breakpoint = 900;
 
   React.useEffect(() => {
     /* Inside of a "useEffect" hook add an event listener that updates
