@@ -73,6 +73,21 @@ function Navigation({setTheme, theme}) {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
+
+    function search({searchValue}){
+
+        // ------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        // hier muss die Suche hin
+        console.log(searchValue);
+        // ------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    }
+
+
+
+
+
+
+
     useEffect(() => {
         // write your code here, it's like componentWillMount
         themeStart();
@@ -86,7 +101,7 @@ function Navigation({setTheme, theme}) {
                     variant="h6"
                     component="div"
                     sx={{mr: 2, ml: 2, display: {xs: 'none', md: 'flex'}}}
-                    href="/"
+                   
                 ><Avatar src="logo-white.png" variant="square" component={Link} to='/Startseite' />
                 </Typography>
                 {/* Display only in Mobile Version -------------------------------------------------------------------------------------------------------------------*/}
@@ -169,14 +184,8 @@ function Navigation({setTheme, theme}) {
                 <Box  sx={{minWidth: 200,  width: 1500}}>
                     <SearchBar
                        sx={{height: '50%'}}
-                       onChange={(value) => setsearchValue(value)} onRequestSearch={() =>
-
-                        // ------------------------------------------------------------------------------------------------------------------------------------------------------------------
-                        // hier muss die Suche hin
-                        console.log({searchValue})
-                        // ------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-                    }/></Box>
+                       onChange={(value) => setsearchValue(value)} onRequestSearch={() =>search({searchValue})}/>
+                </Box>
                 <Box sx={{width: 1}}>
                     <ThemeProvider theme={localStorage.getItem("theme") === "light" ? lightTheme : darkTheme}/>
                 </Box>

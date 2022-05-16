@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import TableContainer from '@mui/material/TableContainer';
 import Paper from '@mui/material/Paper';
 import { Box } from "@mui/system"
+import { Link } from 'react-router-dom';
 
 export default function DidYouKnow() {
 
@@ -19,7 +20,7 @@ export default function DidYouKnow() {
     <>
     <Box sx={{ display: 'flex', justifyContent: 'space-between',m: 1,}}>
         <Typography align='left' variant="h5" component="h3" sx={{ fontWeight: 'bold' }}> Wussten Sie schon? </Typography>
-        <Button variant="contained">zur Detailseite</Button>
+        <Button component={Link} to={"/result"} variant="contained">zur Detailseite</Button>
     </Box>
 
     <Divider sx={{  marginBottom: 2 }}/>

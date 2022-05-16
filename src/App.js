@@ -18,6 +18,7 @@ import SearchResult from './Components/SearchResult';
 import data from "./Components/LexikonComponents/LexikonData";
 
 
+
 const darkTheme = createTheme({
     palette: {
         background: {
@@ -56,20 +57,57 @@ const lightTheme = createTheme({
 });
 const App = () =>
 {
+
+    const [theme, setTheme] = useState(true);
+    
+    function checkLogin(){
+        console.log(window.location.pathname)
+        if(window.location.pathname === "/" || window.location.pathname === "/Login"){
+            return null;
+        }
+        else{
+            return  <Navigation setTheme={setTheme} theme={theme} sticky="top"/>;
+        }
+            
+    }
+    const themeStart = () => {
+        if (localStorage.getItem('theme') ==="dark") {
+            setTheme(false);
+            localStorage.setItem('theme', "dark");
+        } else if(localStorage.getItem('theme') ==="light") {
+            setTheme(true);
+            localStorage.setItem('theme', "light");
+        }else{
+            localStorage.setItem('theme', "standard");
+            if(window.matchMedia("(prefers-color-scheme: dark)").matches === false){
+                setTheme(true);
+              }
+              else{
+                setTheme(false);
+              }
+        }
+    }
     useEffect(() => {
         // write your code here, it's like componentWillMount
-        if(localStorage.getItem('theme') === null){
+        if(localStorage.getItem('theme') === 'light' || localStorage.getItem('theme') === null){
             localStorage.setItem('theme', 'light');
+            themeStart()
+        }
+        else if(localStorage.getItem('theme') === "dark"){
+            localStorage.setItem('theme', 'dark');
+            themeStart()
+        }
+        else if(localStorage.getItem('theme') === "standard"){
+            localStorage.setItem('theme', 'standard');
+            themeStart()
         }
             
     }, [])
- 
-    const [theme, setTheme] = useState(true);
     
     return(
         <ThemeProvider theme={theme ?  lightTheme : darkTheme}>
             <CssBaseline/>
-                    <Navigation setTheme={setTheme} theme={theme} sticky="top"/>
+                    {checkLogin()}
                     <Routes>
                         <Route index element={<Login/>} />
                         <Route path="/startseite" element={<Home/>}/>
