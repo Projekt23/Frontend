@@ -72,7 +72,7 @@ export default function (props) {
             <div>
                 <Accordion id={props.id} key={props.id} expanded={expand} onChange={handleChange(props.id)} onClick= {toggleAcordion}>
                     <AccordionSummary
-                        expandIcon={<ExpandMoreIcon onClick= {toggleAcordion}/>}
+                        expandIcon={<ExpandMoreIcon/>}
                         aria-controls={props.id}
                         
                     >
