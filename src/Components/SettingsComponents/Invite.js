@@ -12,7 +12,8 @@ export default function Invite() {
         ...theme.typography.body2,
         padding: theme.spacing(2),
         textAlign: 'right',
-        height: '800px'
+        height: '1000px',
+        width: '100%'
       }));
 
   return (
@@ -21,17 +22,17 @@ export default function Invite() {
 
         <Grid container rowSpacing={1}  columnSpacing={{ xs: 0, sm: 0, md: 0 }} >
             {/* Display SettingsNav only in Desktop Version */}
-            <Grid  sx={{ml: 2, display: {xs: 'none', md:'block'}}} item xs={1.5}>
+            <Grid  sx={{ minWidth: 200, display: {xs: 'none', md:'block'}}} item xs={1.5}>
                 <SettingsNav />   
             </Grid>
-            <Grid item xs={10} maxWidth >
+            <Grid item sx={{flexGrow: 2}}  >
                 <Item >
                 <Typography align='left' variant="h5" component="h3" sx={{ fontWeight: 'bold' }}>Nutzer einladen </Typography>
                 <Divider sx={{  marginBottom: 2, borderBottomWidth: 3,  color: 'primary' }}/>
                 <Grid container rowSpacing={1}  columnSpacing={{ xs: 0, sm: 0, md: 0 }} >
                     {/* Display only in Desktop Version */}
-                    <Box sx={{mr: 15, flexGrow: 0, display: {xs: 'none', md:'block'}} }>
-                        <Typography sx={{marginTop: 4}} align='left' variant="h6">E-Mail Adresse</Typography>
+                    <Box sx={{marginTop: 4, mr: 15, flexGrow: 0, display: {xs: 'none', md:'block'}} }>
+                        <Typography  align='left' variant="h6">E-Mail Adresse</Typography>
                     </Box>
                     <Box sx={{marginTop: 3, ml: 14, flexGrow: 0.3, display: {xs: 'none', md:'block'}}}>
                         <TextField label="E-Mail-Adresse" fullWidth id="email" variant="filled"/><br/><br/>
