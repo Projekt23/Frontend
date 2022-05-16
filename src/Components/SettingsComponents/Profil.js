@@ -5,21 +5,7 @@ import { Grid, Paper,  Typography, Divider, Button } from "@mui/material";
 import SettingsNav from "./SettingsNav";
 import { TextField } from "@mui/material";
 
-// Beispiel GET Aufruf
-async function getUser() {
-    const server = "http://88.214.57.111:8081/api";
-    return fetch(server+'/user/1', {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS' },
-    })
-      .then(response => {
-        response.text().then(value => {
-            console.log(value);
-          }).catch(err => {
-            console.log(err);
-          });
-      });
-  }
+
 
 export default function Profil() {
     const Item = styled(Paper)(({ theme }) => ({
@@ -32,12 +18,12 @@ export default function Profil() {
       }));
       useEffect(() => {
         // write your code here, it's like componentWillMount
-        getUser();
+        writeUser();
     }, [])
        
   return (
     
-    <Box onLoad= {() => getUser()} sx={{ m: 2}}>
+    <Box onLoad= {() => writeUser()} sx={{ m: 2}}>
 
         <Grid container rowSpacing={1}  columnSpacing={{ xs: 0, sm: 0, md: 0 }} >
             {/* Display SettingsNav only in Desktop Version */}
@@ -103,4 +89,8 @@ export default function Profil() {
         </Grid>
     </Box>
   );
+}
+
+function writeUser(){
+
 }

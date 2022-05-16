@@ -82,8 +82,29 @@ export default function Home() {
 }
 
 //retrive UserData from Backend, save to local storage
-function getUserData() {
-  //space for backend call
+async function getUserData() {
+  //backend call
+  //placeholer 
+  var id = "1";
+
+  const server = "http://88.214.57.111:8081/api";
+  return fetch(server+'/user/'+id+'', {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS' },
+  })
+    .then(response => {
+      response.text().then(value => {
+          var responseJSON = JSON.parse(value);
+
+          localStorage.setItem('username', responseJSON["username"]);
+          localStorage.setItem('name', responseJSON["name"]);
+          localStorage.setItem('email', responseJSON["email"]);
+
+        }).catch(err => {
+          console.log(err);
+        });
+    });
+
 
   //create dummy for userdata
   localStorage.setItem('UserName', "Ralf Gärtner");
