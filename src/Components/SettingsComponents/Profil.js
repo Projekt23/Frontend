@@ -4,11 +4,13 @@ import { styled } from '@mui/material/styles';
 import { Grid, Paper,  Typography, Divider, Button } from "@mui/material";
 import SettingsNav from "./SettingsNav";
 import { TextField } from "@mui/material";
-
+import {getUser,test} from "../../RestCalls";
 
 
 export default function Profil() {
-
+    const [username, setusername] = useState();
+    const [name, setname] = useState();
+    const [email, setemail] = useState();
     const [passwordShown, setPasswordShown] = useState(false);
     const togglePassword = () => {
         // When the handler is invoked
@@ -23,7 +25,8 @@ export default function Profil() {
         height: '1000px',
         width: '100%'
       }));
-      
+
+      getUser();
        
   return (
     
@@ -47,17 +50,17 @@ export default function Profil() {
                         <Typography sx={{marginTop: 6}} align='left' variant="h6">Nachname</Typography>
                     </Box>
                     <Box sx={{marginTop: 3, ml:29, flexGrow: 0.3, display: {xs: 'none', md:'block'}}}>
-                        <TextField sx={{ marginTop: 3,  overflow: 'auto'}} fullWidth id="userName" label="Benutzername" variant="filled" defaultValue={localStorage.getItem('username')}></TextField><br/>
-                        <TextField sx={{marginTop: 3,  overflow: 'auto'}} fullWidth id="email" label="E-Mail-Adresse" variant="filled" defaultValue={localStorage.getItem('email')}></TextField><br/>
-                        <TextField sx={{marginTop: 3,  overflow: 'auto'}} fullWidth id="firstName" label="Vorname" variant="filled" defaultValue={localStorage.getItem('name')} ></TextField><br/>
+                        <TextField sx={{ marginTop: 3,  overflow: 'auto'}} fullWidth id="userName" label="Benutzername" variant="filled" defaultValue={username}></TextField><br/>
+                        <TextField sx={{marginTop: 3,  overflow: 'auto'}} fullWidth id="email" label="E-Mail-Adresse" variant="filled" defaultValue={email}></TextField><br/>
+                        <TextField sx={{marginTop: 3,  overflow: 'auto'}} fullWidth id="firstName" label="Vorname" variant="filled" defaultValue={name} ></TextField><br/>
                         <TextField sx={{marginTop: 3,  overflow: 'auto'}} fullWidth id="lastName" label="Nachname" variant="filled"></TextField><br/><br/>
                         <Button size= "small" variant="contained">Bearbeiten</Button>&nbsp;<Button size= "small" disabled variant="contained">Speichern</Button>
                     </Box>
                     {/* Display only in Mobile Version */}
                     <Box sx={{marginTop: 3, flexGrow: 0.3, display: { md: 'none'}}}>
-                        <Typography align='left' variant="h6">Benutzername</Typography>
-                        <TextField fullWidth id="email" label="E-Mail-Adresse" variant="standard"></TextField>
-                        <TextField fullWidth id="firstName" label="Vorname" variant="standard" ></TextField>
+                        <TextField fullWidth id="Benutzername" label="Benutzername" variant="standard" defaultValue={username}></TextField>
+                        <TextField fullWidth id="email" label="E-Mail-Adresse" variant="standard" defaultValue={email}></TextField>
+                        <TextField fullWidth id="firstName" label="Vorname" variant="standard" defaultValue={name}></TextField>
                         <TextField fullWidth id="lastName" label="Nachname" variant="standard"></TextField><br/><br/>
                         <Button size= "small" variant="contained">Bearbeiten</Button>&nbsp;<Button size= "small" disabled variant="contained">Speichern</Button>
                     </Box>
@@ -93,4 +96,26 @@ export default function Profil() {
         </Grid>
     </Box>
   );
+
+  function getUser(){
+    var id = "3";
+
+    const server = "http://88.214.57.111:8081/api";
+    fetch(server+'/user/'+id+'', {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS' },
+        })
+        .then(response => {
+        response.text().then(value => {
+            var responseJSON = JSON.parse(value);
+            
+            setusername(responseJSON["username"]);
+            setemail(responseJSON["email"]);
+            setname(responseJSON["name"]);
+
+            }).catch(err => {
+            console.log(err);
+            });
+        });
+    }
 }
