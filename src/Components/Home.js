@@ -10,7 +10,6 @@ export default function Home() {
     /* Inside of a "useEffect" hook add an event listener that updates
        the "width" state variable when the window size changes */
     window.addEventListener("resize", () => setWidth(window.innerWidth));
-    getUserData();
   }, []);
   return (
     width < breakpoint ? <MobileComponent /> : <DesktopComponent />
