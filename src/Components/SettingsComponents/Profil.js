@@ -4,7 +4,6 @@ import { styled } from '@mui/material/styles';
 import { Grid, Paper,  Typography, Divider, Button } from "@mui/material";
 import SettingsNav from "./SettingsNav";
 import { TextField } from "@mui/material";
-import {getUser,test} from "../../RestCalls";
 
 
 export default function Profil() {
