@@ -4,7 +4,7 @@ import { styled } from '@mui/material/styles';
 import { Grid, Paper,  Typography, Divider, Button } from "@mui/material";
 import SettingsNav from "./SettingsNav";
 import { TextField } from "@mui/material";
-
+import { isExpired, decodeToken } from "react-jwt";
 
 export default function Profil() {
     const [username, setusername] = useState();
@@ -97,7 +97,8 @@ export default function Profil() {
   );
 
   function getUser(){
-    var id = "3";
+    console.log(decodeToken(localStorage.getItem("userID")))
+    var id = decodeToken(localStorage.getItem("userID")).id;
 
     const server = "http://88.214.57.111:8081/api";
     fetch(server+'/user/'+id+'', {

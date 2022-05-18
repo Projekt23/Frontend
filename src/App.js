@@ -19,6 +19,7 @@ import SearchResult from './Components/SearchResult';
 // Test Data
 import data from "./Components/LexikonComponents/LexikonData";
 import Registierung from './Components/Registierung';
+import { Button } from 'bootstrap';
 
 
 
@@ -66,9 +67,8 @@ const App = () =>
     const navigate = useNavigate();
 
     
-    
     function checkLogin(){
-        if(localStorage.getItem("userID") === null || decodeToken(localStorage.getItem("userID")) === null){
+        if(localStorage.getItem("userID") === null || decodeToken(localStorage.getItem("userID")) === null || (decodeToken(localStorage.getItem("userID")).username === undefined && decodeToken(localStorage.getItem("userID")).email === undefined && decodeToken(localStorage.getItem("userID")).id === undefined)){
             return (
                 <Routes>
                         <Route index element={<Login setUserID = {setUserID}/>} />

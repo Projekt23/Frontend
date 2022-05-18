@@ -1,7 +1,7 @@
 import React from "react"
 import { useState } from "react";
 import {Typography} from '@mui/material';
-
+import { isExpired, decodeToken } from "react-jwt";
 
 
 export default function Greet() {
@@ -13,7 +13,8 @@ export default function Greet() {
 
 
     function getUsername(){
-        var id = "3";
+        console.log(decodeToken(localStorage.getItem("userID")))
+        var id = decodeToken(localStorage.getItem("userID")).id;
 
     const server = "http://88.214.57.111:8081/api";
     fetch(server+'/user/'+id+'', {

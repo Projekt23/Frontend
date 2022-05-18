@@ -219,24 +219,24 @@ function Navigation({setTheme, theme, setUserID}) {
                             width:'200%'
                         }}
                     >
-                        <MenuItem key="Profilverwaltung" onClick={handleCloseUserMenu}>
+                        <MenuItem key="Profilverwaltung" component={Link}
+                                to="/profile" onClick={handleCloseUserMenu}>
                             <Typography
                                 sx={{textDecorationLine: 'none', "&:hover": { color: "inherit" }}}
                                 variant="h6"
                                 noWrap
-                                component={Link}
-                                to="/profile"
+                                
                                 color="textPrimary"
                             >Profil verwalten
                             </Typography>
                         </MenuItem>
-                        <MenuItem key="Nutzereinladung" onClick={handleCloseUserMenu}>
+                        <MenuItem key="Nutzereinladung" component={Link}
+                                to="/invite" onClick={handleCloseUserMenu}>
                             <Typography
                                 sx={{textDecorationLine: 'none', "&:hover": { color: "inherit" }}}
                                 variant="h6"
                                 noWrap
-                                component={Link}
-                                to="/invite"
+                                
                                 color="textPrimary"
                             >Nutzer einladen</Typography>
                         </MenuItem>
@@ -251,13 +251,12 @@ function Navigation({setTheme, theme, setUserID}) {
                             </Box>
                         </RadioGroup>
                         <Divider sx={{  marginBottom: 2, borderBottomWidth: 3,  color: 'primary' }}/>
-                        <MenuItem key="Logout" onClick={Logout}>
+                        <MenuItem key="Logout" onClick={Logout} component={Link}
+                                to="/">
                             <Typography
                                 sx={{textDecorationLine: 'none', "&:hover": { color: "red" }}}
                                 variant="h6"
                                 noWrap
-                                component={Link}
-                                to="/login"
                                 color="red"
                             >
                             
