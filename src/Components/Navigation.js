@@ -20,7 +20,7 @@ import DarkModeIcon from '@mui/icons-material/DarkMode';
 import DevicesIcon from '@mui/icons-material/Devices';
 import { Divider } from '@mui/material';
 
-function Navigation({setTheme, theme}) {
+function Navigation({setTheme, theme, setUserID}) {
     const pages = ['Startseite', 'Lexikon'];
     const themeStart = () => {
         if (localStorage.getItem('theme') ==="dark") {
@@ -82,7 +82,11 @@ function Navigation({setTheme, theme}) {
         // ------------------------------------------------------------------------------------------------------------------------------------------------------------------
     }
 
-
+    function Logout(){
+        setUserID(null)
+        localStorage.removeItem("userID")
+        handleCloseUserMenu()
+    }
 
 
 
@@ -247,7 +251,7 @@ function Navigation({setTheme, theme}) {
                             </Box>
                         </RadioGroup>
                         <Divider sx={{  marginBottom: 2, borderBottomWidth: 3,  color: 'primary' }}/>
-                        <MenuItem key="Logout" onClick={handleCloseUserMenu}>
+                        <MenuItem key="Logout" onClick={Logout}>
                             <Typography
                                 sx={{textDecorationLine: 'none', "&:hover": { color: "red" }}}
                                 variant="h6"

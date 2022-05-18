@@ -58,16 +58,16 @@ const lightTheme = createTheme({
 });
 const App = () =>
 {
-
+    const [userID, setUserID] = useState();
     const [theme, setTheme] = useState(true);
 
     function checkLogin(){
         console.log(window.location.pathname)
-        if(window.location.pathname === "/" || window.location.pathname === "/Login"){
+        if((window.location.pathname === "/" || window.location.pathname === "/Login" || window.location.pathname === "/login"|| window.location.pathname === "/register") && localStorage.getItem("userID") === null){
             return null;
         }
         else{
-            return  <Navigation setTheme={setTheme} theme={theme} sticky="top"/>;
+            return  <Navigation setTheme={setTheme} theme={theme} sticky="top" setUserID = {setUserID}/>;
         }
             
     }
@@ -110,10 +110,10 @@ const App = () =>
             <CssBaseline/>
                     {checkLogin()}
                     <Routes>
-                        <Route index element={<Login/>} />
+                        <Route index element={<Login setUserID = {setUserID}/>} />
                         <Route path="/startseite" element={<Home/>}/>
-                        <Route path="/login" element={<Login />}/>
-                        <Route path="/register" element={<Registierung />}/>
+                        <Route path="/login" element={<Login setUserID = {setUserID}/>}/>
+                        <Route path="/register" element={<Registierung setUserID = {setUserID}/>}/>
                         <Route path="/lexikon" element={<Lexikon lexikonData={data}/>}/>
                         <Route path="/objekt_anlegen" element={<ObjektAnlegen />}/>
                         <Route path="/settings" element={<Settings />}/>

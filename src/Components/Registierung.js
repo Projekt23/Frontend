@@ -1,13 +1,18 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { Grid } from '@material-ui/core'
 import {Card, Checkbox, FormControlLabel, Link, TextField} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import {purple} from "@mui/material/colors";
 import { styled } from '@mui/material/styles';
+import {useNavigate} from "react-router-dom";
+import { isExpired, decodeToken } from "react-jwt";
 
-
-const Registierung= () => {
+const Registierung= ({setUserID}) => {
+    const [userName, setUserName] = useState("");
+    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("");
+    
     const gridStyle = {height : "100%", width: "100%"}
     const paperStyle = {padding : 20, height: '65vh', width: "25vw", margin: "80px auto"}
     const logoStyle = {display:"flex", justifyContent:"center", alignItems:"center",}
@@ -15,13 +20,43 @@ const Registierung= () => {
     const divloginbtn = {width: "100%", display:"flex", alignItems:"center", flexDirection:"column",}
     const linksStyle = {display:"flex", justifyContent:"space-between", width: "100%"}
     const ColorButton = styled(Button)(({ theme }) => ({
-        color: theme.palette.getContrastText(purple[500]),
-        backgroundColor: purple[500],
-        '&:hover': {
-            backgroundColor: purple[700],
-        },
         marginBottom: "15px"
     }));
+
+    function postRegister(){
+        var registerBody;
+        var myDecodedToken = decodeToken(window.location.hash);
+        console.log(myDecodedToken["email"])
+
+        registerBody = JSON.stringify({
+            "username": userName,
+            "password": password,
+            "name": myDecodedToken["email"],
+            "email": myDecodedToken["email"]
+        })
+    
+    const server = "http://88.214.57.111:8081/api";
+    fetch(server+'/auth/register/' , {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS' },
+        body: registerBody
+        })
+        .then(response => {
+        response.text().then(value => {
+            if(response.status === 200){
+                setUserID(value)
+                localStorage.setItem("userID", value)
+                navigate("/startseite")
+            }
+            
+            }).catch(err => {
+            console.log(err);
+            });
+        });
+    }
+
+        const navigate = useNavigate();
+
 
     return(
         <Card style={paperStyle}>
@@ -40,13 +75,13 @@ const Registierung= () => {
                 </Grid>
                 <Grid item>
                     <Typography variant="h5" secondary>Registrierung</Typography>
-                    <TextField variant="standard" fullWidth style = {textfieldStyle} label='Benutzername' placeholder='Enter Username ...'/>
-                    <TextField variant="standard" fullWidth style = {textfieldStyle} type="password" label='Passwort' placeholder='Enter Password ...'/>
-                    <TextField variant="standard" fullWidth style = {textfieldStyle} type="password" label='Passwort wiederholen' placeholder='Confirm Password ...'/>
+                    <TextField variant="standard" fullWidth style = {textfieldStyle} label='Benutzername' onChange={(event) => setUserName(event.target.value)} placeholder='Enter Username ...'/>
+                    <TextField variant="standard" fullWidth style = {textfieldStyle} type="password" label='Passwort' placeholder='Enter Password ...' onChange={(event) => setPassword(event.target.value)}/>
+                    <TextField variant="standard" fullWidth style = {textfieldStyle} type="password" label='Passwort wiederholen' placeholder='Confirm Password ...' onChange={(event) => setPassword(event.target.value)}/>
                     <FormControlLabel control={<Checkbox size="small"/>} label="Benutzername merken"/>
                 </Grid>
                 <Grid item style={divloginbtn}>
-                    <ColorButton type="submit" color="primary" variant="contained" fullWidth>Login</ColorButton>
+                    <ColorButton sx={{bgcolor: '#004ea5'}} type="submit" variant="contained" fullWidth onClick={postRegister}>Login</ColorButton>
                     <div style={linksStyle}>
                         <Typography variant="caption">
                             <Link href="#">Passwort vergessen?</Link>

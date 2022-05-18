@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {Grid} from '@material-ui/core'
 import {Card, Checkbox, FormControlLabel, Link, TextField} from "@mui/material";
 import Typography from "@mui/material/Typography";
@@ -8,8 +8,10 @@ import {styled} from '@mui/material/styles';
 import {useNavigate} from "react-router-dom";
 
 
-const Login = () => {
-
+const Login = ({setUserID}) => {
+    const [userName, setUserName] = useState("");
+    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("");
     const gridStyle = {height: "100%", width: "100%"}
     const paperStyle = {padding: 20, height: '65vh', width: "25vw", margin: "80px auto"}
     const logoStyle = {display: "flex", justifyContent: "center", alignItems: "center",}
@@ -25,6 +27,45 @@ const Login = () => {
         },
         marginBottom: "15px"
     }));
+
+    function postLogin(){
+        var loginMethod;
+        var loginBody;
+        if(userName.includes("@") && userName.includes(".")){
+            loginMethod = "mail"
+            loginBody = JSON.stringify({
+                "email": userName,
+                "password": password
+            })
+        }
+        else{
+            loginMethod = "user"
+            loginBody = JSON.stringify({
+                "username": userName,
+                "password": password
+            })
+        }
+    
+        const server = "http://88.214.57.111:8081/api";
+        fetch(server+'/auth/login/' + loginMethod, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS' },
+            body: loginBody
+            })
+            .then(response => {
+            response.text().then(value => {
+                console.log(value)
+                if(response.status === 200){
+                    setUserID(value)
+                    localStorage.setItem("userID", value)
+                    navigate("/startseite")
+                }
+                
+                }).catch(err => {
+                console.log(err);
+                });
+            });
+        }
 
     const navigate = useNavigate();
 
@@ -46,9 +87,9 @@ const Login = () => {
                 <Grid item>
                     <Typography variant="h5" secondary>Anmeldung</Typography>
                     <TextField variant="standard" fullWidth style={textfieldStyle} label='username'
-                               placeholder='Enter Username ...'/>
+                               placeholder='Enter Username ...' onChange={(event) => setUserName(event.target.value)}/>
                     <TextField variant="standard" fullWidth style={textfieldStyle} type="password" label='password'
-                               placeholder='Enter Password ...'/>
+                               placeholder='Enter Password ...' onChange={(event) => setPassword(event.target.value)}/>
                     <FormControlLabel control={<Checkbox size="small"/>} label="Benutzername merken"/>
                 </Grid>
                 <Grid item style={divloginbtn}>
@@ -57,7 +98,7 @@ const Login = () => {
                         //color="primary"
                         variant="contained"
                         fullWidth
-                        onClick={() => navigate("/startseite")}
+                        onClick={() => postLogin(userName, password)}
                         style={loginbtn}
                     >
                         Login
