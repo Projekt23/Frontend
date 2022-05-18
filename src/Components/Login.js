@@ -46,7 +46,7 @@ const Login = ({setUserID}) => {
             })
         }
     
-        const server = "http://88.214.57.111:8081/api";
+        const server = process.env.REACT_APP_API_BACKEND;
         fetch(server+'/auth/login/' + loginMethod, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS' },
