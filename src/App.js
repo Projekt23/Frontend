@@ -11,6 +11,8 @@ import './App.css';
 import Invite from './Components/SettingsComponents/Invite';
 import Settings from './Components/Settings';
 
+import {useNavigate} from "react-router-dom";
+import { isExpired, decodeToken } from "react-jwt";
 import { CssBaseline } from '@mui/material/';
 import SearchResult from './Components/SearchResult';
 
@@ -59,16 +61,43 @@ const lightTheme = createTheme({
 const App = () =>
 {
     const [userID, setUserID] = useState();
+    const[loggedIn, setLoggedIn] = useState(false);
     const [theme, setTheme] = useState(true);
+    const navigate = useNavigate();
 
+    
+    
     function checkLogin(){
-        console.log(window.location.pathname)
-        if((window.location.pathname === "/" || window.location.pathname === "/Login" || window.location.pathname === "/login"|| window.location.pathname === "/register") && localStorage.getItem("userID") === null){
-            return null;
+        if(localStorage.getItem("userID") === null || decodeToken(localStorage.getItem("userID")) === null){
+            return (
+                <Routes>
+                        <Route index element={<Login setUserID = {setUserID}/>} />
+                        <Route path="/login" element={<Login setUserID = {setUserID}/>}/>
+                        <Route path="/register" element={<Registierung setUserID = {setUserID}/>}/>
+                        <Route path="*" element={<div>Access denied!</div>} />
+                </Routes>)
         }
+        
         else{
-            return  <Navigation setTheme={setTheme} theme={theme} sticky="top" setUserID = {setUserID}/>;
+            return  (
+                <>
+            <Navigation setTheme={setTheme} theme={theme} sticky="top" setUserID = {setUserID}/>
+            <Routes>
+                    <Route index element={<Login setUserID = {setUserID}/>} />
+                    <Route path="/startseite" element={<Home/>}/>
+                    <Route path="/login" element={<Login setUserID = {setUserID}/>}/>
+                    <Route path="/register" element={<Registierung setUserID = {setUserID}/>}/>
+                    <Route path="/lexikon" element={<Lexikon lexikonData={data}/>}/>
+                    <Route path="/objekt_anlegen" element={<ObjektAnlegen />}/>
+                    <Route path="/settings" element={<Settings />}/>
+                    <Route path="/invite" element={<Invite />}/>
+                    <Route path="/profile" element={<Profil />}/>
+                    <Route path="/result" element={<SearchResult />}/>
+                    <Route path="*" element={<div>404 Not Found!</div>} />
+                </Routes></>
+                    )
         }
+
             
     }
     const themeStart = () => {
@@ -109,19 +138,7 @@ const App = () =>
         <ThemeProvider theme={theme ?  lightTheme : darkTheme}>
             <CssBaseline/>
                     {checkLogin()}
-                    <Routes>
-                        <Route index element={<Login setUserID = {setUserID}/>} />
-                        <Route path="/startseite" element={<Home/>}/>
-                        <Route path="/login" element={<Login setUserID = {setUserID}/>}/>
-                        <Route path="/register" element={<Registierung setUserID = {setUserID}/>}/>
-                        <Route path="/lexikon" element={<Lexikon lexikonData={data}/>}/>
-                        <Route path="/objekt_anlegen" element={<ObjektAnlegen />}/>
-                        <Route path="/settings" element={<Settings />}/>
-                        <Route path="/invite" element={<Invite />}/>
-                        <Route path="/profile" element={<Profil />}/>
-                        <Route path="/result" element={<SearchResult />}/>
-                        <Route path="*" element={<div>404 Not Found!</div>} />
-                    </Routes>
+                    
         </ThemeProvider>
     )}
 export default App;
