@@ -5,7 +5,7 @@ import Login from './Components/Login';
 import Lexikon from "./Components/Lexikon";
 import ObjektAnlegen from "./Components/ObjektAnlegen";
 import Profil from './Components/SettingsComponents/Profil';
-import {Route, Routes} from 'react-router-dom';
+import {Link, Route, Routes} from 'react-router-dom';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import './App.css';
 import Invite from './Components/SettingsComponents/Invite';
@@ -13,13 +13,14 @@ import Settings from './Components/Settings';
 
 import {useNavigate} from "react-router-dom";
 import { isExpired, decodeToken } from "react-jwt";
-import { CssBaseline } from '@mui/material/';
+import { CssBaseline, Typography } from '@mui/material/';
 import SearchResult from './Components/SearchResult';
 
 // Test Data
 import data from "./Components/LexikonComponents/LexikonData";
 import Registierung from './Components/Registierung';
 import { Button } from 'bootstrap';
+import { Box } from '@mui/system';
 
 
 
@@ -74,7 +75,7 @@ const App = () =>
                         <Route index element={<Login setUserID = {setUserID}/>} />
                         <Route path="/login" element={<Login setUserID = {setUserID}/>}/>
                         <Route path="/register" element={<Registierung setUserID = {setUserID}/>}/>
-                        <Route path="*" element={<div>Access denied!</div>} />
+                        <Route path="*" element={<Box><Typography>Access denied!</Typography><Typography component={Link} to="/login" >zum Login</Typography></Box>} />
                 </Routes>)
         }
         
