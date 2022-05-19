@@ -12,9 +12,10 @@ const Registierung= ({setUserID}) => {
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-    
+    const [width, setWidth] = React.useState(window.innerWidth);
     const gridStyle = {height : "100%", width: "100%"}
-    const paperStyle = {padding : 20, height: '65vh', width: "25vw", margin: "80px auto"}
+    const paperStyle = {padding : 20, height: '65vh', width: "25%", margin: "80px auto"}
+    const paperStyleMobile = {padding: 20, height: '65vh', width: "80%", margin: "80px auto"}
     const logoStyle = {display:"flex", justifyContent:"center", alignItems:"center",}
     const textfieldStyle = {margin: "5px"}
     const divloginbtn = {width: "100%", display:"flex", alignItems:"center", flexDirection:"column",}
@@ -22,6 +23,20 @@ const Registierung= ({setUserID}) => {
     const ColorButton = styled(Button)(({ theme }) => ({
         marginBottom: "15px"
     }));
+    React.useEffect(() => {
+        /* Inside of a "useEffect" hook add an event listener that updates
+           the "width" state variable when the window size changes */
+        window.addEventListener("resize", () => setWidth(window.innerWidth));
+      }, []);
+
+      function checkResponsive(){
+        if(window.innerWidth > 1000){
+        return paperStyle
+        }
+        else{
+        return paperStyleMobile
+        }
+        }
 
     function postRegister(){
         var registerBody;
@@ -75,7 +90,8 @@ const Registierung= ({setUserID}) => {
 
 
     return(
-        <Card style={paperStyle}>
+        <>
+        <Card style={checkResponsive()}>
             <Grid
                 container
                 direction="column"
@@ -112,6 +128,8 @@ const Registierung= ({setUserID}) => {
                 </Grid>
             </Grid>
         </Card>
+        
+    </>
     )
 }
 

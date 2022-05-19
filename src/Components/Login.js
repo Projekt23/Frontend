@@ -13,18 +13,32 @@ const Login = ({setUserID}) => {
     const [password, setPassword] = useState("");
     const [saveUsername, setSaveUsername] = useState(false);
     const gridStyle = {height: "100%", width: "100%"}
-    const paperStyle = {padding: 20, height: '65vh', width: "25vw", margin: "80px auto"}
-    const paperStyleMobile = {padding: 20, height: '65vh', margin: "80px auto"}
+    const paperStyle = {padding: 20, height: '65vh', width: "25%", margin: "80px auto"}
+    const paperStyleMobile = {padding: 20, height: '65vh', width: "80%", margin: "80px auto"}
     const logoStyle = {display: "flex", justifyContent: "center", alignItems: "center",}
     const textfieldStyle = {margin: "5px"}
     const divloginbtn = {width: "100%", alignItems: "center", flexDirection: "column",}
     const loginbtn = {marginBottom: "15px"}
     const linksStyle = {display: "flex", justifyContent: "space-between", width: "100%"}
     
-
+    const [width, setWidth] = React.useState(window.innerWidth);
+    function checkResponsive(){
+        if(window.innerWidth > 1000){
+        return paperStyle
+        }
+        else{
+        return paperStyleMobile
+        }
+        }
+        React.useEffect(() => {
+            /* Inside of a "useEffect" hook add an event listener that updates
+               the "width" state variable when the window size changes */
+            window.addEventListener("resize", () => setWidth(window.innerWidth));
+          }, []);
     function postLogin(){
         var loginMethod;
         var loginBody;
+        
         if(userName !== "" && password !== ""){
             if(userName.includes("@") && userName.includes(".")){
                 loginMethod = "mail"
@@ -75,7 +89,7 @@ const Login = ({setUserID}) => {
         
     return (
         <>
-        <Card style={paperStyle} sx={{display: {xs: 'none', md: 'block'}}}>
+        <Card style={checkResponsive()} >
             <Grid
                 container
                 direction="column"
@@ -85,7 +99,8 @@ const Login = ({setUserID}) => {
             >
                 <Grid item direction="row" alignContent="center">
                     <div style={logoStyle}>
-                        <img src="logo-lila.png" alt="logo" width="50px" height="50px"/>
+                        <img src="logo-lila.png" alt="logo" width="50px" h
+                        eight="50px"/>
                         <Typography variant="h4" paddingLeft="5px">Projekt 23</Typography>
                     </div>
                 </Grid>
@@ -120,51 +135,7 @@ const Login = ({setUserID}) => {
                 </Grid>
             </Grid>
         </Card>
-         <Card style={paperStyleMobile} sx={{display: {xs: 'block', md: 'none'}}}>
-         <Grid
-             container
-             direction="column"
-             justifyContent="space-between"
-             alignItems="center"
-             style={gridStyle}
-         >
-             <Grid item direction="row" alignContent="center">
-                 <div style={logoStyle}>
-                     <img src="logo-lila.png" alt="logo" width="50px" height="50px"/>
-                     <Typography variant="h4" paddingLeft="5px">Projekt 23</Typography>
-                 </div>
-             </Grid>
-             <Grid item>
-                 <Typography variant="h5" secondary>Anmeldung</Typography>
-                 <TextField variant="standard" fullWidth style={textfieldStyle} label='username' defaultValue={localStorage.getItem("userName")}
-                            placeholder='Enter Username ...' onChange={(event) => setUserName(event.target.value)}/>
-                 <TextField variant="standard" fullWidth style={textfieldStyle} type="password" label='password'
-                            placeholder='Enter Password ...' onChange={(event) => setPassword(event.target.value)}/>
-                 <FormControlLabel control={<Checkbox defaultChecked={checkSaveUsername()} onChange={(event) => {setSaveUsername(event.target.checked)}} size="small"/>} label="Benutzername merken"/>
-             </Grid>
-             <Grid item style={divloginbtn}>
-                 <Button
-                     type="submit"
-                     //color="primary"
-                     variant="contained"
-                     fullWidth
-                     onClick={() => postLogin(userName, password)}
-                     style={loginbtn}
-                 >
-                     Login
-                 </Button>
-                 <div style={linksStyle}>
-                     <Typography variant="caption">
-                         <Link href="#">Passwort vergessen?</Link>
-                     </Typography>
-                     <Typography variant="caption">
-                         Neu hier?
-                         <Link href="/register"> Anmeldelink anfordern</Link>
-                     </Typography>
-                 </div>
-             </Grid>
-         </Grid>
-     </Card>
+         
      </>
     )
 }
