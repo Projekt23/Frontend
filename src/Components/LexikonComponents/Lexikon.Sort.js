@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {Divider, FormControl, InputLabel, NativeSelect, Stack, ToggleButton, ToggleButtonGroup} from "@mui/material";
 import Button from "@mui/material/Button";
 import data from "./LexikonData";
@@ -65,6 +65,18 @@ export default function ({handleSort, handleSort2, ansicht, setAnsicht, startLet
         }
     };
 
+
+/*
+    [{
+        "id": 1,
+        "name": "Test",
+        "description": "Test",
+        "synonyms": [],
+        "labels": [{"id": 2, "name": "SAP"}],
+        "contextList": []
+    }]
+*/
+
     const alphabetButton = {
         maxWidth: "50px",
         maxHeight: "50px",
@@ -91,6 +103,7 @@ export default function ({handleSort, handleSort2, ansicht, setAnsicht, startLet
         marginTop: "30px",
         marginBottom: "30px",
     }
+
 
     return (
         <div>
