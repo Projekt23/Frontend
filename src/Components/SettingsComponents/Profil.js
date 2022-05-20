@@ -8,9 +8,17 @@ import { isExpired, decodeToken } from "react-jwt";
 
 export default function Profil() {
     const [username, setusername] = useState();
+    const [edit, setEdit] = useState(true);
+    const [confirmPwdError, setConfirmPwdError] = useState("");
+    const [currentPwdError, setCurrentPwdError] = useState("");
+    const [currentPassword, setCurrentPassword] = useState("");
+    const[buttonTxt, setButtonTxt] = useState("Bearbeiten")
+    const [buttonColor, setButtonColor] = useState("");
+    const [hoverColor, setHoverColor] = useState("");
     const [name, setname] = useState();
     const [email, setemail] = useState();
     const [passwordShown, setPasswordShown] = useState(false);
+    const server = process.env.REACT_APP_API_BACKEND;
     const togglePassword = () => {
         // When the handler is invoked
         // inverse the boolean state of passwordShown
@@ -24,9 +32,25 @@ export default function Profil() {
         height: '1000px',
         width: '100%'
       }));
-
-      getUser();
-       
+      const editToggle = () => {
+        if(edit === false){
+            setEdit(true);
+            setButtonColor("")
+            setHoverColor("")
+            setButtonTxt("Bearbeiten")
+        }
+        else{
+            setButtonColor("red")
+            setHoverColor("#f44336")
+            setButtonTxt("Abbrechen")
+            setEdit(false);
+        }
+        }  
+     useEffect(() => {
+        getUser();
+     }, [])
+     
+     
   return (
     
     <Box sx={{ m: 2}}>
@@ -49,11 +73,11 @@ export default function Profil() {
                         <Typography sx={{marginTop: 6}} align='left' variant="h6">Nachname</Typography>
                     </Box>
                     <Box sx={{marginTop: 3, flexGrow: 0.5, alignSelf: "center"}}>
-                        <TextField sx={{ marginTop: 3,  overflow: 'auto'}} fullWidth id="userName" label="Benutzername" variant="filled" defaultValue={username}></TextField><br/>
-                        <TextField sx={{marginTop: 3,  overflow: 'auto'}} fullWidth id="email" label="E-Mail-Adresse" variant="filled" defaultValue={email}></TextField><br/>
-                        <TextField sx={{marginTop: 3,  overflow: 'auto'}} fullWidth id="firstName" label="Vorname" variant="filled" defaultValue={name} ></TextField><br/>
-                        <TextField sx={{marginTop: 3,  overflow: 'auto'}} fullWidth id="lastName" label="Nachname" variant="filled"></TextField><br/><br/>
-                        <Button size= "small" variant="contained">Bearbeiten</Button>&nbsp;<Button size= "small" disabled variant="contained">Speichern</Button>
+                        <TextField sx={{ marginTop: 3,  overflow: 'auto'}} disabled = {edit} fullWidth id="userName" label="Benutzername" variant="filled" defaultValue={username}></TextField><br/>
+                        <TextField sx={{marginTop: 3,  overflow: 'auto'}} disabled= {edit} fullWidth id="email" label="E-Mail-Adresse" variant="filled" defaultValue={email}></TextField><br/>
+                        <TextField sx={{marginTop: 3,  overflow: 'auto'}} disabled={edit} fullWidth id="firstName" label="Vorname" variant="filled" defaultValue={name} ></TextField><br/>
+                        <TextField sx={{marginTop: 3,  overflow: 'auto'}} disabled={edit} fullWidth id="lastName" label="Nachname" variant="filled"></TextField><br/><br/>
+                        <Button sx={{bgcolor: buttonColor, '&:hover': {backgroundColor: hoverColor}}} id="editBtn" size= "small" variant="contained"onClick= {() => {editToggle()}}>{buttonTxt}</Button>&nbsp;<Button size= "small" disabled={edit} onClick={() => {postSaveUserData(document.getElementById("userName").value, document.getElementById("email").value, document.getElementById("firstName").value, decodeToken(localStorage.getItem("userID")).password)}} variant="contained">Speichern</Button>
                     </Box>
                     
                     
@@ -64,17 +88,17 @@ export default function Profil() {
                 <Grid container rowSpacing={1}  columnSpacing={{ xs: 0, sm: 0, md: 0 }} >
                     {/* Display only in Desktop Version */}
                     <Box sx={{mr: 20,alignItems: "center", marginTop: 3, flexGrow: 0, display: {xs: 'none', md:'block'}}}>
-                            <Typography sx={{marginTop: 1}} align='left' variant="h6">Aktuelles Passwort</Typography>
+                            <Typography sx={{color: currentPwdError, marginTop: 1}} align='left' variant="h6">Aktuelles Passwort</Typography>
                             <Typography sx={{marginTop: 5.5}} align='left' variant="h6">Neues Passwort</Typography>
-                            <Typography sx={{marginTop: 6.5}} align='left' variant="h6">Neues Passwort bestätigen</Typography>
+                            <Typography sx={{color: confirmPwdError,marginTop: 6.5}} align='left' variant="h6">Neues Passwort bestätigen</Typography>
                     </Box>
                     <Box  sx={{alignItems: "center", marginTop: 2.5, flexGrow: 0.5}}>
-                        <TextField  fullWidth id="email" variant="filled" type="password"></TextField><br/>
-                        <TextField fullWidth sx={{marginTop: 3}}  id="email" variant="filled" type={passwordShown ? "text" : "password"}></TextField><br/>
-                        <TextField fullWidth sx={{marginTop: 3}}  id="firstName" variant="filled" type="password"></TextField><br/><br/>
-                        <Button  size= "small"  variant="contained">Speichern</Button>
+                        <TextField  fullWidth id="currentPwd" variant="filled" type="password"></TextField><br/>
+                        <TextField fullWidth sx={{marginTop: 3}} id="newPwd" variant="filled" type={passwordShown ? "text" : "password"}></TextField><br/>
+                        <TextField sx={{ marginTop: 3}} fullWidth  id="confirmPwd" variant="filled" type="password"></TextField><br/><br/>
+                        <Button  size= "small" onClick={() => {postSavePwd(document.getElementById("currentPwd").value,document.getElementById("newPwd").value,document.getElementById("confirmPwd").value, document.getElementById("userName").value, document.getElementById("email").value, document.getElementById("firstName").value)}} variant="contained">Speichern</Button>
                     </Box>
-                    
+
                 </Grid>
                 </Box>
                 </Item>
@@ -82,12 +106,77 @@ export default function Profil() {
         </Grid>
     </Box>
   );
+    function postSaveUserData(userName, email, firstName, password){
 
+        
+        var id = decodeToken(localStorage.getItem("userID")).id;
+        fetch(server + '/user/'+id+'', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS' },
+        body: JSON.stringify({
+            "username": userName,
+            "password":password ,
+            "name": firstName,
+            "email": email
+        })
+        })
+        .then(response => {
+        response.text().then(value => {
+            getUser();
+            setEdit(true);
+            setButtonColor("")
+            setHoverColor("")
+            setButtonTxt("Bearbeiten")
+            }).catch(err => {
+            console.log(err);
+            });
+        });
+        
+    }
+    function postSavePwd(currentPwd, pwd, confirmPwd, userName, firstName, email){
+
+        if(currentPwd ===  decodeToken(localStorage.getItem("userID")).password && pwd === confirmPwd){
+        var id = decodeToken(localStorage.getItem("userID")).id;
+        fetch(server + '/user/'+id+'', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS' },
+        body: JSON.stringify({
+            "username": userName,
+            "password":pwd ,
+            "name": firstName,
+            "email": email
+        })
+        })
+        .then(response => {
+        response.text().then(value => {
+            setEdit(true);
+            setButtonColor("")
+            setHoverColor("")
+            setButtonTxt("Bearbeiten")
+            setCurrentPwdError("")
+            setConfirmPwdError("")
+            reLogin(pwd, userName)
+            }).catch(err => {
+            console.log(err);
+            });
+        });
+    }
+    else if(pwd === confirmPwd){
+    console.log(currentPassword)
+    setCurrentPwdError("red")
+    setConfirmPwdError("")
+    }
+    else if(currentPwd === decodeToken(localStorage.getItem("userID")).password){
+        setConfirmPwdError("red")
+        setCurrentPwdError("")
+    }
+}
+    
+    
   function getUser(){
-    console.log(decodeToken(localStorage.getItem("userID")))
     var id = decodeToken(localStorage.getItem("userID")).id;
 
-    const server = process.env.REACT_APP_API_BACKEND;
+    
     fetch(server+'/user/'+id+'', {
         method: 'GET',
         headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS' },
@@ -95,14 +184,33 @@ export default function Profil() {
         .then(response => {
         response.text().then(value => {
             var responseJSON = JSON.parse(value);
-            
+            console.log(responseJSON)
             setusername(responseJSON["username"]);
             setemail(responseJSON["email"]);
             setname(responseJSON["name"]);
-
+            setCurrentPassword(responseJSON["password"])
             }).catch(err => {
             console.log(err);
             });
         });
+    }
+
+    function reLogin(pwd, userName){
+        fetch(server + '/auth/login/user', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS' },
+            body: JSON.stringify({
+                "username": userName,
+                "password":pwd ,
+            })
+            })
+            .then(response => {
+            response.text().then(value => {
+                    localStorage.setItem("userID", value)
+                    getUser()
+                }).catch(err => {
+                console.log(err);
+                });
+            });
     }
 }
