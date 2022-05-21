@@ -130,9 +130,9 @@ export default function Lexikon() {
                 </Button>
             </div>
             <LexikonSort handleSort={handleSort} handleSort2={handleSort2} ansicht={ansicht} setAnsicht={setAnsicht} startLetter = {startLetter} setStartLetter ={setStartLetter}/>
-{/*            <Stack spacing={1} direction={"column"}>
+            <Stack spacing={1} direction={"column"}>
                 {listData}
-            </Stack>*/}
-            <LexikonList/>
+            </Stack>
+            {/*<LexikonList/>*/}
         </div>)
 }
