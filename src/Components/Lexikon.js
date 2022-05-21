@@ -7,13 +7,28 @@ import Button from "@mui/material/Button";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import {Link} from "react-router-dom";
 
-export default function Lexikon(props) {
+export default function Lexikon() {
 
     const [lexikonData, setLexikonData] = useState([])
     const [ansicht, setAnsicht] = useState("all")
     const[startLetter, setStartLetter] = useState(null);
     useEffect(() => {
-        setLexikonData(props.lexikonData)
+        const server = "http://88.214.57.111:8081/api";
+        fetch(server + '/businessobject/all', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
+            },
+        })
+            .then(res => res.json())
+            .then(
+                (data) => {
+                    setLexikonData(data);
+                    console.log(data);
+                },
+            )
     }, [])
 
     function startsWith(str, word) {
@@ -44,10 +59,10 @@ export default function Lexikon(props) {
             return <LexikonList
                 id = {object.id}
                 key={object.id}
-                title={object.title}
+                name={object.name}
+                synonyms = {object.synonyms}
                 description={object.description}
-                details={object.details}
-                systems={object.system}
+                labels={object.labels}
                 favorite={object.favorite}
             />
         })
@@ -58,10 +73,10 @@ export default function Lexikon(props) {
                 return <LexikonList
                     id = {object.id}
                     key={object.id}
-                    title={object.title}
-                    description={object.description}
-                    details={object.details}
-                    systems={object.system}
+                    name={object.name}
+                    synonyms={object.synonyms}
+                    details={object.description}
+                    labels={object.labels}
                     favorite={object.favorite}
                 />}
             }) 
@@ -74,10 +89,10 @@ export default function Lexikon(props) {
                     return <LexikonList
                         id = {object.id}
                         key={object.id}
-                        title={object.title}
-                        description={object.description}
-                        details={object.details}
-                        systems={object.system}
+                        name={object.name}
+                        synonyms={object.synonyms}
+                        details={object.description}
+                        labels={object.labels}
                         favorite={object.favorite}
                     />}
         })
@@ -88,10 +103,10 @@ export default function Lexikon(props) {
                     return <LexikonList
                         id = {object.id}
                         key={object.id}
-                        title={object.title}
+                        name={object.name}
+                        synonyms={object.synonyms}
                         description={object.description}
-                        details={object.details}
-                        systems={object.system}
+                        labels={object.labels}
                         favorite={object.favorite}
                     />}
             }) 
@@ -108,8 +123,10 @@ export default function Lexikon(props) {
                         component={Link}
                         to="/objekt_anlegen"
                 >
+
                     <AddCircleOutlineIcon/>
                     Eintrag hinzufügen
+
                 </Button>
             </div>
             <LexikonSort handleSort={handleSort} handleSort2={handleSort2} ansicht={ansicht} setAnsicht={setAnsicht} startLetter = {startLetter} setStartLetter ={setStartLetter}/>

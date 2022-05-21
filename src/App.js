@@ -88,7 +88,7 @@ const App = () =>
                     <Route path="/startseite" element={<Home/>}/>
                     <Route path="/login" element={<Login setUserID = {setUserID}/>}/>
                     <Route path="/register" element={<Registierung setUserID = {setUserID}/>}/>
-                    <Route path="/lexikon" element={<Lexikon lexikonData={data}/>}/>
+                    <Route path="/lexikon" element={<Lexikon/>}/>
                     <Route path="/objekt_anlegen" element={<ObjektAnlegen />}/>
                     <Route path="/settings" element={<Settings />}/>
                     <Route path="/invite" element={<Invite />}/>

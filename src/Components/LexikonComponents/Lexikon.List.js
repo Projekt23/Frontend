@@ -1,5 +1,5 @@
 import React from "react";
-import {Accordion, AccordionDetails, AccordionSummary, Divider} from "@mui/material";
+import {Accordion, AccordionDetails, AccordionSummary, Divider, Stack} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Button from "@mui/material/Button";
@@ -8,13 +8,13 @@ import {Link} from "react-router-dom";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import IconButton from "@mui/material/IconButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import { ViewModule } from "@material-ui/icons";
+import Chip from "@material-ui/core/Chip";
 
 
 export default function (props) {
     const [expand, setExpand] = React.useState(false);
     const toggleAcordion = () => {
-        
+        console.log(props.labels)
       setExpand((prev) => !prev);
     };
 
@@ -77,10 +77,10 @@ export default function (props) {
                         
                     >
                         <Typography sx={{width: '33%', flexShrink: 0}}>
-                            {props.title}
+                            {props.name}
                         </Typography>
                         <div style={AccordionSummaryText}>
-                            <Typography sx={{color: 'text.secondary'}}>Synonyme: {props.description}</Typography>
+                            <Typography sx={{color: 'text.secondary'}}>Synonyme: {props.synonyms}</Typography>
                             {checkFavorite(fav, props.id)}
                         </div>
                     </AccordionSummary>
@@ -89,18 +89,18 @@ export default function (props) {
                         <div style={AccordionDetailsText}>
                             <Typography variant={"h5"}>Begriffsabgrenzung</Typography>
                             <br/>
-                            <Typography>{props.details}</Typography>
+                            <Typography>{props.description}</Typography>
                         </div>
                         <Divider/>
                         <div style={AccordionFooter}>
                             <Button variant={"contained"} component={Link} to={{pathname: "/result", hash: String(props.id)}}>Zur Detailseite</Button>
-                            {/*                            <div>
+                            <div>
                                 <Stack direction={"row"} spacing={1}>
-                                    {props.systems.map(system => (
-                                        <Chip  label= {system}/>
+                                    {props.labels.map(label => (
+                                        <Chip key={label.id} label={label.name}/>
                                     ))}
                                 </Stack>
-                            </div>*/}
+                            </div>
                         </div>
                     </AccordionDetails>
                 </Accordion>
