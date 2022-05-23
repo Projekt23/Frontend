@@ -16,7 +16,7 @@ export default function Greet() {
         console.log(decodeToken(localStorage.getItem("userID")))
         var id = decodeToken(localStorage.getItem("userID")).id;
 
-    const server = "http://88.214.57.111:8081/api";
+        const server = process.env.REACT_APP_API_BACKEND;
     fetch(server+'/user/'+id+'', {
         method: 'GET',
         headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS' },

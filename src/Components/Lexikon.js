@@ -13,7 +13,7 @@ export default function Lexikon() {
     const [ansicht, setAnsicht] = useState("all")
     const[startLetter, setStartLetter] = useState(null);
     useEffect(() => {
-        const server = "http://88.214.57.111:8081/api";
+        const server = process.env.REACT_APP_API_BACKEND;
         fetch(server + '/businessobject/all', {
             method: 'GET',
             headers: {
