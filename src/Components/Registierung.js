@@ -44,7 +44,7 @@ const Registierung= ({setUserID}) => {
         var registerBody;
         
         if(isExpired(window.location.hash) === false){
-        if(userName !== "" && password !=="" && password === confirmPassword){
+        if(firstName !== "" && lastName !== "" && userName !== "" && password !=="" && password === confirmPassword){
         var myDecodedToken = decodeToken(window.location.hash);
         console.log(myDecodedToken["email"])
 

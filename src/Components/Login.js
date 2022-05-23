@@ -67,7 +67,7 @@ const Login = ({setUserID}) => {
                     if(response.status === 200){
                         setUserID(value)
                         localStorage.setItem("userID", value)
-                        if(saveUsername === true){
+                        if(saveUsername === true || (!(localStorage.getItem("userName") === null || localStorage.getItem("userName") === ""))){
                             localStorage.setItem("userName", userName)
                         }
                         else{
@@ -83,6 +83,7 @@ const Login = ({setUserID}) => {
             }
         }
         function checkSaveUsername(){
+            
             return !(localStorage.getItem("userName") === null || localStorage.getItem("userName") === "");
         }
     const navigate = useNavigate();
