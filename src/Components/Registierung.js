@@ -49,9 +49,10 @@ const Registierung= ({setUserID}) => {
         console.log(myDecodedToken["email"])
 
         registerBody = JSON.stringify({
+            "firstName": firstName,
+            "lastName": lastName,
             "username": userName,
             "password": password,
-            "name": firstName,
             "email": myDecodedToken["email"]
         })
     

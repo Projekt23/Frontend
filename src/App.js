@@ -66,14 +66,14 @@ const App = () =>
     const[loggedIn, setLoggedIn] = useState(false);
     const [theme, setTheme] = useState(true);
     const navigate = useNavigate();
-
+    const [password, setPassword] = useState("");
     
     function checkLogin(){
         if(localStorage.getItem("userID") === null || decodeToken(localStorage.getItem("userID")) === null || (decodeToken(localStorage.getItem("userID")).username === undefined && decodeToken(localStorage.getItem("userID")).email === undefined && decodeToken(localStorage.getItem("userID")).id === undefined)){
             return (
                 <Routes>
-                        <Route index element={<Login setUserID = {setUserID}/>} />
-                        <Route path="/login" element={<Login setUserID = {setUserID}/>}/>
+                        <Route index element={<Login setUserID = {setUserID} password = {password} setPassword = {setPassword}/>} />
+                        <Route path="/login" element={<Login setUserID = {setUserID} password = {password} setPassword = {setPassword}/>}/>
                         <Route path="/register" element={<Registierung setUserID = {setUserID}/>}/>
                         <Route path="*" element={<Box><Typography>Access denied!</Typography><Typography component={Link} to="/login" >zum Login</Typography></Box>} />
                 </Routes>)
@@ -82,7 +82,7 @@ const App = () =>
         else{
             return  (
                 <>
-            <Navigation setTheme={setTheme} theme={theme} sticky="top" setUserID = {setUserID}/>
+            <Navigation setTheme={setTheme} theme={theme} sticky="top" setUserID = {setUserID} password = {password} setPassword = {setPassword}/>
             <Routes>
                     <Route index element={<Home />} />
                     <Route path="/startseite" element={<Home/>}/>
@@ -92,7 +92,7 @@ const App = () =>
                     <Route path="/objekt_anlegen" element={<ObjektAnlegen />}/>
                     <Route path="/settings" element={<Settings />}/>
                     <Route path="/invite" element={<Invite />}/>
-                    <Route path="/profile" element={<Profil />}/>
+                    <Route path="/profile" element={<Profil password = {password} setPassword = {setPassword}/>}/>
                     <Route path="/result" element={<SearchResult />}/>
                     <Route path="*" element={<div>404 Not Found!</div>} />
                 </Routes></>

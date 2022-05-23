@@ -6,7 +6,7 @@ import SettingsNav from "./SettingsNav";
 import { TextField } from "@mui/material";
 import { isExpired, decodeToken } from "react-jwt";
 
-export default function Profil() {
+export default function Profil({password, setPassword}) {
     const [username, setusername] = useState();
     const [edit, setEdit] = useState(true);
     const [confirmPwdError, setConfirmPwdError] = useState("");
@@ -15,7 +15,8 @@ export default function Profil() {
     const[buttonTxt, setButtonTxt] = useState("Bearbeiten")
     const [buttonColor, setButtonColor] = useState("");
     const [hoverColor, setHoverColor] = useState("");
-    const [name, setname] = useState();
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
     const [email, setemail] = useState();
     const [passwordShown, setPasswordShown] = useState(false);
     const server = process.env.REACT_APP_API_BACKEND;
@@ -75,9 +76,9 @@ export default function Profil() {
                     <Box sx={{marginTop: 3, flexGrow: 0.5, alignSelf: "center"}}>
                         <TextField sx={{ marginTop: 3,  overflow: 'auto'}} disabled = {edit} fullWidth id="userName" label="Benutzername" variant="filled" defaultValue={username}></TextField><br/>
                         <TextField sx={{marginTop: 3,  overflow: 'auto'}} disabled= {edit} fullWidth id="email" label="E-Mail-Adresse" variant="filled" defaultValue={email}></TextField><br/>
-                        <TextField sx={{marginTop: 3,  overflow: 'auto'}} disabled={edit} fullWidth id="firstName" label="Vorname" variant="filled" defaultValue={name} ></TextField><br/>
-                        <TextField sx={{marginTop: 3,  overflow: 'auto'}} disabled={edit} fullWidth id="lastName" label="Nachname" variant="filled"></TextField><br/><br/>
-                        <Button sx={{bgcolor: buttonColor, '&:hover': {backgroundColor: hoverColor}}} id="editBtn" size= "small" variant="contained"onClick= {() => {editToggle()}}>{buttonTxt}</Button>&nbsp;<Button size= "small" disabled={edit} onClick={() => {postSaveUserData(document.getElementById("userName").value, document.getElementById("email").value, document.getElementById("firstName").value, decodeToken(localStorage.getItem("userID")).password)}} variant="contained">Speichern</Button>
+                        <TextField sx={{marginTop: 3,  overflow: 'auto'}} disabled={edit} fullWidth id="firstName" label="Vorname" variant="filled" defaultValue={firstName} ></TextField><br/>
+                        <TextField sx={{marginTop: 3,  overflow: 'auto'}} disabled={edit} fullWidth id="lastName" label="Nachname" variant="filled" defaultValue={lastName} ></TextField><br/><br/>
+                        <Button sx={{bgcolor: buttonColor, '&:hover': {backgroundColor: hoverColor}}} id="editBtn" size= "small" variant="contained"onClick= {() => {editToggle()}}>{buttonTxt}</Button>&nbsp;<Button size= "small" disabled={edit} onClick={() => {postSaveUserData(document.getElementById("userName").value, document.getElementById("email").value, document.getElementById("firstName").value, document.getElementById("lastName").value)}} variant="contained">Speichern</Button>
                     </Box>
                     
                     
@@ -96,7 +97,7 @@ export default function Profil() {
                         <TextField  fullWidth id="currentPwd" variant="filled" type="password"></TextField><br/>
                         <TextField fullWidth sx={{marginTop: 3}} id="newPwd" variant="filled" type={passwordShown ? "text" : "password"}></TextField><br/>
                         <TextField sx={{ marginTop: 3}} fullWidth  id="confirmPwd" variant="filled" type="password"></TextField><br/><br/>
-                        <Button  size= "small" onClick={() => {postSavePwd(document.getElementById("currentPwd").value,document.getElementById("newPwd").value,document.getElementById("confirmPwd").value, document.getElementById("userName").value, document.getElementById("email").value, document.getElementById("firstName").value)}} variant="contained">Speichern</Button>
+                        <Button  size= "small" onClick={() => {postSavePwd(document.getElementById("currentPwd").value,document.getElementById("newPwd").value,document.getElementById("confirmPwd").value, document.getElementById("userName").value, document.getElementById("email").value, document.getElementById("firstName").value, document.getElementById("lastName").value)}} variant="contained">Speichern</Button>
                     </Box>
 
                 </Grid>
@@ -106,7 +107,7 @@ export default function Profil() {
         </Grid>
     </Box>
   );
-    function postSaveUserData(userName, email, firstName, password){
+    function postSaveUserData(userName, email, firstName, lastName){
 
         
         var id = decodeToken(localStorage.getItem("userID")).id;
@@ -114,9 +115,10 @@ export default function Profil() {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS' },
         body: JSON.stringify({
+            "firstName": firstName,
+            "lastName": lastName,
             "username": userName,
-            "password":password ,
-            "name": firstName,
+            "password":password,
             "email": email
         })
         })
@@ -133,17 +135,18 @@ export default function Profil() {
         });
         
     }
-    function postSavePwd(currentPwd, pwd, confirmPwd, userName, firstName, email){
+    function postSavePwd(currentPwd, pwd, confirmPwd, userName, email, firstName, lastName){
 
-        if(currentPwd ===  decodeToken(localStorage.getItem("userID")).password && pwd === confirmPwd){
+        if(currentPwd ===  password && pwd === confirmPwd){
         var id = decodeToken(localStorage.getItem("userID")).id;
         fetch(server + '/user/'+id+'', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS' },
         body: JSON.stringify({
+            "firstName": firstName,
+            "lastName": lastName,
             "username": userName,
             "password":pwd ,
-            "name": firstName,
             "email": email
         })
         })
@@ -155,20 +158,20 @@ export default function Profil() {
             setButtonTxt("Bearbeiten")
             setCurrentPwdError("")
             setConfirmPwdError("")
+            setPassword(pwd)
             reLogin(pwd, userName)
             }).catch(err => {
             console.log(err);
             });
         });
     }
-    else if(pwd === confirmPwd){
-    console.log(currentPassword)
-    setCurrentPwdError("red")
-    setConfirmPwdError("")
+    else if(currentPwd !== password){
+        setConfirmPwdError("")
+        setCurrentPwdError("red")
     }
-    else if(currentPwd === decodeToken(localStorage.getItem("userID")).password){
-        setConfirmPwdError("red")
+    else if(pwd !== confirmPwd){
         setCurrentPwdError("")
+        setConfirmPwdError("red")
     }
 }
     
@@ -187,7 +190,8 @@ export default function Profil() {
             console.log(responseJSON)
             setusername(responseJSON["username"]);
             setemail(responseJSON["email"]);
-            setname(responseJSON["name"]);
+            setFirstName(responseJSON["firstName"]);
+            setLastName(responseJSON["lastName"]);
             setCurrentPassword(responseJSON["password"])
             }).catch(err => {
             console.log(err);

@@ -8,9 +8,9 @@ import {styled} from '@mui/material/styles';
 import {useNavigate} from "react-router-dom";
 
 
-const Login = ({setUserID}) => {
+const Login = ({setUserID, password, setPassword}) => {
     const [userName, setUserName] = useState(localStorage.getItem("userName"));
-    const [password, setPassword] = useState("");
+    
     const [saveUsername, setSaveUsername] = useState(false);
     const gridStyle = {height: "100%", width: "100%"}
     const paperStyle = {padding: 20, height: '65vh', width: "25%", margin: "80px auto"}
@@ -22,6 +22,13 @@ const Login = ({setUserID}) => {
     const linksStyle = {display: "flex", justifyContent: "space-between", width: "100%"}
     
     const [width, setWidth] = React.useState(window.innerWidth);
+
+    function setPasswordF(pwd){
+        setPassword(pwd)
+    }
+
+
+
     function checkResponsive(){
         if(window.innerWidth > 1000){
         return paperStyle
@@ -68,6 +75,7 @@ const Login = ({setUserID}) => {
                         setUserID(value)
                         localStorage.setItem("userID", value)
                         if(saveUsername === true || (!(localStorage.getItem("userName") === null || localStorage.getItem("userName") === ""))){
+                            
                             localStorage.setItem("userName", userName)
                         }
                         else{
@@ -110,7 +118,7 @@ const Login = ({setUserID}) => {
                     <TextField variant="standard" fullWidth style={textfieldStyle} label='username' defaultValue={localStorage.getItem("userName")}
                                placeholder='Enter Username ...' onChange={(event) => setUserName(event.target.value)}/>
                     <TextField variant="standard" fullWidth style={textfieldStyle} type="password" label='password'
-                               placeholder='Enter Password ...' onChange={(event) => setPassword(event.target.value)}/>
+                               placeholder='Enter Password ...' onChange={(event) => setPasswordF(event.target.value)}/>
                     <FormControlLabel control={<Checkbox defaultChecked={checkSaveUsername()} onChange={(event) => {setSaveUsername(event.target.checked)}} size="small"/>} label="Benutzername merken"/>
                 </Grid>
                 <Grid item style={divloginbtn}>

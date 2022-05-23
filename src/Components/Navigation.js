@@ -20,7 +20,7 @@ import DarkModeIcon from '@mui/icons-material/DarkMode';
 import DevicesIcon from '@mui/icons-material/Devices';
 import { Divider } from '@mui/material';
 
-function Navigation({setTheme, theme, setUserID}) {
+function Navigation({setTheme, theme, setUserID, password, setPassword}) {
     const pages = ['Startseite', 'Lexikon'];
     const themeStart = () => {
         if (localStorage.getItem('theme') ==="dark") {
@@ -84,6 +84,7 @@ function Navigation({setTheme, theme, setUserID}) {
 
     function Logout(){
         setUserID(null)
+        setPassword(null)
         localStorage.removeItem("userID")
         handleCloseUserMenu()
     }
