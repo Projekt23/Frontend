@@ -84,10 +84,10 @@ const App = () =>
                 <>
             <Navigation setTheme={setTheme} theme={theme} sticky="top" setUserID = {setUserID}/>
             <Routes>
-                    <Route index element={<Login setUserID = {setUserID}/>} />
+                    <Route index element={<Home />} />
                     <Route path="/startseite" element={<Home/>}/>
-                    <Route path="/login" element={<Login setUserID = {setUserID}/>}/>
-                    <Route path="/register" element={<Registierung setUserID = {setUserID}/>}/>
+                    {/* <Route path="/login" element={<Login setUserID = {setUserID}/>}/>
+                    <Route path="/register" element={<Registierung setUserID = {setUserID}/>}/> */}
                     <Route path="/lexikon" element={<Lexikon/>}/>
                     <Route path="/objekt_anlegen" element={<ObjektAnlegen />}/>
                     <Route path="/settings" element={<Settings />}/>
