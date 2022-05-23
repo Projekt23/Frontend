@@ -10,6 +10,8 @@ import { isExpired, decodeToken } from "react-jwt";
 
 const Registierung= ({setUserID}) => {
     const [userName, setUserName] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [width, setWidth] = React.useState(window.innerWidth);
@@ -49,7 +51,7 @@ const Registierung= ({setUserID}) => {
         registerBody = JSON.stringify({
             "username": userName,
             "password": password,
-            "name": myDecodedToken["email"],
+            "name": firstName,
             "email": myDecodedToken["email"]
         })
     
@@ -107,7 +109,9 @@ const Registierung= ({setUserID}) => {
                 </Grid>
                 <Grid item>
                     <Typography variant="h5" secondary>Registrierung</Typography>
-                    <TextField variant="standard" fullWidth style = {textfieldStyle} label='Benutzername' onChange={(event) => setUserName(event.target.value)} placeholder='Enter Username ...'/>
+                    <TextField variant="standard" fullWidth style = {textfieldStyle} label='Benutzername' onChange={(event) => setUserName(event.target.value)}/>
+                    <TextField variant="standard" fullWidth style = {textfieldStyle} label='Vorname' onChange={(event) => setFirstName(event.target.value)}/>
+                    <TextField variant="standard" fullWidth style = {textfieldStyle} label='Nachname' onChange={(event) => setLastName(event.target.value)}/>
                     <TextField variant="standard" fullWidth style = {textfieldStyle} type="password" label='Passwort' placeholder='Enter Password ...' onChange={(event) => setPassword(event.target.value)}/>
                     <TextField variant="standard" fullWidth style = {textfieldStyle} type="password" label='Passwort wiederholen' placeholder='Confirm Password ...' onChange={(event) => setConfirmPassword(event.target.value)}/>
                     <FormControlLabel control={<Checkbox size="small"/>} label="Benutzername merken"/>
@@ -116,7 +120,7 @@ const Registierung= ({setUserID}) => {
                 </Grid>
                 <Typography id="errorTxt" color="red">{" "}</Typography>
                 <Grid item style={divloginbtn}>
-                    <ColorButton sx={{bgcolor: '#004ea5'}} type="submit" variant="contained" fullWidth onClick={postRegister}>Login</ColorButton>
+                    <ColorButton sx={{bgcolor: '#004ea5'}} type="submit" variant="contained" fullWidth onClick={postRegister}>Anmelden</ColorButton>
                     <div style={linksStyle}>
                         <Typography variant="caption">
                             <Link href="#">Passwort vergessen?</Link>
