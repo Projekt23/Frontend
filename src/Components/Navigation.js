@@ -222,7 +222,7 @@ function Navigation({setTheme, theme, setUserID}) {
                         <MenuItem key="Profilverwaltung" component={Link}
                                 to="/profile" onClick={handleCloseUserMenu}>
                             <Typography
-                                sx={{textDecorationLine: 'none', "&:hover": { color: "inherit" }}}
+                                sx={{textDecorationLine: 'none', "&:hover": { color: "textPrimary" }}}
                                 variant="h6"
                                 noWrap
                                 
@@ -233,7 +233,7 @@ function Navigation({setTheme, theme, setUserID}) {
                         <MenuItem key="Nutzereinladung" component={Link}
                                 to="/invite" onClick={handleCloseUserMenu}>
                             <Typography
-                                sx={{textDecorationLine: 'none', "&:hover": { color: "inherit" }}}
+                                sx={{textDecorationLine: 'none', "&:hover": { color: "textPrimary" }}}
                                 variant="h6"
                                 noWrap
                                 
