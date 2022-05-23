@@ -84,7 +84,7 @@ const Registierung= ({setUserID}) => {
     
     }
         else{
-            document.getElementById("errorTxt").innerHTML = "Etwas ist schief gelaufen!"
+            document.getElementById("errorTxt").innerHTML = "Der Token ist bereits abgelaufen!"
         }
     }
 
