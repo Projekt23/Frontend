@@ -70,17 +70,27 @@ export default function (props) {
     return (
         <div>
             <div>
-                <Accordion id={props.id} key={props.id} expanded={expand} onChange={handleChange(props.id)} onClick= {toggleAcordion}>
+                <Accordion id={props.id} expanded={expand} onChange={handleChange(props.id)} onClick= {toggleAcordion}>
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon/>}
                         aria-controls={props.id}
                         
                     >
-                        <Typography sx={{width: '33%', flexShrink: 0}}>
+                        <Typography sx={{width: '33%', flexShrink: 0}} key={props.id}>
                             {props.name}
                         </Typography>
                         <div style={AccordionSummaryText}>
-                            <Typography sx={{color: 'text.secondary'}}>Synonyme: {props.synonyms}</Typography>
+                            <div>
+                                <Stack direction={"row"} spacing={1} alignItems="center">
+                                    <Typography sx={{color: 'text.secondary'}}>
+                                        Synonyme:
+                                    </Typography>
+                                    {props.synonyms.map(synonym => (
+                                        // <Typography key={synonym.id}>{synonym.name}</Typography>
+                                        <Chip key={synonym.id} label={synonym.name} color={"primary"}/>
+                                    ))}
+                                </Stack>
+                            </div>
                             {checkFavorite(fav, props.id)}
                         </div>
                     </AccordionSummary>
@@ -89,7 +99,7 @@ export default function (props) {
                         <div style={AccordionDetailsText}>
                             <Typography variant={"h5"}>Begriffsabgrenzung</Typography>
                             <br/>
-                            <Typography>{props.description}</Typography>
+                            <Typography key={props.id}>{props.description}</Typography>
                         </div>
                         <Divider/>
                         <div style={AccordionFooter}>
