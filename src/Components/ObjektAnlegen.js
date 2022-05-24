@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import Data from "./EditObject/EditObjectsData"
 import style from "./LexikonComponents/Lexikon.module.css";
 import {Autocomplete, Card, Divider, Stack, TextField, Typography} from "@mui/material";
@@ -17,15 +17,54 @@ const CardStyle = {
 const NameColumn = {
     width: "15%",
     minWidth: "200px",
+    marginTop: "15px",
 }
 
 const DescriptionCard = {
     maxWidth: "35vw",
-    minWidth: "500px"
+    minWidth: "500px",
+    marginTop: "15px",
 
 }
 
+const ButtonStyle = {
+    marginTop: "15px",
+    marginBottom: "15px",
+}
+
+
+
 export default function ObjektAnlegen() {
+
+    const [ObjektData, setObjektData] = useState([])
+
+    useEffect(() => {
+        const server = process.env.REACT_APP_API_BACKEND;
+        fetch(server + '/label/all', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
+            },
+        })
+            .then(res => res.json())
+            .then(
+                (data) => {
+                    setObjektData(data);
+                    console.log(data);
+                },
+            )
+    }, [])
+
+    const LabelData = ObjektData.map((data) =>{
+        return(data.name)
+    })
+
+    function TestData() {
+        console.log(LabelData);
+    }
+
     //Input Field function
     const [value, setValue] = React.useState('');
 
@@ -43,9 +82,9 @@ export default function ObjektAnlegen() {
                     alignItems="center"
                 >
                     <Typography variant={"h4"}>Objekt anlegen</Typography>
-                    <Stack direction="row" spacing={2}>
+                    <Stack direction="row" spacing={2} style={ButtonStyle} alignItems={"center"}>
                         <Button variant={"contained"} style={{backgroundColor: "grey"}}><CloseIcon/> Abbrechen</Button>
-                        <Button variant={"contained"}><SaveIcon/> Veröffentlichen</Button>
+                        <Button variant={"contained"} onClick={TestData}><SaveIcon/> Veröffentlichen</Button>
                     </Stack>
                 </Grid>
 
@@ -53,21 +92,23 @@ export default function ObjektAnlegen() {
             <Divider style={{marginBottom: 15}}/>
             <Stack direction="column" spacing={2}>
                 <Card style={CardStyle}>
-                    <Typography variant={"h6"}>Name</Typography>
                     <Grid
                         container
                         direction="row"
                         justifyContent="space-between"
                         alignItems="center"
                     >
-                        <TextField id="standard-basic" label="Objekt Name" variant="standard"/>
-                        <div style={NameColumn}>
+                        <Stack direction="column" spacing={2} style={NameColumn}>
+                            <Typography variant={"h6"}>Name des Objekts</Typography>
+                            <TextField id="standard-basic" label="Objekt Name eintragen" variant="standard"/>
+                        </Stack>
+                        <Stack direction="column" spacing={2} style={NameColumn}>
+                            <Typography variant={"h6"}>Labels</Typography>
                             <Autocomplete
                                 fullWidth={true}
                                 multiple
                                 id="tags"
-                                options={Data.map((data) => data.label)}
-                                freeSolo
+                                options={LabelData}
                                 renderTags={(value, getTagProps) =>
                                     value.map((data, index) => (
                                         <Chip variant="outlined" label={data} {...getTagProps({index})} />
@@ -77,12 +118,12 @@ export default function ObjektAnlegen() {
                                     <TextField
                                         {...params}
                                         variant="standard"
-                                        label="Eintragen der Tags"
+                                        label="Labels (z.B. System) auswählen"
                                         placeholder="..."
                                     />
                                 )}
                             />
-                        </div>
+                        </Stack>
                     </Grid>
                 </Card>
                 <Card style={CardStyle}>
@@ -92,7 +133,6 @@ export default function ObjektAnlegen() {
                             multiple
                             id="synonyme"
                             options={Data.map((data) => data.label)}
-                            freeSolo
                             renderTags={(value, getTagProps) =>
                                 value.map((data, index) => (
                                     <Chip variant="outlined" label={data} {...getTagProps({index})} />
@@ -102,7 +142,7 @@ export default function ObjektAnlegen() {
                                 <TextField
                                     {...params}
                                     variant="standard"
-                                    label="Eintragen der Synonyme"
+                                    label="Synonyme auswählen und mit Enter bestätigen ..."
                                     placeholder="..."
                                 />
                             )}
@@ -121,7 +161,7 @@ export default function ObjektAnlegen() {
                                 <Typography variant={"h6"}>Begriffsabgrenzung</Typography>
                                 <TextField
                                     id="outlined-multiline-flexible"
-                                    label="Text einfügen ..."
+                                    label="Begriffsabgrenzung eingeben ..."
                                     multiline
                                     rows={4}
                                     value={value}
@@ -159,7 +199,6 @@ export default function ObjektAnlegen() {
                             multiple
                             id="tags"
                             options={Data.map((data) => data.label)}
-                            freeSolo
                             renderTags={(value, getTagProps) =>
                                 value.map((data, index) => (
                                     <Chip variant="outlined" label={data} {...getTagProps({index})} />
@@ -169,7 +208,7 @@ export default function ObjektAnlegen() {
                                 <TextField
                                     {...params}
                                     variant="standard"
-                                    label="Eintragen des Kontexts"
+                                    label="Objekte im gleichen Kontext auswählen"
                                     placeholder="..."
                                 />
                             )}
