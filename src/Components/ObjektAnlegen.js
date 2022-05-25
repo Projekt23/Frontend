@@ -16,7 +16,7 @@ const CardStyle = {
 
 const NameColumn = {
     width: "15%",
-    minWidth: "200px",
+    minWidth: "500px",
     marginTop: "15px",
 }
 
@@ -36,10 +36,31 @@ const ButtonStyle = {
 
 export default function ObjektAnlegen() {
 
-    const [ObjektData, setObjektData] = useState([])
+
+    const [Labels, setLabels] = useState([])
+    const [Objects, setObjects] = useState([])
+
+    //selected Data
+    const [selectedLabels, setSelectedLabels] = useState([])
+    const [selectedSynonyms, setSelectedSynonyms] = useState([])
+    const [selectedKontext, setSelectedKontext] = useState([])
+
+    const [selectedValue, SetSelectedValue] = useState("");
+
+    const handleLabelSelection = (event, value) => setSelectedLabels(value);
+    //const handleSynonymSelection = (event, value) => setSelectedSynonyms(value);
+    const handleSynonymSelection = (event, newValue) => {
+        if (newValue != null) {
+            console.log(newValue)
+            setSelectedSynonyms(newValue.id)
+        }
+    };
+    const handleKontextSelection = (event, value) => setSelectedKontext(value);
 
     useEffect(() => {
         const server = process.env.REACT_APP_API_BACKEND;
+
+        //Get Label Data
         fetch(server + '/label/all', {
             method: 'GET',
             headers: {
@@ -50,19 +71,45 @@ export default function ObjektAnlegen() {
         })
             .then(res => res.json())
             .then(
-                (data) => {
-                    setObjektData(data);
-                    console.log(data);
+                (labels) => {
+                    setLabels(labels);
+                    console.log(labels);
+                },
+            )
+
+        //Get Objekt Data
+        fetch(server + '/businessobject/all', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
+            },
+        })
+            .then(res => res.json())
+            .then(
+                (objects) => {
+                    setObjects(objects);
+                    console.log(objects);
                 },
             )
     }, [])
 
-    const LabelData = ObjektData.map((data) =>{
-        return(data.name)
+    const LabelData = Labels.map((labels) =>{
+        return(labels.name)
+    })
+
+    const ObjectData = Objects.map((objects) =>{
+        //return(JSON.stringify({label: objects.name, id: objects.id}))
+        return({name: objects.name, id: objects.id})
     })
 
     function TestData() {
-        console.log(LabelData);
+        //console.log(LabelData);
+        //console.log(ObjectData);
+        console.log(selectedLabels)
+        console.log(selectedSynonyms)
+        console.log(selectedKontext)
     }
 
     //Input Field function
@@ -72,6 +119,7 @@ export default function ObjektAnlegen() {
         setValue(event.target.value);
     };
 
+    let output;
     return (
         <div className={style.containerMain}>
             <div className={style.headerRow}>
@@ -109,6 +157,7 @@ export default function ObjektAnlegen() {
                                 multiple
                                 id="tags"
                                 options={LabelData}
+                                onChange={handleLabelSelection}
                                 renderTags={(value, getTagProps) =>
                                     value.map((data, index) => (
                                         <Chip variant="outlined" label={data} {...getTagProps({index})} />
@@ -132,7 +181,22 @@ export default function ObjektAnlegen() {
                         <Autocomplete
                             multiple
                             id="synonyme"
-                            options={Data.map((data) => data.label)}
+                            //options={ObjectData.map((data) => data.name)}
+                            options={ObjectData.map((data) => output = JSON.stringify(data.name) )}
+                            //getOptionLabel={(option) => `${option.name} -${option.id}`}
+                            getOptionLabel={(output) => `${output.name} -${output.id}`}
+                            // getOptionLabel={(option) => option.name}
+                            onChange={(event, output) => {
+                                if (output?.name) {
+                                    SetSelectedValue(output.name);
+                                    console.log(output)
+                                } else {
+                                    SetSelectedValue("");
+                                }
+                            }}
+                            inputValue={selectedValue}
+                            // getOptionLabel={(ObjectData) => ObjectData.name }
+                            // getOptionSelected={(option, value) => option.name === value.name }
                             renderTags={(value, getTagProps) =>
                                 value.map((data, index) => (
                                     <Chip variant="outlined" label={data} {...getTagProps({index})} />
@@ -198,7 +262,8 @@ export default function ObjektAnlegen() {
                             fullWidth={true}
                             multiple
                             id="tags"
-                            options={Data.map((data) => data.label)}
+                            options={ObjectData.map((data) => data.name)}
+                            onChange={handleKontextSelection}
                             renderTags={(value, getTagProps) =>
                                 value.map((data, index) => (
                                     <Chip variant="outlined" label={data} {...getTagProps({index})} />
