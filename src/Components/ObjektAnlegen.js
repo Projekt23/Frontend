@@ -32,6 +32,12 @@ const ButtonStyle = {
     marginBottom: "15px",
 }
 
+const options = [
+    { id: "01", name: "Peter" },
+    { id: "02", name: "Mary" },
+    { id: "03", name: "John" }
+]
+
 
 
 export default function ObjektAnlegen() {
@@ -41,21 +47,19 @@ export default function ObjektAnlegen() {
     const [Objects, setObjects] = useState([])
 
     //selected Data
+    const [selectedName, setSelectedName] = useState("")
     const [selectedLabels, setSelectedLabels] = useState([])
     const [selectedSynonyms, setSelectedSynonyms] = useState([])
+    const [selectedDescription, setSelectedDescription] = useState("")
     const [selectedKontext, setSelectedKontext] = useState([])
 
-    const [selectedValue, SetSelectedValue] = useState("");
 
+
+    const handleNameSelection = (event, value) => setSelectedName(value)
     const handleLabelSelection = (event, value) => setSelectedLabels(value);
-    //const handleSynonymSelection = (event, value) => setSelectedSynonyms(value);
-    const handleSynonymSelection = (event, newValue) => {
-        if (newValue != null) {
-            console.log(newValue)
-            setSelectedSynonyms(newValue.id)
-        }
-    };
-    const handleKontextSelection = (event, value) => setSelectedKontext(value);
+    const handleSynonymSelection = (value) => setSelectedSynonyms(value);
+    const handleDesciptionSelection = (event, value) => setSelectedDescription(value)
+    const handleKontextSelection = (value) => setSelectedKontext(value);
 
     useEffect(() => {
         const server = process.env.REACT_APP_API_BACKEND;
@@ -73,7 +77,6 @@ export default function ObjektAnlegen() {
             .then(
                 (labels) => {
                     setLabels(labels);
-                    console.log(labels);
                 },
             )
 
@@ -90,7 +93,6 @@ export default function ObjektAnlegen() {
             .then(
                 (objects) => {
                     setObjects(objects);
-                    console.log(objects);
                 },
             )
     }, [])
@@ -98,15 +100,12 @@ export default function ObjektAnlegen() {
     const LabelData = Labels.map((labels) =>{
         return(labels.name)
     })
-
+    let optionsData = [];
     const ObjectData = Objects.map((objects) =>{
-        //return(JSON.stringify({label: objects.name, id: objects.id}))
-        return({name: objects.name, id: objects.id})
+       return optionsData = {id: objects.id, name: objects.name}
     })
 
     function TestData() {
-        //console.log(LabelData);
-        //console.log(ObjectData);
         console.log(selectedLabels)
         console.log(selectedSynonyms)
         console.log(selectedKontext)
@@ -119,7 +118,11 @@ export default function ObjektAnlegen() {
         setValue(event.target.value);
     };
 
-    let output;
+    function onChangeHandle(value) {
+
+    }
+
+    let ObjectName;
     return (
         <div className={style.containerMain}>
             <div className={style.headerRow}>
@@ -148,7 +151,13 @@ export default function ObjektAnlegen() {
                     >
                         <Stack direction="column" spacing={2} style={NameColumn}>
                             <Typography variant={"h6"}>Name des Objekts</Typography>
-                            <TextField id="standard-basic" label="Objekt Name eintragen" variant="standard"/>
+                            <TextField
+                                id="standard-basic"
+                                label="Objekt Name eintragen"
+                                variant="standard"
+                                value={ObjectName}
+                                onChange{handleNameSelection(ObjectName)}
+                            />
                         </Stack>
                         <Stack direction="column" spacing={2} style={NameColumn}>
                             <Typography variant={"h6"}>Labels</Typography>
@@ -179,35 +188,19 @@ export default function ObjektAnlegen() {
                     <Stack direction="column" spacing={2}>
                         <Typography variant={"h6"}>Synonyme </Typography>
                         <Autocomplete
+                            fullWidth={true}
                             multiple
-                            id="synonyme"
-                            //options={ObjectData.map((data) => data.name)}
-                            options={ObjectData.map((data) => output = JSON.stringify(data.name) )}
-                            //getOptionLabel={(option) => `${option.name} -${option.id}`}
-                            getOptionLabel={(output) => `${output.name} -${output.id}`}
-                            // getOptionLabel={(option) => option.name}
-                            onChange={(event, output) => {
-                                if (output?.name) {
-                                    SetSelectedValue(output.name);
-                                    console.log(output)
-                                } else {
-                                    SetSelectedValue("");
-                                }
+                            id="synonyms"
+                            options = {ObjectData}
+                            getOptionLabel={(option) => option["name"]}
+                            filterSelectedOptions
+                            onChange={(event, newValue) => {
+                                handleSynonymSelection(newValue)
                             }}
-                            inputValue={selectedValue}
-                            // getOptionLabel={(ObjectData) => ObjectData.name }
-                            // getOptionSelected={(option, value) => option.name === value.name }
-                            renderTags={(value, getTagProps) =>
-                                value.map((data, index) => (
-                                    <Chip variant="outlined" label={data} {...getTagProps({index})} />
-                                ))
-                            }
                             renderInput={(params) => (
                                 <TextField
                                     {...params}
-                                    variant="standard"
-                                    label="Synonyme auswählen und mit Enter bestätigen ..."
-                                    placeholder="..."
+                                    label="Synonyme für das Objekt auswählen"
                                 />
                             )}
                         />
@@ -261,20 +254,17 @@ export default function ObjektAnlegen() {
                         <Autocomplete
                             fullWidth={true}
                             multiple
-                            id="tags"
-                            options={ObjectData.map((data) => data.name)}
-                            onChange={handleKontextSelection}
-                            renderTags={(value, getTagProps) =>
-                                value.map((data, index) => (
-                                    <Chip variant="outlined" label={data} {...getTagProps({index})} />
-                                ))
-                            }
+                            id="context"
+                            options = {ObjectData}
+                            getOptionLabel={(option) => option["name"]}
+                            filterSelectedOptions
+                            onChange={(event, newValue) => {
+                                handleKontextSelection(newValue)
+                            }}
                             renderInput={(params) => (
                                 <TextField
                                     {...params}
-                                    variant="standard"
                                     label="Objekte im gleichen Kontext auswählen"
-                                    placeholder="..."
                                 />
                             )}
                         />
