@@ -10,7 +10,7 @@ import Button from '@mui/material/Button';
 import History from './History';
 
 
-export default function HomeMobile() {
+export default function HomeMobile({boName,boDescription,boID,username}) {
 
     const Item = styled(Paper)(({ theme }) => ({
         backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -26,7 +26,7 @@ export default function HomeMobile() {
             <Item
                 sx={{
                     mb: 1,
-                }}>   <Greet />
+                }}>   <Greet username={username}/>
             </Item>
             <Item sx={{
                     mb: 1,
@@ -74,7 +74,12 @@ export default function HomeMobile() {
                 <ChangeHistory /></Item>
             <Item sx={{
                     mb: 1,
-                }} ><DidYouKnow /></Item>
+                }} >
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignContent: 'center', mb: 1 }}>
+                            <Typography  marginTop={1} align='left' variant="h5" component="h3" sx={{ fontWeight: 'bold' }}> Wussten Sie schon? </Typography>
+                            <Button to={{pathname: "/result", hash: String(boID)}} variant="contained">zur Detailseite</Button>
+                        </Box>
+                    <DidYouKnow boName = {boName} boDescription = {boDescription}/></Item>
         </Container >
     )
 }

@@ -7,22 +7,15 @@ import Paper from '@mui/material/Paper';
 import { Box } from "@mui/system"
 import { Link } from 'react-router-dom';
 
-export default function DidYouKnow() {
+export default function DidYouKnow({boName,boDescription}) {
 
-    //Space for API call 
-    
-    //returns filler
-
-    var name = "der Nummernkreis";
-    var desc = "Der Nummernkreis beschreibt eine definierte Abfolge in einer Gruppe, in der Elemente zu ordnen sind. Er findet vor allem im Rechnungswesen bei Unternehmen seine Verwendung.";
-    
     return (
     
 
     <TableContainer>
-        <Typography align='left' variant="h6" component="h3" sx={{ fontWeight: 'bold' }} > {name} </Typography>
+        <Typography align='left' variant="h6" component="h3" sx={{ fontWeight: 'bold' }} > {boName} </Typography>
         <Divider sx={{  marginBottom: 2 }}/>
-        <Typography align='center'  component="h3" > <b>Begriffsabgrenzung:</b> <br />  {desc} </Typography>
+        <Typography align='center'  component="h3" > <b>Begriffsabgrenzung:</b> <br />  {boDescription} </Typography>
     </TableContainer>
    
     );

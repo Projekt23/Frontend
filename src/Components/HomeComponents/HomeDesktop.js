@@ -1,5 +1,6 @@
 import React from "react"
 import { Box } from "@mui/system"
+import { Link } from "react-router-dom";
 import Greet from './Greet';
 import DidYouKnow from "./DidYouKnow";
 import Bookmarks from './Bookmarks';
@@ -10,7 +11,7 @@ import Button from '@mui/material/Button';
 import History from './History';
 
 
-export default function HomeDesktop() {
+export default function HomeDesktop({boName,boDescription,boID,username}) {
 
     const Item = styled(Paper)(({ theme }) => ({
         backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -24,7 +25,7 @@ export default function HomeDesktop() {
         <Container maxWidth="auto">
             <Grid mt={0} mb={2} container spacing={2}>
                 <Grid item xs={12} >
-                    <Item ><Greet /></Item>
+                    <Item ><Greet username={username}/></Item>
                 </Grid>
             </Grid>
             <Grid container spacing={2}>
@@ -61,11 +62,11 @@ export default function HomeDesktop() {
                     <Item sx={{ minHeight: 240 }} >
                         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignContent: 'center', mb: 1 }}>
                             <Typography  marginTop={1} align='left' variant="h5" component="h3" sx={{ fontWeight: 'bold' }}> Wussten Sie schon? </Typography>
-                            <Button to={"/result"} variant="contained">zur Detailseite</Button>
+                            <Button component={Link} to={{pathname: "/result", hash: String(boID)}} variant="contained">zur Detailseite</Button>
                         </Box>
                         <Divider sx={{ marginBottom: 2 }} />
                         <Item  >
-                            <DidYouKnow />
+                            <DidYouKnow boName = {boName} boDescription = {boDescription}/>
                         </Item>
                     </Item>
                 </Grid>
