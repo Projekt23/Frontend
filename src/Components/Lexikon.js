@@ -32,7 +32,7 @@ export default function Lexikon() {
     }, [])
 
     function startsWith(str, word) {
-        return str.lastIndexOf(word, 0) === 0;
+        return str.toUpperCase().lastIndexOf(word, 0) === 0;
     }
 
     function handleSort() {
@@ -60,10 +60,9 @@ export default function Lexikon() {
                 id = {object.id}
                 key={object.id}
                 name={object.name}
-                synonyms = {object.synonyms}
-                description={object.description}
+                synonyms={object.synonyms}
+                details={object.description}
                 labels={object.labels}
-                favorite={object.favorite}
             />
         })
         }
@@ -77,7 +76,6 @@ export default function Lexikon() {
                     synonyms={object.synonyms}
                     details={object.description}
                     labels={object.labels}
-                    favorite={object.favorite}
                 />}
             }) 
         }
@@ -85,7 +83,7 @@ export default function Lexikon() {
     else{
         if(ansicht === "all"){
             listData = lexikonData.map((object) => {
-                if (startsWith(object.title, startLetter)){
+                if (startsWith(object.name, startLetter)){
                     return <LexikonList
                         id = {object.id}
                         key={object.id}
@@ -99,7 +97,7 @@ export default function Lexikon() {
         }
         else if(ansicht==="favorites"){
             listData = lexikonData.map((object) => {
-                if (object.favorite ===true && startsWith(object.title, startLetter)){
+                if (object.favorite ===true && startsWith(object.name, startLetter)){
                     return <LexikonList
                         id = {object.id}
                         key={object.id}
