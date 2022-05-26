@@ -156,7 +156,7 @@ export default function ObjektAnlegen() {
                                 label="Objekt Name eintragen"
                                 variant="standard"
                                 value={ObjectName}
-                                onChange{handleNameSelection(ObjectName)}
+                                // onChange{handleNameSelection(ObjectName)}
                             />
                         </Stack>
                         <Stack direction="column" spacing={2} style={NameColumn}>
