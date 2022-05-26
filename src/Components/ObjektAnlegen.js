@@ -8,8 +8,9 @@ import SaveIcon from '@mui/icons-material/Save';
 import Button from "@mui/material/Button";
 import Chip from "@material-ui/core/Chip";
 import {Grid} from "@material-ui/core";
+import { isExpired, decodeToken } from "react-jwt";
 
-
+import {useNavigate} from "react-router-dom";
 const CardStyle = {
     padding: "20px",
 }
@@ -52,14 +53,22 @@ export default function ObjektAnlegen() {
     const [selectedSynonyms, setSelectedSynonyms] = useState([])
     const [selectedDescription, setSelectedDescription] = useState("")
     const [selectedKontext, setSelectedKontext] = useState([])
-
+    const navigate = useNavigate();
 
 
     const handleNameSelection = (event, value) => setSelectedName(value)
     const handleLabelSelection = (event, value) => setSelectedLabels(value);
-    const handleSynonymSelection = (value) => setSelectedSynonyms(value);
+    const handleSynonymSelection = (value) => {
+        var selectedSynonymIds = []
+        value.forEach(element => {
+        selectedSynonymIds.push(element["id"])
+    }); setSelectedSynonyms(selectedSynonymIds)};
     const handleDesciptionSelection = (event, value) => setSelectedDescription(value)
-    const handleKontextSelection = (value) => setSelectedKontext(value);
+    const handleKontextSelection = (value) => {
+        var selectedKontextIds = []
+            value.forEach(element => {
+            selectedKontextIds.push(element["id"])
+    }); setSelectedKontext(selectedKontextIds)};
 
     useEffect(() => {
         const server = process.env.REACT_APP_API_BACKEND;
@@ -105,24 +114,30 @@ export default function ObjektAnlegen() {
        return optionsData = {id: objects.id, name: objects.name}
     })
 
-    function TestData() {
-        console.log(selectedLabels)
-        console.log(selectedSynonyms)
-        console.log(selectedKontext)
+    function TestData() {      
+        const server = process.env.REACT_APP_API_BACKEND;
+        var id = decodeToken(localStorage.getItem("userID")).id;
+        fetch(server + '/businessobject?userId='+id+'', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS' },
+        body: JSON.stringify({
+            "name": selectedName,
+            "description": selectedDescription,
+            "synonymIds": selectedSynonyms,
+            "labels": selectedLabels,
+            "contextIds": selectedKontext
+        })
+        })
+        .then(response => {
+        response.text().then(value => {
+                navigate("/lexikon")
+            }).catch(err => {
+            console.log(err);
+            });
+        });
     }
-
     //Input Field function
     const [value, setValue] = React.useState('');
-
-    const handleChange = (event) => {
-        setValue(event.target.value);
-    };
-
-    function onChangeHandle(value) {
-
-    }
-
-    let ObjectName;
     return (
         <div className={style.containerMain}>
             <div className={style.headerRow}>
@@ -155,8 +170,7 @@ export default function ObjektAnlegen() {
                                 id="standard-basic"
                                 label="Objekt Name eintragen"
                                 variant="standard"
-                                value={ObjectName}
-                                // onChange{handleNameSelection(ObjectName)}
+                                onChange = {(event) => {setSelectedName(event.target.value)}}
                             />
                         </Stack>
                         <Stack direction="column" spacing={2} style={NameColumn}>
@@ -221,8 +235,9 @@ export default function ObjektAnlegen() {
                                     label="Begriffsabgrenzung eingeben ..."
                                     multiline
                                     rows={4}
-                                    value={value}
-                                    onChange={handleChange}
+                                    variant="outlined"
+                                    defaultValue={value}
+                                    onChange= {(event) => {setSelectedDescription(event.target.value)}}
                                 />
                             </Stack>
                         </div>

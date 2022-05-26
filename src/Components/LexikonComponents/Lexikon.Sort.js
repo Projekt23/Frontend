@@ -3,11 +3,14 @@ import {Divider, FormControl, InputLabel, NativeSelect, Stack, ToggleButton, Tog
 import Button from "@mui/material/Button";
 import data from "./LexikonData";
 
-export default function ({handleSort, handleSort2, ansicht, setAnsicht, startLetter, setStartLetter}) {
+export default function ({handleSort, handleSort2, ansicht, setAnsicht, startLetter, setStartLetter, getAllFavourites}) {
     const letters = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
     const [tempLetter, setTempLetter] = React.useState(null);
     const [entries, setEntries] = React.useState('all');
+
+
     const ansichtToggler = (event) => {
+        getAllFavourites()
         setAnsicht(event.target.value);
     }
     const [alignment, setAlignment] = React.useState('left');

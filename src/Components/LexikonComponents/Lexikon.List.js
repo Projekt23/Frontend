@@ -9,12 +9,11 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import IconButton from "@mui/material/IconButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Chip from "@material-ui/core/Chip";
-
+import { isExpired, decodeToken } from "react-jwt";
 
 export default function (props) {
     const [expand, setExpand] = React.useState(false);
     const toggleAcordion = () => {
-        console.log(props.labels)
       setExpand((prev) => !prev);
     };
 
@@ -36,19 +35,60 @@ export default function (props) {
     function checkFavorite(favorite, accordionId) {
         if (favorite === true) {
             return (
-                <IconButton aria-label="delete" onClick={() => {changeFavorite(favorite, accordionId);toggleAcordion()}}>
+                <IconButton aria-label="delete" onClick={() => {
+                    
+                    deleteFavorite();
+                    changeFavorite(favorite, accordionId);
+                    toggleAcordion()}}>
                     <FavoriteIcon />
                 </IconButton>
             )
         } else {
             return (
-                <IconButton aria-label="delete" onClick={() => {changeFavorite(favorite, accordionId);toggleAcordion()}}>
+                <IconButton aria-label="delete" onClick={() => {
+                    setFavorite();
+                    changeFavorite(favorite, accordionId);
+                    toggleAcordion()}}>
                     <FavoriteBorderIcon />
                 </IconButton>
             )
         }
     }
     
+    function deleteFavorite(){
+        const server = process.env.REACT_APP_API_BACKEND;
+        var userId = decodeToken(localStorage.getItem("userID")).id;
+        fetch(server + '/favourite/' + userId +'/'+props.id, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS' },
+        })
+        .then(response => {
+        response.text().then(value => {
+            }).catch(err => {
+            console.log(err);
+            });
+        });
+    }
+
+    function setFavorite(){
+        const server = process.env.REACT_APP_API_BACKEND;
+        var userId = decodeToken(localStorage.getItem("userID")).id;
+        fetch(server + '/favourite', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS' },
+        body: JSON.stringify({
+            "userId": userId,
+            "businessObjectId": props.id
+        })
+        })
+        .then(response => {
+        response.text().then(value => {
+            }).catch(err => {
+            console.log(err);
+            });
+        });
+    }
+
     const AccordionSummaryText = {
         width: "100%",
         display: "flex",
@@ -99,7 +139,7 @@ export default function (props) {
                         <div style={AccordionDetailsText}>
                             <Typography variant={"h5"}>Begriffsabgrenzung</Typography>
                             <br/>
-                            <Typography key={props.id}>{props.description}</Typography>
+                            <Typography key={props.id}>{props.details}</Typography>
                         </div>
                         <Divider/>
                         <div style={AccordionFooter}>
