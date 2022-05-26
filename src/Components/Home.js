@@ -61,7 +61,7 @@ export default function Home() {
     window.addEventListener("resize", () => setWidth(window.innerWidth));
   }, []);
   return (
-    width < breakpoint ? <MobileComponent boName = {boName} boDescription = {boDescription} boID = {boID} username={username}/> : <DesktopComponent boName = {boName} boDescription = {boDescription} username={username} />
+    width < breakpoint ? <MobileComponent boName = {boName} boDescription = {boDescription} boID = {boID} username={username}/> : <DesktopComponent boName = {boName} boDescription = {boDescription} boID = {boID} username={username} />
   )
 }
 

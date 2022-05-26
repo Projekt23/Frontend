@@ -13,6 +13,8 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { Container, Typography, Divider } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { sizeHeight } from '@mui/system';
+import { Route } from 'react-router';
+import { useLocation } from 'react-router';
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -44,10 +46,12 @@ const chips = [
 ];
 
 export default function SearchResult() {
+    const location = useLocation();
     function changeFavorite(clicked){
         setClicked(!clicked)
         
     }
+    console.log(location.hash.replace('#', ""))
     const [clicked, setClicked] = useState();
     return (
         <Container maxWidth="auto">

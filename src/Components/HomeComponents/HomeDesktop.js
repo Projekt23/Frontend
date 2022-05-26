@@ -12,7 +12,6 @@ import History from './History';
 
 
 export default function HomeDesktop({boName,boDescription,boID,username}) {
-
     const Item = styled(Paper)(({ theme }) => ({
         backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
         ...theme.typography.body2,
