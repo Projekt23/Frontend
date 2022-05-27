@@ -4,6 +4,7 @@ import Home from './Components/Home';
 import Login from './Components/Login';
 import Lexikon from "./Components/Lexikon";
 import ObjektAnlegen from "./Components/ObjektAnlegen";
+import ObjektBearbeiten from "./Components/ObjektBearbeiten";
 import Profil from './Components/SettingsComponents/Profil';
 import {Link, Route, Routes} from 'react-router-dom';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
@@ -90,6 +91,7 @@ const App = () =>
                     <Route path="/register" element={<Registierung setUserID = {setUserID}/>}/> */}
                     <Route path="/lexikon" element={<Lexikon/>}/>
                     <Route path="/objekt_anlegen" element={<ObjektAnlegen />}/>
+                    <Route path="/objekt_bearbeiten" element={<ObjektBearbeiten />}/>
                     <Route path="/settings" element={<Settings />}/>
                     <Route path="/invite" element={<Invite />}/>
                     <Route path="/profile" element={<Profil password = {password} setPassword = {setPassword}/>}/>
