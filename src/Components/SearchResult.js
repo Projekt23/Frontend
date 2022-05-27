@@ -1,6 +1,6 @@
 import { ThemeProvider } from 'styled-components';
 import { darkTheme, lightTheme } from "./themes.js";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
@@ -13,8 +13,11 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { Container, Typography, Divider } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { sizeHeight } from '@mui/system';
-import { Route } from 'react-router';
+import { Navigate, Route } from 'react-router';
 import { useLocation } from 'react-router';
+import { decodeToken } from "react-jwt";
+import {Link} from "react-router-dom";
+import { useNavigate } from 'react-router';
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -24,35 +27,50 @@ const Item = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary,
 }));
 
-function createData(content) {
-    return { content };
-}
 
-function createPageData(page) {
-    return { page };
-}
-
-
-// Hier muss noch aufruf backend stattfinden. // String, String, Bool
-
-const rows = [
-    createPageData('skonto'),
-    createPageData('Rechnung'),
-    createPageData('Kunde'),
-];
-
-const chips = [
-    createData('Salesforce CRM'),
-];
 
 export default function SearchResult() {
     const location = useLocation();
+    const [businessObjectName, setBusinessObjectName] = useState();
+    const [synonyms, setSynonyms] = useState([]);
+    const [description, setDescription] = useState("");
+    const [labels, setLabels] = useState([]);
+    const [contextList, setContextList] = useState([]);
+    const [boId, setBoId] = useState("");
+    const [clicked, setClicked] = useState();
+    const navigate = useNavigate();
     function changeFavorite(clicked){
         setClicked(!clicked)
         
     }
-    console.log(location.hash.replace('#', ""))
-    const [clicked, setClicked] = useState();
+    useEffect(() => {
+        getResult()
+    }, [description])
+    
+    function getResult(){
+        var userId = decodeToken(localStorage.getItem("userID")).id;
+        const server = process.env.REACT_APP_API_BACKEND;
+        fetch(server+'/businessobject/' + location.hash.replace('#', "") + '?userId='+userId+'', {
+              method: 'GET',
+              headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS' },
+          })
+              .then(response => {
+              response.text().then(value => {
+                  var responseJSON = JSON.parse(value);
+                  setBusinessObjectName(responseJSON["name"])
+                  setSynonyms(responseJSON["synonyms"])
+                  setDescription(responseJSON["description"])
+                  setLabels(responseJSON["labels"])
+                  setContextList(responseJSON["contextList"])
+                  setBoId(responseJSON["id"])
+                  }).catch(err => {
+                  console.log(err);
+                  });
+              });
+      
+    }
+
+    
     return (
         <Container maxWidth="auto">
             <Box sx={{ width: '100%' }}>
@@ -72,7 +90,7 @@ export default function SearchResult() {
                             <Typography align='left' variant="h5" component="h3"
                                 sx={{
                                     mt: 1
-                                }}> <b>Auftrag</b> </Typography>
+                                }}> <b>{businessObjectName}</b> </Typography>
                             <IconButton onClick={() => changeFavorite(clicked)} >
                                 {clicked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
                             </IconButton>
@@ -82,8 +100,8 @@ export default function SearchResult() {
                                 display: 'flex',
                                 alignContent: 'center',
                             }}>
-                             {chips.map((chip) => (
-                                <Chip label={chip.content} key={chip.content} sx={{
+                             {labels.map((chip) => (
+                                <Chip label={chip.name} key={chip.id} sx={{
                                     marginRight: 1,
                                     marginY: 'auto'
                                 }} />
@@ -104,8 +122,19 @@ export default function SearchResult() {
                         <Box>
                             <Typography align='left' variant="h6" component="h3"> <b>Synonym: </b> </Typography>
                             <Divider sx={{ marginBottom: 2 }} />
-                            <Box>
-
+                            <Box sx={{
+                                display: 'flex',
+                                flexWrap: 'wrap',
+                                alignContent: 'center',
+                            }}>
+                                {synonyms.map((row) => (
+                                    <Button variant="contained"
+                                        key= {row.id}
+                                        sx={{ marginRight: 2 }}
+                                        onClick = {() => {navigate("/result#" + row.id); setDescription("")}}>
+                                        {row.name}
+                                    </Button>
+                                ))}
                             </Box>
                         </Box>
                     </Item>
@@ -115,9 +144,8 @@ export default function SearchResult() {
                             <Divider sx={{ marginBottom: 2 }} />
                             <Box>
                                 <Typography align='left' fontSize={14} component="h3">
-                                    Der Auftrag ist in der Rechtswissenschaft ein Vertrag zwischen einem Auftraggeber und einem Auftragnehmer, bei dem sich letzterer verpflichtet, das ihm übertragene Geschäft unentgeltlich zu besorgen.
-                                    Der allgemeine Sprachgebrauch versteht unter dem Auftrag meist einen durch Bestellung eingeleiteten Kaufvertrag, einen Werkvertrag, ein Kommissionsgeschäft oder die Klienten von Maklern, Architekten oder Kommissionären. Beim Auftrag im Rechtssinne liegt dagegen ein unentgeltlicher Gefälligkeitsvertrag wie bei Schenkung und Leihe vor, bei dem es sich um einen unvollkommen zweiseitig verpflichtenden Vertrag handelt, weil die Hauptleistungspflichten beim Auftragnehmer liegen. Als Auftragnehmer fungieren insbesondere Unternehmen, die hereingenommene Aufträge als Auftragseingang registrieren, einer wichtigen betriebswirtschaftlichen und volkswirtschaftlichen Kennzahl. Aufträge in diesem Sinne sind Kundenaufträge aufgrund eines Vertragsangebots, deren Bearbeitung oder Produktion noch nicht begonnen hat. Unter einem Geschäft ist in diesem Zusammenhang jede beliebige Tätigkeit tatsächlicher oder rechtsgeschäftlicher Art im fremden Interesse zu verstehen. Das aus einem Auftrag herrührende Geschäft muss unentgeltlich, also ohne Gegenleistung des Auftraggebers, erfolgen. </Typography>
-                            </Box>
+                                   {description}</Typography>
+                                   </Box>
                         </Box>
 
                     </Item>
@@ -130,10 +158,11 @@ export default function SearchResult() {
                                 flexWrap: 'wrap',
                                 alignContent: 'center',
                             }}>
-                                {rows.map((row) => (
+                                {contextList.map((row) => (
                                     <Button variant="contained"
+                                        key= {row.id}
                                         sx={{ marginRight: 2 }}>
-                                        {row.page}
+                                        {row.name}
                                     </Button>
                                 ))}
                             </Box>

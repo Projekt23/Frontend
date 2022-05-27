@@ -62,6 +62,7 @@ export default function Lexikon() {
     
     function getAllFavourites(){
         const server = process.env.REACT_APP_API_BACKEND;
+        
         var userId = decodeToken(localStorage.getItem("userID")).id;
         fetch(server + '/favourite/all/' + userId, {
             method: 'GET',
