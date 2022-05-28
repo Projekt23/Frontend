@@ -58,7 +58,6 @@ export default function ObjektAnlegen() {
     const [currentContextList, setCurrentContextList] = useState([]);
     const [currentBoId, setCurrentBoId] = useState("");
 
-
     const handleNameSelection = (event, value) => setSelectedName(value)
     const handleLabelSelection = (event, value) => setSelectedLabels(value);
     const handleSynonymSelection = (value) => {
@@ -144,20 +143,31 @@ export default function ObjektAnlegen() {
     let currentoptionsData = [];
 
     const ObjectData = Objects.map((objects) =>{
-       return optionsData = {id: objects.id, name: objects.name}
+       //return optionsData = {id: objects.id, name: objects.name}
+        return {id: objects.id, name: objects.name}
     });
 
     const CurrentObjectData = currentSynonyms.map((objects) =>{
         return currentoptionsData = {id: objects.id, name: objects.name}
     });
 
+    const [autocompleteValues, setAutocompleteValues] = useState([
+        //ObjectData[1]
+    ]);
+
+    const handleAutocompleteChange = (event, value) => {
+        setAutocompleteValues(value);
+    };
+
 
     function TestButton() {
-        console.log(Objects);
+        //console.log(Objects);
         console.log(ObjectData);
-        console.log(CurrentObjects);
-        console.log(currentSynonyms);
-        console.log(CurrentObjectData);
+        console.log(ObjectData[1]);
+        console.log(optionsData[1])
+        //console.log(CurrentObjects);
+        //console.log(currentSynonyms);
+        //console.log(CurrentObjectData);
     }
 
     function TestData() {      
@@ -253,14 +263,14 @@ export default function ObjektAnlegen() {
                             multiple
                             id="synonyms"
                             options = {ObjectData}
-                            getOptionLabel={(option) => option["name"]}
-                            value={ObjectData}
-                            //defaultValue={ObjectData[1]}
+                            getOptionLabel={(option) => option.name}
+                            value={autocompleteValues}
                             isOptionEqualToValue={(option, value) => option.id === value.id}
                             filterSelectedOptions
-                            onChange={(event, newValue) => {
-                                handleSynonymSelection(newValue)
-                            }}
+                            onChange={handleAutocompleteChange}
+                            // onChange={(event, newValue) => {
+                            //     handleSynonymSelection(newValue)
+                            // }}
                             renderInput={(params) => (
                                 <TextField
                                     {...params}
