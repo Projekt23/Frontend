@@ -21,12 +21,7 @@ function createData(designation, date, favorite) {
 
 // Hier muss noch aufruf backend stattfinden. // String, String, Bool
 
-const rows = [
-  createData('Abrechnungsbelegarten', '2022-05-06 4:30', true),
-  createData('Debitorenkonditionen', '2010-10-20 4:30', false),
-  createData('Reparaturschema', '2022-05-06 10:30', false),
-  createData('Skonto', '2022-05-06 10:30', true),
-];
+
 
 export default function History({lastSeen}) {
   console.log(lastSeen)
