@@ -3,8 +3,14 @@ import { decodeToken } from "react-jwt";
 import DesktopComponent from './HomeComponents/HomeDesktop';
 import MobileComponent from './HomeComponents/HomeMobile';
 
-export default function Home() {
+function createData(designation, describtion, favorite) {
+  return { designation, describtion, favorite };
+}
 
+export default function Home() {
+  const [favourites, setFavourites] = useState([])
+  const [bookmarkRows, setBookmarkRows] = useState([
+  ]);
   const [boName,setboName] = useState();
   const [boDescription,setboDescription] = useState();
   const [boID,setboID] = useState();
@@ -14,7 +20,7 @@ export default function Home() {
     
   
   
-
+  
   var id = decodeToken(localStorage.getItem("userID")).id;
   const server = process.env.REACT_APP_API_BACKEND;
   fetch(server+'/dashboard?userId='+id+'', {
@@ -46,8 +52,22 @@ export default function Home() {
               console.log(err);
               });
           });
-      
+          fetch(server+'/favourite/all/'+id+'', {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS' },
+        })
+            .then(response => {
+            response.text().then(value => {
+                var responseJSON = JSON.parse(value);
 
+                setBookmarkRows(responseJSON)
+                console.log(favourites)
+                }).catch(err => {
+                console.log(err);
+                });
+            });
+          
+            
     }, [])
 
 
@@ -60,7 +80,7 @@ export default function Home() {
     window.addEventListener("resize", () => setWidth(window.innerWidth));
   }, []);
   return (
-    width < breakpoint ? <MobileComponent boName = {boName} boDescription = {boDescription} boID = {boID} username={username}/> : <DesktopComponent boName = {boName} boDescription = {boDescription} boID = {boID} username={username} />
+    width < breakpoint ? <MobileComponent boName = {boName} boDescription = {boDescription} boID = {boID} username={username} bookmarkRows = {bookmarkRows}/> : <DesktopComponent boName = {boName} boDescription = {boDescription} boID = {boID} username={username} bookmarkRows = {bookmarkRows} />
   )
 }
 

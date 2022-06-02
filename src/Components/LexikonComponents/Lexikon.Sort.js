@@ -3,7 +3,7 @@ import {Divider, FormControl, InputLabel, NativeSelect, Stack, ToggleButton, Tog
 import Button from "@mui/material/Button";
 import data from "./LexikonData";
 
-export default function ({handleSort, handleSort2, ansicht, setAnsicht, startLetter, setStartLetter, getAllFavourites}) {
+export default function ({handleSort, handleSort2, ansicht, setAnsicht, startLetter, setStartLetter, getAllFavourites, setIsExpanded}) {
     const letters = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
     const [tempLetter, setTempLetter] = React.useState(null);
     const [entries, setEntries] = React.useState('all');
@@ -62,12 +62,13 @@ export default function ({handleSort, handleSort2, ansicht, setAnsicht, startLet
         }
     }
 
-    const expandAll = () => (isExpanded) => {
-        for (var i = 0; i < data.length; i++) {
-
-        }
+    const expandAll = () => {
+        setIsExpanded(true)
     };
 
+    const shrinkAll = () => {
+        setIsExpanded(false)
+    };
     const alphabetButton = {
         maxWidth: "50px",
         maxHeight: "50px",
@@ -141,7 +142,7 @@ export default function ({handleSort, handleSort2, ansicht, setAnsicht, startLet
             <div style={AccordionExpandButtons}>
                 <Stack spacing={2} direction="row">
                     <Button variant={"contained"} onClick={expandAll}>Alle aufklappen</Button>
-                    <Button variant={"contained"}>Alle zuklappen</Button>
+                    <Button variant={"contained"} onClick={shrinkAll}>Alle zuklappen</Button>
                 </Stack>
             </div>
         </div>
