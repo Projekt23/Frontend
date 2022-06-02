@@ -114,7 +114,7 @@ export default function ObjektAnlegen() {
        return optionsData = {id: objects.id, name: objects.name}
     })
 
-    function TestData() {      
+    function PublishData() {      
         const server = process.env.REACT_APP_API_BACKEND;
         var id = decodeToken(localStorage.getItem("userID")).id;
         fetch(server + '/businessobject?userId='+id+'', {
@@ -150,7 +150,7 @@ export default function ObjektAnlegen() {
                     <Typography variant={"h4"}>Objekt anlegen</Typography>
                     <Stack direction="row" spacing={2} style={ButtonStyle} alignItems={"center"}>
                         <Button variant={"contained"} style={{backgroundColor: "grey"}}><CloseIcon/> Abbrechen</Button>
-                        <Button variant={"contained"} onClick={TestData}><SaveIcon/> Veröffentlichen</Button>
+                        <Button variant={"contained"} onClick={PublishData}><SaveIcon/> Veröffentlichen</Button>
                     </Stack>
                 </Grid>
 

@@ -95,13 +95,6 @@ export default function ObjektAnlegen() {
                 });
             });
 
-            // .then(res => res.json())
-            // .then(
-            //     (currentObjects) => {
-            //         setCurrentObjects(currentObjects);
-            //     },
-            // )
-
         //Get Label Data
         fetch(server + '/label/all', {
             method: 'GET',
@@ -151,37 +144,72 @@ export default function ObjektAnlegen() {
         return currentoptionsData = {id: objects.id, name: objects.name}
     });
 
-    const [autocompleteValues, setAutocompleteValues] = useState([
-        //ObjectData[1]
-    ]);
+    // const [synonymeValues, setSynonymeValues] = useState([
+    //     ObjectData
+    // ]);
 
-    const handleAutocompleteChange = (event, value) => {
-        setAutocompleteValues(value);
+    const handleSynonymeChange = (event, value) => {
+        setCurrentSynonyms(value);
+    };
+
+    const handleContextChange = (event, value) => {
+        setCurrentContextList(value);
+    };
+
+    const handleLabelChange = (event, value) => {
+        setCurrentLabels(value);
+    };
+
+    const handleNameChange = (event, value) => {
+        setCurrentBusinessObjectName(value);
+    };
+
+    const handleDescriptionChange = (event, value) => {
+        setCurrentDescription(value);
     };
 
 
     function TestButton() {
-        //console.log(Objects);
-        console.log(ObjectData);
-        console.log(ObjectData[1]);
-        console.log(optionsData[1])
-        //console.log(CurrentObjects);
-        //console.log(currentSynonyms);
-        //console.log(CurrentObjectData);
+        console.log("name", currentBusinessObjectName);
+        console.log("description", currentDescription);
+        console.log('changed again')
+        console.log(typeof currentBusinessObjectName);
+        console.log(typeof 'test');
+        console.log("synonymIds", currentSynonyms,)
+        //console.log("labels", currentLabels,);
+        //console.log("contextIds", currentContextList);
+        //console.log('currentObjectData',CurrentObjectData);
     }
 
     function TestData() {      
         const server = process.env.REACT_APP_API_BACKEND;
         var id = decodeToken(localStorage.getItem("userID")).id;
-        fetch(server + '/businessobject?userId='+id+'', {
-        method: 'POST',
+        var bID = currentBoId;
+        fetch(server + '/businessobject/'+bID+'?userId='+id, {
+        method: 'PUT',
         headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS' },
         body: JSON.stringify({
-            "name": selectedName,
-            "description": selectedDescription,
-            "synonymIds": selectedSynonyms,
-            "labels": selectedLabels,
-            "contextIds": selectedKontext
+            // "name": currentBusinessObjectName,
+            // "description": currentDescription,
+            // "name": 'currentBusinessObjectName',
+            // "description": 'currentDescription',
+            // "synonymIds": currentSynonyms,
+            // "synonymIds": [1,2],
+            // "labels": currentLabels,
+            // "labels": '',
+            // "contextIds": currentContextList
+            // "contextIds": [1,2],
+            "name": currentBusinessObjectName,
+            "description": currentDescription,
+            "synonymIds": [
+                1,2
+            ],
+            "labels": [
+
+            ],
+            "contextIds": [
+                1,2
+            ]
         })
         })
         .then(response => {
@@ -226,7 +254,9 @@ export default function ObjektAnlegen() {
                                 id="standard-basic"
                                 label="Objekt Name eintragen"
                                 variant="standard"
-                                onChange = {(event) => {setSelectedName(event.target.value)}}
+                                value={currentBusinessObjectName}
+                                onChange={handleNameChange}
+                                //onChange = {(event) => {setSelectedName(event.target.value)}}
                             />
                         </Stack>
                         <Stack direction="column" spacing={2} style={NameColumn}>
@@ -236,8 +266,9 @@ export default function ObjektAnlegen() {
                                 multiple
                                 id="labels"
                                 options={LabelData}
-                                //defaultValue={LabelData.find(v => v.label[0])}
-                                onChange={handleLabelSelection}
+                                value={currentLabels}
+                                onChange={handleLabelChange}
+                                filterSelectedOptions
                                 renderTags={(value, getTagProps) =>
                                     value.map((data, index) => (
                                         <Chip variant="outlined" label={data} {...getTagProps({index})} />
@@ -264,13 +295,10 @@ export default function ObjektAnlegen() {
                             id="synonyms"
                             options = {ObjectData}
                             getOptionLabel={(option) => option.name}
-                            value={autocompleteValues}
+                            value={currentSynonyms}
                             isOptionEqualToValue={(option, value) => option.id === value.id}
                             filterSelectedOptions
-                            onChange={handleAutocompleteChange}
-                            // onChange={(event, newValue) => {
-                            //     handleSynonymSelection(newValue)
-                            // }}
+                            onChange={handleSynonymeChange}
                             renderInput={(params) => (
                                 <TextField
                                     {...params}
@@ -296,8 +324,10 @@ export default function ObjektAnlegen() {
                                     multiline
                                     rows={4}
                                     variant="outlined"
-                                    defaultValue={value}
-                                    onChange= {(event) => {setSelectedDescription(event.target.value)}}
+                                    value={currentDescription}
+                                    onChange={handleDescriptionChange}
+                                    //defaultValue={value}
+                                    //onChange= {(event) => {setSelectedDescription(event.target.value)}}
                                 />
                             </Stack>
                         </div>
@@ -331,11 +361,11 @@ export default function ObjektAnlegen() {
                             multiple
                             id="context"
                             options = {ObjectData}
-                            getOptionLabel={(option) => option["name"]}
+                            getOptionLabel={(option) => option.name}
+                            value={currentContextList}
+                            isOptionEqualToValue={(option, value) => option.id === value.id}
                             filterSelectedOptions
-                            onChange={(event, newValue) => {
-                                handleKontextSelection(newValue)
-                            }}
+                            onChange={handleContextChange}
                             renderInput={(params) => (
                                 <TextField
                                     {...params}
