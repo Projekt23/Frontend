@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import Navigation from './Components/Navigation';
 import Home from './Components/Home';
 import Login from './Components/Login';
+import Resultlist from './Components/Resultlist';
 import Lexikon from "./Components/Lexikon";
 import ObjektAnlegen from "./Components/ObjektAnlegen";
 import ObjektBearbeiten from "./Components/ObjektBearbeiten";
@@ -11,6 +12,7 @@ import {createTheme, ThemeProvider} from '@mui/material/styles';
 import './App.css';
 import Invite from './Components/SettingsComponents/Invite';
 import Settings from './Components/Settings';
+import {  ReactiveBase, ResultList }  from "@appbaseio/reactivesearch";
 
 import {useNavigate} from "react-router-dom";
 import { isExpired, decodeToken } from "react-jwt";
@@ -82,8 +84,18 @@ const App = () =>
         
         else{
             return  (
-                <>
+            <>
+            
+            <ReactiveBase
+            app='projekt23'
+            url={process.env.REACT_APP_API_ELASTIC}
+            >
+
+       
             <Navigation setTheme={setTheme} theme={theme} sticky="top" setUserID = {setUserID} password = {password} setPassword = {setPassword}/>
+
+            
+
             <Routes>
                     <Route index element={<Home />} />
                     <Route path="/startseite" element={<Home/>}/>
@@ -94,10 +106,13 @@ const App = () =>
                     <Route path="/objekt_bearbeiten" element={<ObjektBearbeiten />}/>
                     <Route path="/settings" element={<Settings />}/>
                     <Route path="/invite" element={<Invite />}/>
+                    <Route path="/resultlist" element={<ResultList />}/>
                     <Route path="/profile" element={<Profil password = {password} setPassword = {setPassword}/>}/>
                     <Route path="/result" element={<SearchResult />}/>
                     <Route path="*" element={<div>404 Not Found!</div>} />
-                </Routes></>
+                </Routes>
+                </ReactiveBase>
+                </>
                     )
         }
 

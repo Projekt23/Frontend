@@ -19,6 +19,7 @@ import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import DevicesIcon from '@mui/icons-material/Devices';
 import { Divider } from '@mui/material';
+import Searchbar from './Searchbar';
 
 function Navigation({setTheme, theme, setUserID, password, setPassword}) {
     const pages = ['Startseite', 'Lexikon'];
@@ -126,7 +127,6 @@ function Navigation({setTheme, theme, setUserID, password, setPassword}) {
                         aria-controls="menu-appbar"
                         aria-haspopup="true"
                         onClick={handleOpenNavMenu}
-
                         color="inherit"
                     >
                         <MenuIcon/>
@@ -187,9 +187,11 @@ function Navigation({setTheme, theme, setUserID, password, setPassword}) {
                 </Box><Box sx={{width: 0.5}}></Box>
                 {/* The searchbar is displayed in Mobile and Desktop Version -------------------------------------------------------------------------------------------------------------------*/}
                 <Box  sx={{minWidth: 200,  width: 1500}}>
-                    <SearchBar
+                    <Searchbar></Searchbar>
+                    {/* <SearchBar
                        sx={{height: '50%'}}
-                       onChange={(value) => setsearchValue(value)} onRequestSearch={() =>search({searchValue})}/>
+                       onChange={(value) => setsearchValue(value)} onRequestSearch={() =>search({searchValue})}/> */}
+
                 </Box>
                 <Box sx={{width: 1}}>
                     <ThemeProvider theme={localStorage.getItem("theme") === "light" ? lightTheme : darkTheme}/>
@@ -267,8 +269,6 @@ function Navigation({setTheme, theme, setUserID, password, setPassword}) {
                 </Box>
             </Toolbar>
         </AppBar>
-
-
     )
 }
 

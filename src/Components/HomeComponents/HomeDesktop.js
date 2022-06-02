@@ -61,7 +61,7 @@ export default function HomeDesktop({boName,boDescription,boID,username}) {
                     <Item sx={{ minHeight: 240 }} >
                         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignContent: 'center', mb: 1 }}>
                             <Typography  marginTop={1} align='left' variant="h5" component="h3" sx={{ fontWeight: 'bold' }}> Wussten Sie schon? </Typography>
-                            <Button component={Link} to={{pathname: "/result", hash: String(boID)}} variant="contained">zur Detailseite</Button>
+                            <Button component={Link} to={{pathname: "/result", hash: String(boID)}} variant="contained">Detailseite</Button>
                         </Box>
                         <Divider sx={{ marginBottom: 2 }} />
                         <Item  >
