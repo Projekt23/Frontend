@@ -10,7 +10,7 @@ import Button from '@mui/material/Button';
 import History from './History';
 
 
-export default function HomeMobile({boName,boDescription,boID,username,bookmarkRows}) {
+export default function HomeMobile({boName,boDescription,boID,username,bookmarkRows, lastSeen, changeHistory}) {
 
     const Item = styled(Paper)(({ theme }) => ({
         backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -56,7 +56,7 @@ export default function HomeMobile({boName,boDescription,boID,username,bookmarkR
                     <Typography align='left' variant="h5" component="h3"> <b>Zuletzt angesehen:</b> </Typography>
                 </Box>
                 <Divider sx={{ marginBottom: 2 }} />
-                <History />
+                <History lastSeen = {lastSeen}/>
             </Item>
 
             <Item sx={{
@@ -71,7 +71,7 @@ export default function HomeMobile({boName,boDescription,boID,username,bookmarkR
                     <Typography align='left' variant="h5" component="h3"> <b>Änderungshistorie:</b> </Typography>
                 </Box>
                 <Divider sx={{ marginBottom: 2 }} />
-                <ChangeHistory /></Item>
+                <ChangeHistory changeHistory = {changeHistory}/></Item>
             <Item sx={{
                     mb: 1,
                 }} >

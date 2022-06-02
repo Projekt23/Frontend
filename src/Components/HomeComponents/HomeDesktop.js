@@ -11,7 +11,7 @@ import Button from '@mui/material/Button';
 import History from './History';
 
 
-export default function HomeDesktop({boName,boDescription,boID,username,bookmarkRows}) {
+export default function HomeDesktop({boName,boDescription,boID,username,bookmarkRows, lastSeen, changeHistory}) {
     const Item = styled(Paper)(({ theme }) => ({
         backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
         ...theme.typography.body2,
@@ -46,7 +46,7 @@ export default function HomeDesktop({boName,boDescription,boID,username,bookmark
                             <Typography align='left' variant="h5" component="h3"> <b>Zuletzt angesehen:</b> </Typography>
                         </Box>
                         <Divider sx={{ marginBottom: 2 }} />
-                        <History />
+                        <History lastSeen = {lastSeen}/>
                     </Item>
                 </Grid>
                 <Grid item xs={6}>
@@ -55,7 +55,7 @@ export default function HomeDesktop({boName,boDescription,boID,username,bookmark
                             <Typography align='left' variant="h5" component="h3"> <b>Änderungshistorie:</b> </Typography>
                         </Box>
                         <Divider sx={{ marginBottom: 2 }} />
-                        <ChangeHistory /></Item>
+                        <ChangeHistory changeHistory = {changeHistory}/></Item>
                 </Grid>
                 <Grid item xs={6}>
                     <Item sx={{ minHeight: 240 }} >

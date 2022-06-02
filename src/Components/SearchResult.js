@@ -45,7 +45,7 @@ export default function SearchResult() {
     }
     useEffect(() => {
         getResult()
-    }, [description])
+    }, [])
 
     function getResult(){
         var userId = decodeToken(localStorage.getItem("userID")).id;
@@ -132,7 +132,7 @@ export default function SearchResult() {
                                     <Button variant="contained"
                                         key= {row.id}
                                         sx={{ marginRight: 2 }}
-                                        onClick = {() => {navigate("/result#" + row.id); setDescription("")}}>
+                                        onClick = {() => {navigate("/result#" + row.id); getResult()}}>
                                         {row.name}
                                     </Button>
                                 ))}
@@ -162,7 +162,8 @@ export default function SearchResult() {
                                 {contextList.map((row) => (
                                     <Button variant="contained"
                                         key= {row.id}
-                                        sx={{ marginRight: 2 }}>
+                                        sx={{ marginRight: 2 }}
+                                        onClick = {() => {navigate("/result#" + row.id); getResult()}}>
                                         {row.name}
                                     </Button>
                                 ))}
