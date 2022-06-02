@@ -12,7 +12,7 @@ import Chip from "@material-ui/core/Chip";
 import { isExpired, decodeToken } from "react-jwt";
 
 export default function (props) {
-    const [expand, setExpand] = React.useState(false);
+    const [expand, setExpand] = React.useState(props.expand);
     const toggleAcordion = () => {
       setExpand((prev) => !prev);
     };
@@ -110,7 +110,7 @@ export default function (props) {
     return (
         <div>
             <div>
-                <Accordion id={props.id} expanded={expand} onChange={handleChange(props.id)} onClick= {toggleAcordion}>
+                <Accordion id={props.id} expanded={props.expand} onChange={handleChange(props.id)} onClick= {toggleAcordion}>
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon/>}
                         aria-controls={props.id}

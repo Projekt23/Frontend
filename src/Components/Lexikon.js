@@ -15,6 +15,7 @@ export default function Lexikon() {
     const [ansicht, setAnsicht] = useState("all")
     const[startLetter, setStartLetter] = useState(null);
     const [favourites, setFavourites] = useState([])
+    const [isExpanded, setIsExpanded] = useState(false)
 
     useEffect(() => {
         getAllFavourites()
@@ -95,6 +96,7 @@ export default function Lexikon() {
                 details={object.description}
                 labels={object.labels}
                 favorite= {favourites.includes(object.id)}
+                expand = {isExpanded}
             />
             
         })
@@ -110,6 +112,7 @@ export default function Lexikon() {
                     details={object.description}
                     labels={object.labels}
                     favorite= {favourites.includes(object.id)}
+                    expand = {isExpanded}
                 />}
             }) 
         }
@@ -126,6 +129,7 @@ export default function Lexikon() {
                         details={object.description}
                         labels={object.labels}
                         favorite= {favourites.includes(object.id)}
+                        expand = {isExpanded}
                     />}
         })
         }
@@ -140,6 +144,7 @@ export default function Lexikon() {
                         description={object.description}
                         labels={object.labels}
                         favorite={favourites.includes(object.id)}
+                        expand = {isExpanded}
                     />}
             }) 
         }
@@ -160,7 +165,7 @@ export default function Lexikon() {
 
                 </Button>
             </div>
-            <LexikonSort handleSort={handleSort} handleSort2={handleSort2} ansicht={ansicht} setAnsicht={setAnsicht} startLetter = {startLetter} setStartLetter ={setStartLetter} getAllFavourites = {getAllFavourites}/>
+            <LexikonSort handleSort={handleSort} handleSort2={handleSort2} ansicht={ansicht} setAnsicht={setAnsicht} startLetter = {startLetter} setStartLetter ={setStartLetter} getAllFavourites = {getAllFavourites} setIsExpanded = {setIsExpanded}/>
             <Stack spacing={1} direction={"column"}>
                 {listData}
             </Stack>
