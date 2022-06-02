@@ -11,7 +11,7 @@ import Button from '@mui/material/Button';
 import History from './History';
 
 
-export default function HomeDesktop({boName,boDescription,boID,username}) {
+export default function HomeDesktop({boName,boDescription,boID,username,bookmarkRows}) {
     const Item = styled(Paper)(({ theme }) => ({
         backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
         ...theme.typography.body2,
@@ -36,7 +36,7 @@ export default function HomeDesktop({boName,boDescription,boID,username}) {
                             <Button variant="contained">Alle anzeigen</Button>
                         </Box>
                         <Divider sx={{ marginBottom: 2 }} />
-                        <Bookmarks />
+                        <Bookmarks bookmarkRows = {bookmarkRows}/>
                     </Item>
                 </Grid>
                 <Grid item xs={6}>

@@ -3,8 +3,17 @@ import { decodeToken } from "react-jwt";
 import DesktopComponent from './HomeComponents/HomeDesktop';
 import MobileComponent from './HomeComponents/HomeMobile';
 
-export default function Home() {
+function createData(designation, describtion, favorite) {
+  return { designation, describtion, favorite };
+}
 
+export default function Home() {
+  const [bookmarkRows, setBookmarkRows] = useState([
+    createData('Auftrag', 'Der Auftrag ist in der Rechtswissenschaft ein Vertrag zwischen einem Auftraggeber...', true),
+    createData('Rechnung', 'Unter Rechung wird jedes Dokument verstanden, das die Abrechnung über eine Lief...', true),
+    createData('Kunde', 'Ein Kunde ist allgemein in der Wirtschaft und speziell im Marketing ein Person, ...', true),
+    createData('Skonto', 'Der oder das Skonto ist im Handel ein Preisnachlass auf den Kaufpreis, den der Verk..', true),
+  ]);
   const [boName,setboName] = useState();
   const [boDescription,setboDescription] = useState();
   const [boID,setboID] = useState();
@@ -60,7 +69,7 @@ export default function Home() {
     window.addEventListener("resize", () => setWidth(window.innerWidth));
   }, []);
   return (
-    width < breakpoint ? <MobileComponent boName = {boName} boDescription = {boDescription} boID = {boID} username={username}/> : <DesktopComponent boName = {boName} boDescription = {boDescription} boID = {boID} username={username} />
+    width < breakpoint ? <MobileComponent boName = {boName} boDescription = {boDescription} boID = {boID} username={username} bookmarkRows = {bookmarkRows}/> : <DesktopComponent boName = {boName} boDescription = {boDescription} boID = {boID} username={username} bookmarkRows = {bookmarkRows} />
   )
 }
 

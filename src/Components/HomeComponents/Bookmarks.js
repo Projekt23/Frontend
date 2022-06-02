@@ -10,9 +10,7 @@ import Paper from '@mui/material/Paper';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import IconButton from '@mui/material/IconButton';
 
-function createData(designation, describtion, favorite) {
-  return { designation, describtion, favorite };
-}
+
 
 const useStyles = makeStyles({
   ellipsis: {
@@ -25,14 +23,8 @@ const useStyles = makeStyles({
 
 // Hier muss noch aufruf backend stattfinden. // String, String, Bool
 
-const rows = [
-  createData('Auftrag', 'Der Auftrag ist in der Rechtswissenschaft ein Vertrag zwischen einem Auftraggeber...', true),
-  createData('Rechnung', 'Unter Rechung wird jedes Dokument verstanden, das die Abrechnung über eine Lief...', true),
-  createData('Kunde', 'Ein Kunde ist allgemein in der Wirtschaft und speziell im Marketing ein Person, ...', true),
-  createData('Skonto', 'Der oder das Skonto ist im Handel ein Preisnachlass auf den Kaufpreis, den der Verk..', true),
-];
 
-export default function Bookmarks() {
+export default function Bookmarks({bookmarkRows}) {
   const classes = useStyles();
 
   return (
@@ -46,7 +38,7 @@ export default function Bookmarks() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {bookmarkRows.map((row) => (
             <TableRow
               key={row.designation}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
