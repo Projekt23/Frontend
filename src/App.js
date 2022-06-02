@@ -87,7 +87,7 @@ const App = () =>
             <>
             
             <ReactiveBase
-            app='projekt23'
+            app='business_objects'
             url={process.env.REACT_APP_API_ELASTIC}
             >
 

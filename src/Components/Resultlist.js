@@ -14,7 +14,6 @@ export const SearchResult = (props) => {
         e.preventDefault();
         navigate("/results/" + id);
     }
-
     return (
             <div>
                 <Container>
@@ -30,7 +29,7 @@ export const SearchResult = (props) => {
                         }}
                         render={({ data }) => (
                             <ReactiveList.ResultListWrapper>
-                                
+                                {console.log(data)}
                                 {data.map(item => (
                                     <ResultList key={item._id} href="#" target="_self" onClick={(e) => { redirect(e, item._id) }}>
                                         <ResultList.Content>
@@ -43,9 +42,7 @@ export const SearchResult = (props) => {
                                                     />
                                             </ResultList.Title>
                                             <ResultList.Description>
-                            
                                             </ResultList.Description>
-
                                         </ResultList.Content>
                                     </ResultList>
                                 ))}

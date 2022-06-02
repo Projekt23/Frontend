@@ -168,7 +168,6 @@ export default function SearchResult() {
                                 ))}
                             </Box>
                         </Box>
-
                     </Item>
                 </Stack>
             </Box>

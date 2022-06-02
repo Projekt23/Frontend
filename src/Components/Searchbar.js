@@ -1,22 +1,25 @@
 import React from 'react'
 import { DataSearch } from "@appbaseio/reactivesearch";
-import { useLocation, useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom";
+import styled from 'styled-components';
+
+const Styles = styled.div`
+    .searchbar{
+        color: black;
+    }
+`;
 
 function Searchbar() {
     const navigate = useNavigate()
     const location = useLocation()
 
-    /*
-    * @description: If the current path is not "search" it redirects to this path.
-    * @params:  -
-    * @return:  Return DataSearch
-    */
     const redirect = () => {
         if (location.pathname !== '/resultlist') {
             navigate("/resultlist");
         }
     }
   return (
+    <Styles>
     <DataSearch
     componentId="q"
     dataField="name"
@@ -27,6 +30,7 @@ function Searchbar() {
     onValueSelected={redirect}
     className="searchbar"
     />
+    </Styles>
   )
 }
 
