@@ -9,8 +9,9 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import IconButton from '@mui/material/IconButton';
-
-
+import LaunchIcon from '@mui/icons-material/Launch';
+import { Button } from '@mui/material';
+import { useNavigate } from 'react-router';
 
 const useStyles = makeStyles({
   ellipsis: {
@@ -26,7 +27,7 @@ const useStyles = makeStyles({
 
 export default function Bookmarks({bookmarkRows}) {
   const classes = useStyles();
-
+  const navigate = useNavigate();
   return (
     <TableContainer component={Paper}>
       <Table aria-label="simple table">
@@ -40,13 +41,13 @@ export default function Bookmarks({bookmarkRows}) {
         <TableBody>
           {bookmarkRows.map((row) => (
             <TableRow
-              key={row.designation}
+              key={row["businessObjectId"]}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {row.designation}
+                {row["businessObjectName"]}<Button onClick={() => navigate("/result#"+row["businessObjectId"])}><LaunchIcon></LaunchIcon></Button>
               </TableCell>
-              <TableCell className={classes.ellipsis} >{row.describtion}</TableCell>
+              <TableCell className={classes.ellipsis} >{row["businessObjectDescription"]}</TableCell>
               <TableCell align="right">
                 <IconButton aria-label="delete">
                   <FavoriteIcon />

@@ -8,11 +8,8 @@ function createData(designation, describtion, favorite) {
 }
 
 export default function Home() {
+  const [favourites, setFavourites] = useState([])
   const [bookmarkRows, setBookmarkRows] = useState([
-    createData('Auftrag', 'Der Auftrag ist in der Rechtswissenschaft ein Vertrag zwischen einem Auftraggeber...', true),
-    createData('Rechnung', 'Unter Rechung wird jedes Dokument verstanden, das die Abrechnung über eine Lief...', true),
-    createData('Kunde', 'Ein Kunde ist allgemein in der Wirtschaft und speziell im Marketing ein Person, ...', true),
-    createData('Skonto', 'Der oder das Skonto ist im Handel ein Preisnachlass auf den Kaufpreis, den der Verk..', true),
   ]);
   const [boName,setboName] = useState();
   const [boDescription,setboDescription] = useState();
@@ -23,7 +20,7 @@ export default function Home() {
     
   
   
-
+  
   var id = decodeToken(localStorage.getItem("userID")).id;
   const server = process.env.REACT_APP_API_BACKEND;
   fetch(server+'/dashboard?userId='+id+'', {
@@ -55,8 +52,22 @@ export default function Home() {
               console.log(err);
               });
           });
-      
+          fetch(server+'/favourite/all/'+id+'', {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS' },
+        })
+            .then(response => {
+            response.text().then(value => {
+                var responseJSON = JSON.parse(value);
 
+                setBookmarkRows(responseJSON)
+                console.log(favourites)
+                }).catch(err => {
+                console.log(err);
+                });
+            });
+          
+            
     }, [])
 
 
