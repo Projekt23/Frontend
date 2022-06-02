@@ -15,6 +15,7 @@ export default function Lexikon() {
     const [ansicht, setAnsicht] = useState("all")
     const[startLetter, setStartLetter] = useState(null);
     const [favourites, setFavourites] = useState([])
+
     useEffect(() => {
         getAllFavourites()
         const server = process.env.REACT_APP_API_BACKEND;
@@ -45,7 +46,6 @@ export default function Lexikon() {
     }
 
     function handleSort() {
-        console.log("Sorting ...")
         const sortedData = [...lexikonData].sort((a, b) => {
             return a.title > b.title ? 1 : -1
         })
@@ -53,7 +53,6 @@ export default function Lexikon() {
     }
 
     function handleSort2() {
-        console.log("Sorting 2 ...")
         const sortedData = [...lexikonData].sort((a, b) => {
             return a.title < b.title ? 1 : -1
         })
@@ -82,13 +81,7 @@ export default function Lexikon() {
                     setFavourites(favouritesArr)
                 },
             )
-        
-    
         }
-
-
-    
-
 
     var listData;
     if (startLetter === null){
@@ -151,7 +144,6 @@ export default function Lexikon() {
             }) 
         }
     }
-    
 
     return (<div className={style.containerMain}>
             <div className={style.headerRow}>
@@ -172,6 +164,5 @@ export default function Lexikon() {
             <Stack spacing={1} direction={"column"}>
                 {listData}
             </Stack>
-            {/*<LexikonList/>*/}
         </div>)
 }

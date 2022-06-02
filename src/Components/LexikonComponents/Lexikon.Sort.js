@@ -68,18 +68,6 @@ export default function ({handleSort, handleSort2, ansicht, setAnsicht, startLet
         }
     };
 
-
-/*
-    [{
-        "id": 1,
-        "name": "Test",
-        "description": "Test",
-        "synonyms": [],
-        "labels": [{"id": 2, "name": "SAP"}],
-        "contextList": []
-    }]
-*/
-
     const alphabetButton = {
         maxWidth: "50px",
         maxHeight: "50px",

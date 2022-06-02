@@ -46,7 +46,7 @@ export default function SearchResult() {
     useEffect(() => {
         getResult()
     }, [description])
-    
+
     function getResult(){
         var userId = decodeToken(localStorage.getItem("userID")).id;
         const server = process.env.REACT_APP_API_BACKEND;
@@ -67,10 +67,10 @@ export default function SearchResult() {
                   console.log(err);
                   });
               });
-      
+
     }
 
-    
+
     return (
         <Container maxWidth="auto">
             <Box sx={{ width: '100%' }}>
@@ -110,7 +110,8 @@ export default function SearchResult() {
                                 marginLeft: 1,
                                 marginY: 'auto',
                                 sizeHeight: 20,
-                            }}>
+                            }} component={Link} to={{pathname: "/objekt_bearbeiten", hash: String(boId)}}
+                            >
                                 <EditIcon />
                             </Button>
                         </Box>
