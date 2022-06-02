@@ -37,6 +37,8 @@ export default function ChangeHistory({changeHistory}) {
               <TableCell align="right">{timeCalculator(row["timestamp"])}</TableCell>
             </TableRow>
           ))}
+           <TableRow></TableRow>
+       
         </TableBody>
       </Table>
     </TableContainer>
