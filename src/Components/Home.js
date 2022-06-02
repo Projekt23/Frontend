@@ -6,7 +6,19 @@ import MobileComponent from './HomeComponents/HomeMobile';
 function createData(designation, describtion, favorite) {
   return { designation, describtion, favorite };
 }
+function getUnique(arr, index) {
 
+  const unique = arr
+       .map(e => e[index])
+
+       // store the keys of the unique objects
+       .map((e, i, final) => final.indexOf(e) === i && i)
+
+       // eliminate the dead keys & store unique objects
+      .filter(e => arr[e]).map(e => arr[e]);      
+
+   return unique;
+}
 export default function Home() {
   const [favourites, setFavourites] = useState([])
   const [bookmarkRows, setBookmarkRows] = useState([
@@ -14,6 +26,11 @@ export default function Home() {
   const [boName,setboName] = useState();
   const [boDescription,setboDescription] = useState();
   const [boID,setboID] = useState();
+
+  const [lastSeen,setlastSeen] = useState([]);
+
+  const [changeHistory,setChangeHistory] = useState([]);
+
   const [username,setusername] = useState();
   
   useEffect(() => {
@@ -33,6 +50,10 @@ export default function Home() {
             setboName(responseJSON["randomBo"]["boName"]);
             setboDescription(responseJSON["randomBo"]["boDescription"]);
             setboID(responseJSON["randomBo"]["boId"]);
+            console.log(responseJSON["lastSeen"])
+            setlastSeen(getUnique(responseJSON["lastSeen"], "boId"))
+
+            setChangeHistory(responseJSON["changeHistory"])
             }).catch(err => {
             console.log(err);
             });
@@ -80,7 +101,7 @@ export default function Home() {
     window.addEventListener("resize", () => setWidth(window.innerWidth));
   }, []);
   return (
-    width < breakpoint ? <MobileComponent boName = {boName} boDescription = {boDescription} boID = {boID} username={username} bookmarkRows = {bookmarkRows}/> : <DesktopComponent boName = {boName} boDescription = {boDescription} boID = {boID} username={username} bookmarkRows = {bookmarkRows} />
+    width < breakpoint ? <MobileComponent boName = {boName} boDescription = {boDescription} boID = {boID} username={username} bookmarkRows = {bookmarkRows} lastSeen = {lastSeen} changeHistory ={changeHistory}/> : <DesktopComponent boName = {boName} boDescription = {boDescription} boID = {boID} username={username} bookmarkRows = {bookmarkRows} lastSeen = {lastSeen} changeHistory = {changeHistory}/>
   )
 }
 

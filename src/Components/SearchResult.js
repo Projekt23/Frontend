@@ -29,7 +29,7 @@ const Item = styled(Paper)(({ theme }) => ({
 
 
 
-export default function SearchResult() {
+const SearchResult= () => {
     const location = useLocation();
     const [businessObjectName, setBusinessObjectName] = useState();
     const [synonyms, setSynonyms] = useState([]);
@@ -38,16 +38,18 @@ export default function SearchResult() {
     const [contextList, setContextList] = useState([]);
     const [boId, setBoId] = useState("");
     const [clicked, setClicked] = useState();
+
     const navigate = useNavigate();
+    
     function changeFavorite(clicked){
         setClicked(!clicked)
         
     }
+    
     useEffect(() => {
-        getResult()
-    }, [description])
-
-    function getResult(){
+                getResult()
+            }, [])
+    const getResult = () => {
         var userId = decodeToken(localStorage.getItem("userID")).id;
         const server = process.env.REACT_APP_API_BACKEND;
         fetch(server+'/businessobject/' + location.hash.replace('#', "") + '?userId='+userId+'', {
@@ -69,6 +71,7 @@ export default function SearchResult() {
               });
 
     }
+   
 
 
     return (
@@ -132,7 +135,7 @@ export default function SearchResult() {
                                     <Button variant="contained"
                                         key= {row.id}
                                         sx={{ marginRight: 2 }}
-                                        onClick = {() => {navigate("/result#" + row.id); setDescription("")}}>
+                                        onClick = {() => {navigate("/result#" + row.id); getResult()}}>
                                         {row.name}
                                     </Button>
                                 ))}
@@ -162,7 +165,8 @@ export default function SearchResult() {
                                 {contextList.map((row) => (
                                     <Button variant="contained"
                                         key= {row.id}
-                                        sx={{ marginRight: 2 }}>
+                                        sx={{ marginRight: 2 }}
+                                        onClick = {() => {navigate("/result#" + row.id); getResult()}}>
                                         {row.name}
                                     </Button>
                                 ))}
@@ -178,3 +182,4 @@ export default function SearchResult() {
 
 
 }
+export default SearchResult;

@@ -21,14 +21,10 @@ function createData(designation, date, favorite) {
 
 // Hier muss noch aufruf backend stattfinden. // String, String, Bool
 
-const rows = [
-  createData('Abrechnungsbelegarten', '2022-05-06 4:30', true),
-  createData('Debitorenkonditionen', '2010-10-20 4:30', false),
-  createData('Reparaturschema', '2022-05-06 10:30', false),
-  createData('Skonto', '2022-05-06 10:30', true),
-];
 
-export default function History() {
+
+export default function History({lastSeen}) {
+  console.log(lastSeen)
   return (
 <TableContainer component={Paper}>
       <Table  aria-label="simple table">
@@ -40,15 +36,15 @@ export default function History() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {lastSeen.map((row) => (
             <TableRow
-              key={row.designation}
+              key={row["boId"]}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {row.designation}
+                {row["boName"]}
               </TableCell>
-              <TableCell >{timeCalculator(row.date)}</TableCell>
+              <TableCell >{timeCalculator(row["timestamp"])}</TableCell>
               <TableCell align="right">{checkFavorite(row.favorite)}</TableCell>
             </TableRow>
           ))}
