@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {Accordion, AccordionDetails, AccordionSummary, Divider, Stack} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -10,12 +10,16 @@ import IconButton from "@mui/material/IconButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Chip from "@material-ui/core/Chip";
 import { isExpired, decodeToken } from "react-jwt";
-
 export default function (props) {
     const [expand, setExpand] = React.useState(props.expand);
     const toggleAcordion = () => {
       setExpand((prev) => !prev);
     };
+
+    useEffect(() => {
+        setExpand(props.expand)
+    }, [props.expand])
+    
 
     const [expanded, setExpanded] = React.useState(false);
     const [fav, setFav] = React.useState(props.favorite);
@@ -110,7 +114,7 @@ export default function (props) {
     return (
         <div>
             <div>
-                <Accordion id={props.id} expanded={props.expand} onChange={handleChange(props.id)} onClick= {toggleAcordion}>
+                <Accordion id={props.id} expanded={expand} onChange={handleChange(props.id)} onClick= {toggleAcordion}>
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon/>}
                         aria-controls={props.id}
