@@ -20,25 +20,23 @@ const rows = [
   createData('Einkaufsorganisation', 'Steffen Sanger', '2022-02-06 4:30'),
 ];
 
-export default function ChangeHistory({changeHistory}) {
+export default function ChangeHistory() {
   return (
 <TableContainer component={Paper}>
       <Table  aria-label="simple table">
         <TableBody>
-          {changeHistory.map((row) => (
+          {rows.map((row) => (
             <TableRow
-              key={row["boId"]}
+              key={row.designation}
               sx={{ '&:last-child td, &:last-child th': { border: 0 }}}
             >
               <TableCell component="th" scope="row">
-                {row["boName"]}
+                {row.designation}
               </TableCell>
-              <TableCell >{row["userName"]}</TableCell>
-              <TableCell align="right">{timeCalculator(row["timestamp"])}</TableCell>
+              <TableCell >{row.name}</TableCell>
+              <TableCell align="right">{timeCalculator(row.date)}</TableCell>
             </TableRow>
           ))}
-           <TableRow></TableRow>
-       
         </TableBody>
       </Table>
     </TableContainer>
