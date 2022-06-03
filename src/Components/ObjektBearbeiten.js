@@ -53,9 +53,12 @@ export default function ObjektAnlegen() {
     const location = useLocation();
     const [currentBusinessObjectName, setCurrentBusinessObjectName] = useState("");
     const [currentSynonyms, setCurrentSynonyms] = useState([]);
+    const [currentSynonymsID, setCurrentSynonymsID] = useState([]);
     const [currentDescription, setCurrentDescription] = useState("");
     const [currentLabels, setCurrentLabels] = useState([]);
+    const [currentLabelsID, setCurrentLabelsID] = useState([]);
     const [currentContextList, setCurrentContextList] = useState([]);
+    const [currentContextListID, setCurrentContextListID] = useState([]);
     const [currentBoId, setCurrentBoId] = useState("");
 
     const handleNameSelection = (event, value) => setSelectedName(value)
@@ -150,32 +153,41 @@ export default function ObjektAnlegen() {
 
     const handleSynonymeChange = (event, value) => {
         setCurrentSynonyms(value);
+        setCurrentSynonymsID(
+            value.map((synonyme) => (
+                synonyme.id
+            )));
     };
 
     const handleContextChange = (event, value) => {
         setCurrentContextList(value);
+        setCurrentContextListID(
+            value.map((context) => (
+                context.id
+            )));
     };
 
     const handleLabelChange = (event, value) => {
         setCurrentLabels(value);
+        setCurrentLabelsID(
+            value.map((labels) => (
+                labels.id
+            )));
     };
 
-    const handleNameChange = (event, value) => {
-        setCurrentBusinessObjectName(value);
+    const handleNameChange = (event) => {
+        setCurrentBusinessObjectName(event.target.value);
     };
 
-    const handleDescriptionChange = (event, value) => {
-        setCurrentDescription(value);
+    const handleDescriptionChange = (event) => {
+        setCurrentDescription(event.target.value);
     };
 
 
     function TestButton() {
         console.log("name", currentBusinessObjectName);
         console.log("description", currentDescription);
-        console.log('changed again')
-        console.log(typeof currentBusinessObjectName);
-        console.log(typeof 'test');
-        console.log("synonymIds", currentSynonyms,)
+        console.log("synonymIds", currentSynonymsID,)
         //console.log("labels", currentLabels,);
         //console.log("contextIds", currentContextList);
         //console.log('currentObjectData',CurrentObjectData);
@@ -189,27 +201,11 @@ export default function ObjektAnlegen() {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS' },
         body: JSON.stringify({
-            // "name": currentBusinessObjectName,
-            // "description": currentDescription,
-            // "name": 'currentBusinessObjectName',
-            // "description": 'currentDescription',
-            // "synonymIds": currentSynonyms,
-            // "synonymIds": [1,2],
-            // "labels": currentLabels,
-            // "labels": '',
-            // "contextIds": currentContextList
-            // "contextIds": [1,2],
             "name": currentBusinessObjectName,
             "description": currentDescription,
-            "synonymIds": [
-                1,2
-            ],
-            "labels": [
-
-            ],
-            "contextIds": [
-                1,2
-            ]
+            "synonymIds": currentSynonymsID,
+            "labels": currentLabelsID,
+            "contextIds": currentContextListID
         })
         })
         .then(response => {
@@ -256,7 +252,6 @@ export default function ObjektAnlegen() {
                                 variant="standard"
                                 value={currentBusinessObjectName}
                                 onChange={handleNameChange}
-                                //onChange = {(event) => {setSelectedName(event.target.value)}}
                             />
                         </Stack>
                         <Stack direction="column" spacing={2} style={NameColumn}>
@@ -363,7 +358,7 @@ export default function ObjektAnlegen() {
                             options = {ObjectData}
                             getOptionLabel={(option) => option.name}
                             value={currentContextList}
-                            isOptionEqualToValue={(option, value) => option.id === value.id}
+                            isOptionEqualToValue={(option, value) => option.name === value.name}
                             filterSelectedOptions
                             onChange={handleContextChange}
                             renderInput={(params) => (
