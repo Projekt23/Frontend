@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react";
-import Data from "./EditObject/EditObjectsData"
 import style from "./LexikonComponents/Lexikon.module.css";
 import {Autocomplete, Card, Divider, Stack, TextField, Typography} from "@mui/material";
 import InfoIcon from '@mui/icons-material/Info';
@@ -39,14 +38,6 @@ export default function ObjektAnlegen() {
 
     const [Labels, setLabels] = useState([])
     const [Objects, setObjects] = useState([])
-    const [CurrentObjects, setCurrentObjects] = useState([])
-
-    //selected Data
-    const [selectedName, setSelectedName] = useState("")
-    const [selectedLabels, setSelectedLabels] = useState([])
-    const [selectedSynonyms, setSelectedSynonyms] = useState([])
-    const [selectedDescription, setSelectedDescription] = useState("")
-    const [selectedKontext, setSelectedKontext] = useState([])
     const navigate = useNavigate();
 
     //current Object
@@ -60,20 +51,6 @@ export default function ObjektAnlegen() {
     const [currentContextList, setCurrentContextList] = useState([]);
     const [currentContextListID, setCurrentContextListID] = useState([]);
     const [currentBoId, setCurrentBoId] = useState("");
-
-    const handleNameSelection = (event, value) => setSelectedName(value)
-    const handleLabelSelection = (event, value) => setSelectedLabels(value);
-    const handleSynonymSelection = (value) => {
-        var selectedSynonymIds = []
-        value.forEach(element => {
-        selectedSynonymIds.push(element["id"])
-    }); setSelectedSynonyms(selectedSynonymIds)};
-    const handleDesciptionSelection = (event, value) => setSelectedDescription(value)
-    const handleKontextSelection = (value) => {
-        var selectedKontextIds = []
-            value.forEach(element => {
-            selectedKontextIds.push(element["id"])
-    }); setSelectedKontext(selectedKontextIds)};
 
     useEffect(() => {
         const server = process.env.REACT_APP_API_BACKEND;
@@ -132,24 +109,12 @@ export default function ObjektAnlegen() {
     }, [])
 
     const LabelData = Labels.map((labels) =>{
-        return(labels.name)
+        return {id: labels.id, name: labels.name}
     })
 
-    let optionsData = [];
-    let currentoptionsData = [];
-
     const ObjectData = Objects.map((objects) =>{
-       //return optionsData = {id: objects.id, name: objects.name}
         return {id: objects.id, name: objects.name}
     });
-
-    const CurrentObjectData = currentSynonyms.map((objects) =>{
-        return currentoptionsData = {id: objects.id, name: objects.name}
-    });
-
-    // const [synonymeValues, setSynonymeValues] = useState([
-    //     ObjectData
-    // ]);
 
     const handleSynonymeChange = (event, value) => {
         setCurrentSynonyms(value);
@@ -171,7 +136,7 @@ export default function ObjektAnlegen() {
         setCurrentLabels(value);
         setCurrentLabelsID(
             value.map((labels) => (
-                labels.id
+                labels.name
             )));
     };
 
@@ -261,20 +226,15 @@ export default function ObjektAnlegen() {
                                 multiple
                                 id="labels"
                                 options={LabelData}
+                                getOptionLabel={(option) => option.name}
                                 value={currentLabels}
+                                isOptionEqualToValue={(option, value) => option.id === value.id}
                                 onChange={handleLabelChange}
                                 filterSelectedOptions
-                                renderTags={(value, getTagProps) =>
-                                    value.map((data, index) => (
-                                        <Chip variant="outlined" label={data} {...getTagProps({index})} />
-                                    ))
-                                }
                                 renderInput={(params) => (
                                     <TextField
                                         {...params}
-                                        variant="standard"
-                                        label="Labels (z.B. System) auswählen"
-                                        placeholder="..."
+                                        label="Labels für das Objekt auswählen"
                                     />
                                 )}
                             />
@@ -321,8 +281,6 @@ export default function ObjektAnlegen() {
                                     variant="outlined"
                                     value={currentDescription}
                                     onChange={handleDescriptionChange}
-                                    //defaultValue={value}
-                                    //onChange= {(event) => {setSelectedDescription(event.target.value)}}
                                 />
                             </Stack>
                         </div>

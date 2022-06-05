@@ -115,11 +115,26 @@ const Login = ({setUserID, password, setPassword}) => {
                 </Grid>
                 <Grid item >
                     <Typography variant="h5" secondary>Anmeldung</Typography>
-                    <TextField variant="standard" fullWidth style={textfieldStyle} label='username' defaultValue={localStorage.getItem("userName")}
-                               placeholder='Enter Username ...' onChange={(event) => setUserName(event.target.value)}/>
-                    <TextField variant="standard" fullWidth style={textfieldStyle} type="password" label='password'
-                               placeholder='Enter Password ...' onChange={(event) => setPasswordF(event.target.value)}/>
-                    <FormControlLabel control={<Checkbox defaultChecked={checkSaveUsername()} onChange={(event) => {setSaveUsername(event.target.checked)}} size="small"/>} label="Benutzername merken"/>
+                    <TextField
+                        variant="standard"
+                        fullWidth style={textfieldStyle}
+                        label='Benutzername *'
+                        defaultValue={localStorage.getItem("userName")}
+                        placeholder='Benutzername eingeben ...'
+                        onChange={(event) => setUserName(event.target.value)}
+                    />
+                    <TextField
+                        variant="standard"
+                        fullWidth style={textfieldStyle}
+                        type="password"
+                        label='Passwort *'
+                        placeholder='Passwort eingeben ...'
+                        onChange={(event) => setPasswordF(event.target.value)}
+                    />
+                    <FormControlLabel
+                        control={<Checkbox defaultChecked={checkSaveUsername()}
+                        onChange={(event) => {setSaveUsername(event.target.checked)}} size="small"/>} label="Benutzername merken"
+                    />
                 </Grid>
                 <Grid item style={divloginbtn}>
                     <Button

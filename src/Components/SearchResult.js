@@ -107,7 +107,7 @@ const SearchResult= () => {
                                 <Chip label={chip.name} key={chip.id} sx={{
                                     marginRight: 1,
                                     marginY: 'auto'
-                                }} />
+                                }} color={"primary"}/>
                             ))}
                             <Button variant="contained" sx={{
                                 marginLeft: 1,
@@ -132,7 +132,7 @@ const SearchResult= () => {
                                 alignContent: 'center',
                             }}>
                                 {synonyms.map((row) => (
-                                    <Button variant="contained"
+                                    <Button variant="outlined"
                                         key= {row.id}
                                         sx={{ marginRight: 2 }}
                                         onClick = {() => {navigate("/result#" + row.id); getResult()}}>
