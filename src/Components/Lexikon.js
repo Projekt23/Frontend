@@ -8,6 +8,9 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import {Link} from "react-router-dom";
 import userEvent from "@testing-library/user-event";
 import { decodeToken } from "react-jwt";
+import { useLocation } from 'react-router';
+
+
 export default function Lexikon() {
 
     const [reload, setReload] = useState();
@@ -16,8 +19,11 @@ export default function Lexikon() {
     const[startLetter, setStartLetter] = useState(null);
     const [favourites, setFavourites] = useState([])
     const [isExpanded, setIsExpanded] = useState(false)
-
+    const location = useLocation()
     useEffect(() => {
+        if(location.hash.match("favourites")){
+            setAnsicht("favorites")
+        }
         getAllFavourites()
         const server = process.env.REACT_APP_API_BACKEND;
         fetch(server + '/businessobject/all', {
@@ -152,7 +158,7 @@ export default function Lexikon() {
 
     return (<div className={style.containerMain}>
             <div className={style.headerRow}>
-                <Typography variant={"h4"}>Lexikon</Typography>
+                <Typography color= "textPrimary" variant={"h4"}>Lexikon</Typography>
                 <Button className={style.headerButton}
                         variant={"contained"}
                         size={"small"}

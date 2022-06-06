@@ -13,7 +13,6 @@ import './App.css';
 import Invite from './Components/SettingsComponents/Invite';
 import Settings from './Components/Settings';
 import {  ReactiveBase, ResultList }  from "@appbaseio/reactivesearch";
-
 import {useNavigate} from "react-router-dom";
 import { isExpired, decodeToken } from "react-jwt";
 import { CssBaseline, Typography } from '@mui/material/';
@@ -63,6 +62,24 @@ const lightTheme = createTheme({
         }}
     
 });
+const loginTheme = createTheme({
+    palette: {
+        background: {
+            default: 'white',
+            paper: 'white',
+          },
+        mode: 'light',
+        primary: {
+          main: '#004ea5',
+        },
+    },
+
+    components: {
+        Link: {
+            color: "black"
+        }}
+    
+});
 const App = () =>
 {
     const [userID, setUserID] = useState();
@@ -79,7 +96,8 @@ const App = () =>
                         <Route path="/login" element={<Login setUserID = {setUserID} password = {password} setPassword = {setPassword}/>}/>
                         <Route path="/register" element={<Registierung setUserID = {setUserID}/>}/>
                         <Route path="*" element={<Box><Typography>Access denied!</Typography><Typography component={Link} to="/login" >zum Login</Typography></Box>} />
-                </Routes>)
+                </Routes>
+            )
         }
         
         else{

@@ -7,6 +7,7 @@ import { TextField } from "@mui/material";
 
 export default function Invite() {
     const [errorTxt, setErrorTxt] = useState("")
+    const [errorColor, setErrorColor] = useState("")
     const Item = styled(Paper)(({ theme }) => ({
         backgroundColor: theme.palette.mode === 'dark' ? 'primary' : 'primary',
         ...theme.typography.body2,
@@ -28,10 +29,16 @@ export default function Invite() {
             response.text().then(value => {
                 if(response.status !== 200){
                     setErrorTxt("fehlerhafte E-Mail Adresse")
+                    setErrorColor("red")
+                }
+                else if(response.status === 200){
+                    setErrorTxt("Einladung abgeschickt")
+                    setErrorColor("green")
                 }
                 console.log(value)
                 }).catch(err => {
                     setErrorTxt("fehlerhafte E-Mail Adresse")
+                    setErrorColor("red")
                 console.log(err);
                 });
             });
@@ -57,7 +64,7 @@ export default function Invite() {
                         <Box sx={{marginTop: 3, flexGrow: 0.3}}>
                             <TextField label="E-Mail-Adresse" fullWidth id="email" variant="standard"/><br/><br/>
                             <Button size= "small" variant="contained" onClick={() => inviteUser(document.getElementById("email").value, "inviteErrorTxt")}>Senden</Button>
-                            <Typography sx={{color: "red"}} id="inviteErrorTxt">{errorTxt}</Typography>
+                            <Typography sx={{color: {errorColor}}} id="inviteErrorTxt">{errorTxt}</Typography>
                         </Box>
                 </Grid>
                 

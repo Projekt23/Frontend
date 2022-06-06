@@ -3,10 +3,10 @@ import {Grid} from '@material-ui/core'
 import {Card, Checkbox, FormControlLabel, Link, TextField} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import {purple} from "@mui/material/colors";
+import {purple, red} from "@mui/material/colors";
 import {styled} from '@mui/material/styles';
 import {useNavigate} from "react-router-dom";
-
+import { Box } from '@mui/system';
 
 const Login = ({setUserID, password, setPassword}) => {
     const [userName, setUserName] = useState(localStorage.getItem("userName"));
@@ -20,13 +20,12 @@ const Login = ({setUserID, password, setPassword}) => {
     const divloginbtn = {width: "100%", alignItems: "center", flexDirection: "column",}
     const loginbtn = {marginBottom: "15px"}
     const linksStyle = {display: "flex", justifyContent: "space-between", width: "100%"}
-    
+    const [ERROR, setERROR] = useState(" ");
     const [width, setWidth] = React.useState(window.innerWidth);
 
     function setPasswordF(pwd){
         setPassword(pwd)
     }
-
 
 
     function checkResponsive(){
@@ -83,6 +82,9 @@ const Login = ({setUserID, password, setPassword}) => {
                         }
                         navigate("/startseite")
                     }
+                    else{
+                        setERROR("Login fehlerhaft")
+                    }
                     
                     }).catch(err => {
                     console.log(err);
@@ -97,7 +99,8 @@ const Login = ({setUserID, password, setPassword}) => {
     const navigate = useNavigate();
         
     return (
-        <>
+        <div style={{ width: '100vw',
+        height: '100vh', backgroundImage: "url(background.png)", backgroundRepeat: 'no-repeat', backgroundPosition:"center", backgroundSize:"100%"}}>
         <Card style={checkResponsive()} >
             <Grid
                 container
@@ -114,7 +117,7 @@ const Login = ({setUserID, password, setPassword}) => {
                     </div>
                 </Grid>
                 <Grid item >
-                    <Typography variant="h5" secondary>Anmeldung</Typography>
+                    <Typography variant="h5" secondary>Anmeldung </Typography>
                     <TextField
                         variant="standard"
                         fullWidth style={textfieldStyle}
@@ -133,10 +136,12 @@ const Login = ({setUserID, password, setPassword}) => {
                     />
                     <FormControlLabel
                         control={<Checkbox defaultChecked={checkSaveUsername()}
-                        onChange={(event) => {setSaveUsername(event.target.checked)}} size="small"/>} label="Benutzername merken"
-                    />
+                        onChange={(event) => {setSaveUsername(event.target.checked)}} size="small"/>} label="Benutzername merken" 
+                    ></FormControlLabel><Typography  variant="caption">* Pflichtfeld </Typography><Typography color = "red" >{ERROR}</Typography>
                 </Grid>
+                
                 <Grid item style={divloginbtn}>
+                    
                     <Button
                         type="submit"
                         //color="primary"
@@ -147,10 +152,12 @@ const Login = ({setUserID, password, setPassword}) => {
                     >
                         Login
                     </Button>
+                    
                     <div style={linksStyle}>
                         <Typography variant="caption">
                             <Link href="#">Passwort vergessen?</Link>
                         </Typography>
+                        
                         <Typography variant="caption">
                             Neu hier?
                             <Link href="/register"> Anmeldelink anfordern</Link>
@@ -159,8 +166,8 @@ const Login = ({setUserID, password, setPassword}) => {
                 </Grid>
             </Grid>
         </Card>
-         
-     </>
+         </div>
+        
     )
 }
 

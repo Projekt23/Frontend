@@ -34,7 +34,7 @@ export default function HomeDesktop({ boName, boDescription, boID, username, boo
                             <Box
                                 sx={{ display: 'flex', justifyContent: 'space-between', alignContent: 'center', mb: 1 }}>
                                 <Typography marginTop={1} align='left' variant="h5" component="h3"> <b>Merkliste:</b> </Typography>
-                                <Button variant="contained">Alle anzeigen</Button>
+                                <Button variant="contained" component={Link} to={{ pathname: "/lexikon", hash: "favourites" }}>Alle anzeigen</Button>
                             </Box>
                             <Divider sx={{ marginBottom: 2 }} />
                             <Bookmarks bookmarkRows={bookmarkRows} />
