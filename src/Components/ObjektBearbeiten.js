@@ -5,12 +5,12 @@ import InfoIcon from '@mui/icons-material/Info';
 import CloseIcon from '@mui/icons-material/Close';
 import SaveIcon from '@mui/icons-material/Save';
 import Button from "@mui/material/Button";
-import Chip from "@material-ui/core/Chip";
 import {Grid} from "@material-ui/core";
-import { isExpired, decodeToken } from "react-jwt";
+import {decodeToken} from "react-jwt";
 
 import {useNavigate} from "react-router-dom";
 import {useLocation} from "react-router";
+
 const CardStyle = {
     padding: "20px",
 }
@@ -56,10 +56,15 @@ export default function ObjektAnlegen() {
         const server = process.env.REACT_APP_API_BACKEND;
         var userId = decodeToken(localStorage.getItem("userID")).id;
 
+
         //Get Current Object
-        fetch(server+'/businessobject/' + location.hash.replace('#', "") + '?userId='+userId+'', {
+        fetch(server + '/businessobject/' + location.hash.replace('#', "") + '?userId=' + userId + '', {
             method: 'GET',
-            headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS' },
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
+            },
         })
             .then(response => {
                 response.text().then(value => {
@@ -74,6 +79,8 @@ export default function ObjektAnlegen() {
                     console.log(err);
                 });
             });
+
+        reload();
 
         //Get Label Data
         fetch(server + '/label/all', {
@@ -108,13 +115,31 @@ export default function ObjektAnlegen() {
             )
     }, [])
 
-    const LabelData = Labels.map((labels) =>{
+    const LabelData = Labels.map((labels) => {
         return {id: labels.id, name: labels.name}
     })
 
-    const ObjectData = Objects.map((objects) =>{
+    const ObjectData = Objects.map((objects) => {
         return {id: objects.id, name: objects.name}
     });
+
+    function reload() {
+        setCurrentSynonymsID(
+            currentSynonyms.map((syn) => (
+                syn.id
+            ))
+        );
+        setCurrentContextListID(
+            currentContextList.map((context) => (
+                context.id
+            ))
+        );
+        setCurrentLabelsID(
+            currentLabels.map((label) => (
+                label.id
+            ))
+        );
+    }
 
     const handleSynonymeChange = (event, value) => {
         setCurrentSynonyms(value);
@@ -140,9 +165,9 @@ export default function ObjektAnlegen() {
             )));
     };
 
-    const handleNameChange = (event) => {
+    function handleNameChange(event) {
         setCurrentBusinessObjectName(event.target.value);
-    };
+    }
 
     const handleDescriptionChange = (event) => {
         setCurrentDescription(event.target.value);
@@ -153,34 +178,48 @@ export default function ObjektAnlegen() {
         console.log("name", currentBusinessObjectName);
         console.log("description", currentDescription);
         console.log("synonymIds", currentSynonymsID,)
+        console.log("Kontext", currentContextListID,)
+        console.log("Labels", currentLabelsID,)
         //console.log("labels", currentLabels,);
         //console.log("contextIds", currentContextList);
         //console.log('currentObjectData',CurrentObjectData);
     }
 
-    function TestData() {      
+    function TestData() {
+        // handleDescriptionChange()
+        // handleNameChange()
+        // handleSynonymeChange()
+        // handleLabelChange()
+        // handleContextChange()
+
         const server = process.env.REACT_APP_API_BACKEND;
         var id = decodeToken(localStorage.getItem("userID")).id;
         var bID = currentBoId;
-        fetch(server + '/businessobject/'+bID+'?userId='+id, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS' },
-        body: JSON.stringify({
-            "name": currentBusinessObjectName,
-            "description": currentDescription,
-            "synonymIds": currentSynonymsID,
-            "labels": currentLabelsID,
-            "contextIds": currentContextListID
+        reload();
+        fetch(server + '/businessobject/' + bID + '?userId=' + id, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
+            },
+            body: JSON.stringify({
+                "name": currentBusinessObjectName,
+                "description": currentDescription,
+                "synonymIds": currentSynonymsID,
+                "labels": currentLabelsID,
+                "contextIds": currentContextListID
+            })
         })
-        })
-        .then(response => {
-        response.text().then(value => {
-                navigate("/lexikon")
-            }).catch(err => {
-            console.log(err);
+            .then(response => {
+                response.text().then(value => {
+                    navigate("/lexikon")
+                }).catch(err => {
+                    console.log(err);
+                });
             });
-        });
     }
+
     //Input Field function
     const [value, setValue] = React.useState('');
     return (
@@ -194,7 +233,8 @@ export default function ObjektAnlegen() {
                 >
                     <Typography variant={"h4"}>Objekt bearbeiten</Typography>
                     <Stack direction="row" spacing={2} style={ButtonStyle} alignItems={"center"}>
-                        <Button variant={"contained"} style={{backgroundColor: "grey"}} onClick={TestButton}><CloseIcon/> Abbrechen</Button>
+                        <Button variant={"contained"} style={{backgroundColor: "grey"}}
+                                onClick={TestButton}><CloseIcon/> Abbrechen</Button>
                         <Button variant={"contained"} onClick={TestData}><SaveIcon/> Veröffentlichen</Button>
                     </Stack>
                 </Grid>
@@ -216,7 +256,7 @@ export default function ObjektAnlegen() {
                                 label="Objekt Name eintragen"
                                 variant="standard"
                                 value={currentBusinessObjectName}
-                                onChange={handleNameChange}
+                                onChange={(event) => handleNameChange(event)}
                             />
                         </Stack>
                         <Stack direction="column" spacing={2} style={NameColumn}>
@@ -248,7 +288,7 @@ export default function ObjektAnlegen() {
                             fullWidth={true}
                             multiple
                             id="synonyms"
-                            options = {ObjectData}
+                            options={ObjectData}
                             getOptionLabel={(option) => option.name}
                             value={currentSynonyms}
                             isOptionEqualToValue={(option, value) => option.id === value.id}
@@ -271,7 +311,7 @@ export default function ObjektAnlegen() {
                         alignItems="center"
                     >
                         <div style={DescriptionCard}>
-                            <Stack direction="column" spacing={2} >
+                            <Stack direction="column" spacing={2}>
                                 <Typography variant={"h6"}>Begriffsabgrenzung</Typography>
                                 <TextField
                                     id="outlined-multiline-flexible"
@@ -285,8 +325,8 @@ export default function ObjektAnlegen() {
                             </Stack>
                         </div>
                         <div style={DescriptionCard}>
-                                <Card>
-                                    <Stack direction={"column"} spacing={2} alignItems={"flex-start"} >
+                            <Card>
+                                <Stack direction={"column"} spacing={2} alignItems={"flex-start"}>
                                     <div>
                                         <InfoIcon/>
                                         <Typography>
@@ -298,11 +338,11 @@ export default function ObjektAnlegen() {
                                     <div>
                                         <Button aria-label="autoGenerate" variant={"contained"}>
                                             <InfoIcon/>
-                                                Automatisch generieren ...
+                                            Automatisch generieren ...
                                         </Button>
                                     </div>
-                                    </Stack>
-                                </Card>
+                                </Stack>
+                            </Card>
                         </div>
                     </Grid>
                 </Card>
@@ -313,7 +353,7 @@ export default function ObjektAnlegen() {
                             fullWidth={true}
                             multiple
                             id="context"
-                            options = {ObjectData}
+                            options={ObjectData}
                             getOptionLabel={(option) => option.name}
                             value={currentContextList}
                             isOptionEqualToValue={(option, value) => option.name === value.name}
