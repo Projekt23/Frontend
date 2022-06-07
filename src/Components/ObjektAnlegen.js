@@ -136,6 +136,37 @@ export default function ObjektAnlegen() {
             });
         });
     }
+
+    function generateDescription() {
+        if (selectedName !== "") {
+            //const serverKI = process.env.REACT_APP_API_KI;
+            const serverKI = 'http://88.214.57.111:5001/';
+            console.log(serverKI+ '/descriptgen/generatedescription');
+            fetch(serverKI + '/descriptgen/generatedescription', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
+                },
+                body: JSON.stringify({
+                     "term": selectedName
+                })
+            }).then(responseKI => {
+                responseKI.text().then(value => {
+                    console.log(JSON.parse(value))
+                    const generatedDescription = JSON.parse(value);
+                    console.log(generatedDescription.summary)
+                    setSelectedDescription(generatedDescription.summary);
+                }).catch(err => {
+                    console.log(err);
+                });
+            });
+        } else {
+            alert("Bitte Objekt Namen einfügen und erneut versuchen")
+        }
+    }
+
     //Input Field function
     const [value, setValue] = React.useState('');
     return (
@@ -236,7 +267,7 @@ export default function ObjektAnlegen() {
                                     multiline
                                     rows={4}
                                     variant="outlined"
-                                    defaultValue={value}
+                                    value={selectedDescription}
                                     onChange= {(event) => {setSelectedDescription(event.target.value)}}
                                 />
                             </Stack>
@@ -253,7 +284,7 @@ export default function ObjektAnlegen() {
                                         </Typography>
                                     </div>
                                     <div>
-                                        <Button aria-label="autoGenerate" variant={"contained"}>
+                                        <Button aria-label="autoGenerate" variant={"contained"} onClick={generateDescription}>
                                             <InfoIcon/>
                                                 Automatisch generieren ...
                                         </Button>
