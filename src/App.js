@@ -12,7 +12,7 @@ import {createTheme, ThemeProvider} from '@mui/material/styles';
 import './App.css';
 import Invite from './Components/SettingsComponents/Invite';
 import Settings from './Components/Settings';
-import {  ReactiveBase, ResultList }  from "@appbaseio/reactivesearch";
+import {  ReactiveBase}  from "@appbaseio/reactivesearch";
 
 import {useNavigate} from "react-router-dom";
 import { isExpired, decodeToken } from "react-jwt";
@@ -20,9 +20,9 @@ import { CssBaseline, Typography } from '@mui/material/';
 import SearchResult from './Components/SearchResult';
 
 // Test Data
-import data from "./Components/LexikonComponents/LexikonData";
+
 import Registierung from './Components/Registierung';
-import { Button } from 'bootstrap';
+
 import { Box } from '@mui/system';
 
 
@@ -68,7 +68,7 @@ const App = () =>
     const [userID, setUserID] = useState();
     const[loggedIn, setLoggedIn] = useState(false);
     const [theme, setTheme] = useState(true);
-    const navigate = useNavigate();
+    
     const [password, setPassword] = useState("");
     
     function checkLogin(){
@@ -106,7 +106,7 @@ const App = () =>
                     <Route path="/objekt_bearbeiten" element={<ObjektBearbeiten />}/>
                     <Route path="/settings" element={<Settings />}/>
                     <Route path="/invite" element={<Invite />}/>
-                    <Route path="/resultlist" element={<ResultList />}/>
+                    <Route path="/resultlist" element={<Resultlist />}/>
                     <Route path="/profile" element={<Profil password = {password} setPassword = {setPassword}/>}/>
                     <Route path="/result" element={<SearchResult />}/>
                     <Route path="*" element={<div>404 Not Found!</div>} />

@@ -29,6 +29,7 @@ const Item = styled(Paper)(({ theme }) => ({
 
 
 
+
 const SearchResult= () => {
     const location = useLocation();
     const [businessObjectName, setBusinessObjectName] = useState();

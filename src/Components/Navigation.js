@@ -19,7 +19,7 @@ import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import DevicesIcon from '@mui/icons-material/Devices';
 import { Divider } from '@mui/material';
-import Searchbar from './Searchbar';
+import Searchbar  from './Searchbar';
 
 function Navigation({setTheme, theme, setUserID, password, setPassword}) {
     const pages = ['Startseite', 'Lexikon'];
