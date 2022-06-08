@@ -1,17 +1,16 @@
 import React, {useEffect, useState} from "react";
-import Data from "./EditObject/EditObjectsData"
 import style from "./LexikonComponents/Lexikon.module.css";
 import {Autocomplete, Card, Divider, Stack, TextField, Typography} from "@mui/material";
 import InfoIcon from '@mui/icons-material/Info';
 import CloseIcon from '@mui/icons-material/Close';
 import SaveIcon from '@mui/icons-material/Save';
 import Button from "@mui/material/Button";
-import Chip from "@material-ui/core/Chip";
 import {Grid} from "@material-ui/core";
-import { isExpired, decodeToken } from "react-jwt";
+import {decodeToken} from "react-jwt";
 
 import {useNavigate} from "react-router-dom";
 import {useLocation} from "react-router";
+
 const CardStyle = {
     padding: "20px",
 }
@@ -39,47 +38,33 @@ export default function ObjektAnlegen() {
 
     const [Labels, setLabels] = useState([])
     const [Objects, setObjects] = useState([])
-    const [CurrentObjects, setCurrentObjects] = useState([])
-
-    //selected Data
-    const [selectedName, setSelectedName] = useState("")
-    const [selectedLabels, setSelectedLabels] = useState([])
-    const [selectedSynonyms, setSelectedSynonyms] = useState([])
-    const [selectedDescription, setSelectedDescription] = useState("")
-    const [selectedKontext, setSelectedKontext] = useState([])
     const navigate = useNavigate();
 
     //current Object
     const location = useLocation();
     const [currentBusinessObjectName, setCurrentBusinessObjectName] = useState("");
     const [currentSynonyms, setCurrentSynonyms] = useState([]);
+    const [currentSynonymsID, setCurrentSynonymsID] = useState([]);
     const [currentDescription, setCurrentDescription] = useState("");
     const [currentLabels, setCurrentLabels] = useState([]);
+    const [currentLabelsID, setCurrentLabelsID] = useState([]);
     const [currentContextList, setCurrentContextList] = useState([]);
+    const [currentContextListID, setCurrentContextListID] = useState([]);
     const [currentBoId, setCurrentBoId] = useState("");
-
-    const handleNameSelection = (event, value) => setSelectedName(value)
-    const handleLabelSelection = (event, value) => setSelectedLabels(value);
-    const handleSynonymSelection = (value) => {
-        var selectedSynonymIds = []
-        value.forEach(element => {
-        selectedSynonymIds.push(element["id"])
-    }); setSelectedSynonyms(selectedSynonymIds)};
-    const handleDesciptionSelection = (event, value) => setSelectedDescription(value)
-    const handleKontextSelection = (value) => {
-        var selectedKontextIds = []
-            value.forEach(element => {
-            selectedKontextIds.push(element["id"])
-    }); setSelectedKontext(selectedKontextIds)};
 
     useEffect(() => {
         const server = process.env.REACT_APP_API_BACKEND;
         var userId = decodeToken(localStorage.getItem("userID")).id;
 
+
         //Get Current Object
-        fetch(server+'/businessobject/' + location.hash.replace('#', "") + '?userId='+userId+'', {
+        fetch(server + '/businessobject/' + location.hash.replace('#', "") + '?userId=' + userId + '', {
             method: 'GET',
-            headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS' },
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
+            },
         })
             .then(response => {
                 response.text().then(value => {
@@ -95,12 +80,7 @@ export default function ObjektAnlegen() {
                 });
             });
 
-            // .then(res => res.json())
-            // .then(
-            //     (currentObjects) => {
-            //         setCurrentObjects(currentObjects);
-            //     },
-            // )
+        reload();
 
         //Get Label Data
         fetch(server + '/label/all', {
@@ -135,63 +115,142 @@ export default function ObjektAnlegen() {
             )
     }, [])
 
-    const LabelData = Labels.map((labels) =>{
-        return(labels.name)
+    const LabelData = Labels.map((labels) => {
+        return {id: labels.id, name: labels.name}
     })
 
-    let optionsData = [];
-    let currentoptionsData = [];
-
-    const ObjectData = Objects.map((objects) =>{
-       //return optionsData = {id: objects.id, name: objects.name}
+    const ObjectData = Objects.map((objects) => {
         return {id: objects.id, name: objects.name}
     });
 
-    const CurrentObjectData = currentSynonyms.map((objects) =>{
-        return currentoptionsData = {id: objects.id, name: objects.name}
-    });
+    function reload() {
+        setCurrentSynonymsID(
+            currentSynonyms.map((syn) => (
+                syn.id
+            ))
+        );
+        setCurrentContextListID(
+            currentContextList.map((context) => (
+                context.id
+            ))
+        );
+        setCurrentLabelsID(
+            currentLabels.map((label) => (
+                label.id
+            ))
+        );
+    }
 
-    const [autocompleteValues, setAutocompleteValues] = useState([
-        //ObjectData[1]
-    ]);
+    const handleSynonymeChange = (event, value) => {
+        setCurrentSynonyms(value);
+        setCurrentSynonymsID(
+            value.map((synonyme) => (
+                synonyme.id
+            )));
+    };
 
-    const handleAutocompleteChange = (event, value) => {
-        setAutocompleteValues(value);
+    const handleContextChange = (event, value) => {
+        setCurrentContextList(value);
+        setCurrentContextListID(
+            value.map((context) => (
+                context.id
+            )));
+    };
+
+    const handleLabelChange = (event, value) => {
+        setCurrentLabels(value);
+        setCurrentLabelsID(
+            value.map((labels) => (
+                labels.name
+            )));
+    };
+
+    function handleNameChange(event) {
+        setCurrentBusinessObjectName(event.target.value);
+    }
+
+    const handleDescriptionChange = (event) => {
+        setCurrentDescription(event.target.value);
     };
 
 
     function TestButton() {
-        //console.log(Objects);
-        console.log(ObjectData);
-        console.log(ObjectData[1]);
-        console.log(optionsData[1])
-        //console.log(CurrentObjects);
-        //console.log(currentSynonyms);
-        //console.log(CurrentObjectData);
+        console.log("name", currentBusinessObjectName);
+        console.log("description", currentDescription);
+        console.log("synonymIds", currentSynonymsID,)
+        console.log("Kontext", currentContextListID,)
+        console.log("Labels", currentLabelsID,)
+        //console.log("labels", currentLabels,);
+        //console.log("contextIds", currentContextList);
+        //console.log('currentObjectData',CurrentObjectData);
     }
 
-    function TestData() {      
+    function TestData() {
+        // handleDescriptionChange()
+        // handleNameChange()
+        // handleSynonymeChange()
+        // handleLabelChange()
+        // handleContextChange()
+
         const server = process.env.REACT_APP_API_BACKEND;
         var id = decodeToken(localStorage.getItem("userID")).id;
-        fetch(server + '/businessobject?userId='+id+'', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS' },
-        body: JSON.stringify({
-            "name": selectedName,
-            "description": selectedDescription,
-            "synonymIds": selectedSynonyms,
-            "labels": selectedLabels,
-            "contextIds": selectedKontext
+        var bID = currentBoId;
+        reload();
+        fetch(server + '/businessobject/' + bID + '?userId=' + id, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
+            },
+            body: JSON.stringify({
+                "name": currentBusinessObjectName,
+                "description": currentDescription,
+                "synonymIds": currentSynonymsID,
+                "labels": currentLabelsID,
+                "contextIds": currentContextListID
+            })
         })
-        })
-        .then(response => {
-        response.text().then(value => {
-                navigate("/lexikon")
-            }).catch(err => {
-            console.log(err);
+            .then(response => {
+                response.text().then(value => {
+                    navigate("/lexikon")
+                }).catch(err => {
+                    console.log(err);
+                });
             });
-        });
     }
+
+    function generateDescription() {
+        if (currentBusinessObjectName !== "") {
+            //const serverKI = process.env.REACT_APP_API_KI;
+            const serverKI = 'http://88.214.57.111:5001/';
+            console.log(serverKI+ '/descriptgen/generatedescription');
+            fetch(serverKI + '/descriptgen/generatedescription', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
+                },
+                body: JSON.stringify({
+                    "term": currentBusinessObjectName
+                })
+            }).then(responseKI => {
+                responseKI.text().then(value => {
+                    console.log(JSON.parse(value))
+                    const generatedDescription = JSON.parse(value);
+                    console.log(generatedDescription.summary)
+                    setCurrentDescription(generatedDescription.summary);
+                }).catch(err => {
+                    console.log(err);
+                });
+            });
+        } else {
+            alert("Bitte Objekt Namen einfügen und erneut versuchen")
+        }
+    }
+
+
     //Input Field function
     const [value, setValue] = React.useState('');
     return (
@@ -205,7 +264,8 @@ export default function ObjektAnlegen() {
                 >
                     <Typography variant={"h4"}>Objekt bearbeiten</Typography>
                     <Stack direction="row" spacing={2} style={ButtonStyle} alignItems={"center"}>
-                        <Button variant={"contained"} style={{backgroundColor: "grey"}} onClick={TestButton}><CloseIcon/> Abbrechen</Button>
+                        <Button variant={"contained"} style={{backgroundColor: "grey"}}
+                                onClick={TestButton}><CloseIcon/> Abbrechen</Button>
                         <Button variant={"contained"} onClick={TestData}><SaveIcon/> Veröffentlichen</Button>
                     </Stack>
                 </Grid>
@@ -226,7 +286,8 @@ export default function ObjektAnlegen() {
                                 id="standard-basic"
                                 label="Objekt Name eintragen"
                                 variant="standard"
-                                onChange = {(event) => {setSelectedName(event.target.value)}}
+                                value={currentBusinessObjectName}
+                                onChange={(event) => handleNameChange(event)}
                             />
                         </Stack>
                         <Stack direction="column" spacing={2} style={NameColumn}>
@@ -236,19 +297,15 @@ export default function ObjektAnlegen() {
                                 multiple
                                 id="labels"
                                 options={LabelData}
-                                //defaultValue={LabelData.find(v => v.label[0])}
-                                onChange={handleLabelSelection}
-                                renderTags={(value, getTagProps) =>
-                                    value.map((data, index) => (
-                                        <Chip variant="outlined" label={data} {...getTagProps({index})} />
-                                    ))
-                                }
+                                getOptionLabel={(option) => option.name}
+                                value={currentLabels}
+                                isOptionEqualToValue={(option, value) => option.id === value.id}
+                                onChange={handleLabelChange}
+                                filterSelectedOptions
                                 renderInput={(params) => (
                                     <TextField
                                         {...params}
-                                        variant="standard"
-                                        label="Labels (z.B. System) auswählen"
-                                        placeholder="..."
+                                        label="Labels für das Objekt auswählen"
                                     />
                                 )}
                             />
@@ -262,15 +319,12 @@ export default function ObjektAnlegen() {
                             fullWidth={true}
                             multiple
                             id="synonyms"
-                            options = {ObjectData}
+                            options={ObjectData}
                             getOptionLabel={(option) => option.name}
-                            value={autocompleteValues}
+                            value={currentSynonyms}
                             isOptionEqualToValue={(option, value) => option.id === value.id}
                             filterSelectedOptions
-                            onChange={handleAutocompleteChange}
-                            // onChange={(event, newValue) => {
-                            //     handleSynonymSelection(newValue)
-                            // }}
+                            onChange={handleSynonymeChange}
                             renderInput={(params) => (
                                 <TextField
                                     {...params}
@@ -288,7 +342,7 @@ export default function ObjektAnlegen() {
                         alignItems="center"
                     >
                         <div style={DescriptionCard}>
-                            <Stack direction="column" spacing={2} >
+                            <Stack direction="column" spacing={2}>
                                 <Typography variant={"h6"}>Begriffsabgrenzung</Typography>
                                 <TextField
                                     id="outlined-multiline-flexible"
@@ -296,14 +350,14 @@ export default function ObjektAnlegen() {
                                     multiline
                                     rows={4}
                                     variant="outlined"
-                                    defaultValue={value}
-                                    onChange= {(event) => {setSelectedDescription(event.target.value)}}
+                                    value={currentDescription}
+                                    onChange={handleDescriptionChange}
                                 />
                             </Stack>
                         </div>
                         <div style={DescriptionCard}>
-                                <Card>
-                                    <Stack direction={"column"} spacing={2} alignItems={"flex-start"} >
+                            <Card>
+                                <Stack direction={"column"} spacing={2} alignItems={"flex-start"}>
                                     <div>
                                         <InfoIcon/>
                                         <Typography>
@@ -313,13 +367,13 @@ export default function ObjektAnlegen() {
                                         </Typography>
                                     </div>
                                     <div>
-                                        <Button aria-label="autoGenerate" variant={"contained"}>
+                                        <Button aria-label="autoGenerate" variant={"contained"} onClick={generateDescription}>
                                             <InfoIcon/>
-                                                Automatisch generieren ...
+                                            Automatisch generieren ...
                                         </Button>
                                     </div>
-                                    </Stack>
-                                </Card>
+                                </Stack>
+                            </Card>
                         </div>
                     </Grid>
                 </Card>
@@ -330,12 +384,12 @@ export default function ObjektAnlegen() {
                             fullWidth={true}
                             multiple
                             id="context"
-                            options = {ObjectData}
-                            getOptionLabel={(option) => option["name"]}
+                            options={ObjectData}
+                            getOptionLabel={(option) => option.name}
+                            value={currentContextList}
+                            isOptionEqualToValue={(option, value) => option.name === value.name}
                             filterSelectedOptions
-                            onChange={(event, newValue) => {
-                                handleKontextSelection(newValue)
-                            }}
+                            onChange={handleContextChange}
                             renderInput={(params) => (
                                 <TextField
                                     {...params}

@@ -29,17 +29,17 @@ export default function HomeDesktop({boName,boDescription,boID,username,bookmark
             </Grid>
             <Grid container spacing={2}>
                 <Grid item xs={6}>
-             
-                    <Item sx={{ minHeight: 360 }}>
-                        <Box
-                            sx={{ display: 'flex', justifyContent: 'space-between', alignContent: 'center', mb: 1 }}>
-                            <Typography marginTop={1} align='left' variant="h5" component="h3"> <b>Merkliste:</b> </Typography>
-                            <Button variant="contained">Alle anzeigen</Button>
-                        </Box>
-                        <Divider sx={{ marginBottom: 2 }} />
-                        <Bookmarks bookmarkRows = {bookmarkRows}/>
-                    </Item>
-                  
+                    <Paper>
+                        <Item sx={{ minHeight: 360 }}>
+                            <Box
+                                sx={{ display: 'flex', justifyContent: 'space-between', alignContent: 'center', mb: 1 }}>
+                                <Typography marginTop={1} align='left' variant="h5" component="h3"> <b>Merkliste:</b> </Typography>
+                                <Button variant="contained" component={Link} to={{ pathname: "/lexikon", hash: "favourites" }}>Alle anzeigen</Button>
+                            </Box>
+                            <Divider sx={{ marginBottom: 2 }} />
+                            <Bookmarks bookmarkRows={bookmarkRows} />
+                        </Item>
+                    </Paper>
                 </Grid>
                 <Grid item xs={6}>
        
@@ -65,18 +65,18 @@ export default function HomeDesktop({boName,boDescription,boID,username,bookmark
                
                 </Grid>
                 <Grid item xs={6}>
-               
-                    <Item sx={{ minHeight: 240 }} >
-                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignContent: 'center', mb: 1 }}>
-                            <Typography  marginTop={1} align='left' variant="h5" component="h3" sx={{ fontWeight: 'bold' }}> Wussten Sie schon? </Typography>
-                            <Button component={Link} to={{pathname: "/result", hash: String(boID)}} variant="contained">Detailseite</Button>
-                        </Box>
-                        <Divider sx={{ marginBottom: 2 }} />
-                        <Item  >
-                            <DidYouKnow boName = {boName} boDescription = {boDescription}/>
+                    <Paper>
+                        <Item sx={{ minHeight: 240 }} >
+                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignContent: 'center', mb: 1 }}>
+                                <Typography marginTop={1} align='left' variant="h5" component="h3" sx={{ fontWeight: 'bold' }}> Wussten Sie schon? </Typography>
+                                <Button component={Link} to={{ pathname: "/result", hash: String(boID) }} variant="contained">Zur Detailseite</Button>
+                            </Box>
+                            <Divider sx={{ marginBottom: 2 }} />
+                            <Item  >
+                                <DidYouKnow boName={boName} boDescription={boDescription} />
+                            </Item>
                         </Item>
-                    </Item>
-                    
+                    </Paper>
                 </Grid>
             </Grid >
         </Container >

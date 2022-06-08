@@ -110,11 +110,11 @@ const Registierung= ({setUserID}) => {
                 </Grid>
                 <Grid item>
                     <Typography variant="h5" secondary>Registrierung</Typography>
-                    <TextField variant="standard" fullWidth style = {textfieldStyle} label='Benutzername' onChange={(event) => setUserName(event.target.value)}/>
+                    <TextField variant="standard" fullWidth style = {textfieldStyle} label='Benutzername * ' onChange={(event) => setUserName(event.target.value)}/>
                     <TextField variant="standard" fullWidth style = {textfieldStyle} label='Vorname' onChange={(event) => setFirstName(event.target.value)}/>
                     <TextField variant="standard" fullWidth style = {textfieldStyle} label='Nachname' onChange={(event) => setLastName(event.target.value)}/>
-                    <TextField variant="standard" fullWidth style = {textfieldStyle} type="password" label='Passwort' placeholder='Enter Password ...' onChange={(event) => setPassword(event.target.value)}/>
-                    <TextField variant="standard" fullWidth style = {textfieldStyle} type="password" label='Passwort wiederholen' placeholder='Confirm Password ...' onChange={(event) => setConfirmPassword(event.target.value)}/>
+                    <TextField variant="standard" fullWidth style = {textfieldStyle} type="password" label='Passwort erstellen * ' placeholder='Passwort erstellen...' onChange={(event) => setPassword(event.target.value)}/>
+                    <TextField variant="standard" fullWidth style = {textfieldStyle} type="password" label='Passwort wiederholen *' placeholder='Passwort wiederholen...' onChange={(event) => setConfirmPassword(event.target.value)}/>
                     <FormControlLabel control={<Checkbox size="small"/>} label="Benutzername merken"/>
                     
                     

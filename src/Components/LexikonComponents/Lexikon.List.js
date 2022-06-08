@@ -131,7 +131,7 @@ export default function (props) {
                                     </Typography>
                                     {props.synonyms.map(synonym => (
                                         // <Typography key={synonym.id}>{synonym.name}</Typography>
-                                        <Chip key={synonym.id} label={synonym.name} color={"primary"}/>
+                                        <Chip key={synonym.id} label={synonym.name}/>
                                     ))}
                                 </Stack>
                             </div>
@@ -151,7 +151,7 @@ export default function (props) {
                             <div>
                                 <Stack direction={"row"} spacing={1}>
                                     {props.labels.map(label => (
-                                        <Chip key={label.id} label={label.name}/>
+                                        <Chip key={label.id} label={label.name} color={"primary"}/>
                                     ))}
                                 </Stack>
                             </div>

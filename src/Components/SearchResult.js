@@ -19,6 +19,7 @@ import { decodeToken } from "react-jwt";
 import {Link} from "react-router-dom";
 import { useNavigate } from 'react-router';
 
+
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
     ...theme.typography.body2,
@@ -26,8 +27,6 @@ const Item = styled(Paper)(({ theme }) => ({
     textAlign: 'center',
     color: theme.palette.text.secondary,
 }));
-
-
 
 
 const SearchResult= () => {
@@ -39,17 +38,109 @@ const SearchResult= () => {
     const [contextList, setContextList] = useState([]);
     const [boId, setBoId] = useState("");
     const [clicked, setClicked] = useState();
+    const [favourites, setFavourites] = useState([]);
 
     const navigate = useNavigate();
-    
-    function changeFavorite(clicked){
-        setClicked(!clicked)
-        
-    }
+   
     
     useEffect(() => {
-                getResult()
-            }, [])
+        getResult()
+        getAllFavourites()
+
+
+
+    }, [])
+
+    useEffect(() => {
+        getResult()
+        getAllFavourites()
+
+
+
+    }, [favourites])
+    function getAllFavourites(){
+        var id = decodeToken(localStorage.getItem("userID")).id;
+        const server = process.env.REACT_APP_API_BACKEND;
+        fetch(server+'/favourite/all/'+id+'', {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS' },
+        })
+        .then(res => res.json())
+        .then(
+            (data) => {
+                var favouritesArr = []
+                data.forEach(element => {
+                    favouritesArr.push(element["businessObjectId"])
+                });
+                setFavourites(favouritesArr)
+            },
+        )
+    }
+
+    function deleteFavorite(){
+        const server = process.env.REACT_APP_API_BACKEND;
+        var userId = decodeToken(localStorage.getItem("userID")).id;
+        fetch(server + '/favourite/' + userId +'/'+boId, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS' },
+        })
+        .then(response => {
+        response.text().then(value => {
+
+            }).catch(err => {
+            console.log(err);
+            });
+        });
+    }
+
+    function setFavorite(){
+        const server = process.env.REACT_APP_API_BACKEND;
+        var userId = decodeToken(localStorage.getItem("userID")).id;
+        fetch(server + '/favourite', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS' },
+        body: JSON.stringify({
+            "userId": userId,
+            "businessObjectId": boId
+        })
+        })
+        .then(response => {
+        response.text().then(value => {
+            }).catch(err => {
+            console.log(err);
+            });
+        });
+    }
+
+    function checkFavorite() {
+        var favorite = false
+        if (favourites.includes(boId)){
+            favorite = true
+        }
+        else{
+            favorite = false
+        }
+
+        if (favorite === true) {
+            return (
+                <IconButton onClick={() => {
+                    deleteFavorite()
+                    getAllFavourites()
+                    }}>
+                    <FavoriteIcon />
+                </IconButton>
+            )
+        } else {
+            return (
+                <IconButton  onClick={() => {
+                    setFavorite()
+                    getAllFavourites()}}>
+                    <FavoriteBorderIcon />
+                </IconButton>
+            )
+        }
+    }
+
     const getResult = () => {
         var userId = decodeToken(localStorage.getItem("userID")).id;
         const server = process.env.REACT_APP_API_BACKEND;
@@ -70,7 +161,7 @@ const SearchResult= () => {
                   console.log(err);
                   });
               });
-
+        
     }
    
 
@@ -95,9 +186,7 @@ const SearchResult= () => {
                                 sx={{
                                     mt: 1
                                 }}> <b>{businessObjectName}</b> </Typography>
-                            <IconButton onClick={() => changeFavorite(clicked)} >
-                                {clicked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-                            </IconButton>
+                            {checkFavorite()}
                         </Box>
                         <Box
                             sx={{
@@ -108,7 +197,7 @@ const SearchResult= () => {
                                 <Chip label={chip.name} key={chip.id} sx={{
                                     marginRight: 1,
                                     marginY: 'auto'
-                                }} />
+                                }} color={"primary"}/>
                             ))}
                             <Button variant="contained" sx={{
                                 marginLeft: 1,
@@ -133,7 +222,7 @@ const SearchResult= () => {
                                 alignContent: 'center',
                             }}>
                                 {synonyms.map((row) => (
-                                    <Button variant="contained"
+                                    <Button variant="outlined"
                                         key= {row.id}
                                         sx={{ marginRight: 2 }}
                                         onClick = {() => {navigate("/result#" + row.id); getResult()}}>
@@ -177,10 +266,6 @@ const SearchResult= () => {
                 </Stack>
             </Box>
         </Container>
-
-
     )
-
-
 }
 export default SearchResult;

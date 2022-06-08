@@ -8,6 +8,7 @@ import { styled } from '@mui/material/styles';
 import { Grid, Paper, Container, Typography, Divider } from "@mui/material";
 import Button from '@mui/material/Button';
 import History from './History';
+import { Link } from "react-router-dom";
 
 
 export default function HomeMobile({boName,boDescription,boID,username,bookmarkRows, lastSeen, changeHistory}) {
@@ -38,7 +39,7 @@ export default function HomeMobile({boName,boDescription,boID,username,bookmarkR
                         m: 1,
                     }}>
                     <Typography align='left' variant="h5" component="h3"> <b>Merkliste:</b> </Typography>
-                    <Button variant="contained">Alle anzeigen</Button>
+                    <Button variant="contained" component={Link} to={{ pathname: "/lexikon", hash: "favourites" }}>Alle anzeigen</Button>
                 </Box>
                 <Divider sx={{ marginBottom: 2 }} />
                 <Bookmarks bookmarkRows = {bookmarkRows}/>

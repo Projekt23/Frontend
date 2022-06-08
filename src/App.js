@@ -63,6 +63,24 @@ const lightTheme = createTheme({
         }}
     
 });
+const loginTheme = createTheme({
+    palette: {
+        background: {
+            default: 'white',
+            paper: 'white',
+          },
+        mode: 'light',
+        primary: {
+          main: '#004ea5',
+        },
+    },
+
+    components: {
+        Link: {
+            color: "black"
+        }}
+    
+});
 const App = () =>
 {
     const [userID, setUserID] = useState();
@@ -79,7 +97,8 @@ const App = () =>
                         <Route path="/login" element={<Login setUserID = {setUserID} password = {password} setPassword = {setPassword}/>}/>
                         <Route path="/register" element={<Registierung setUserID = {setUserID}/>}/>
                         <Route path="*" element={<Box><Typography>Access denied!</Typography><Typography component={Link} to="/login" >zum Login</Typography></Box>} />
-                </Routes>)
+                </Routes>
+            )
         }
         
         else{

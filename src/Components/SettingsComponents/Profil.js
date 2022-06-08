@@ -68,8 +68,8 @@ export default function Profil({password, setPassword}) {
                 <Grid container sx={{}} rowSpacing={1}  columnSpacing={{ xs: 0, sm: 0, md: 0 }} >
                     {/* Display only in Desktop Version */}
                     <Box sx={{mr: 33.2, marginTop: 4, flexGrow: 0, display: {xs: 'none', md:'block'}} }>
-                        <Typography sx={{marginTop: 3}}align='left' variant="h6">Benutzername</Typography>
-                        <Typography sx={{marginTop: 7}} align='left' variant="h6">E-Mail Adresse</Typography>
+                        <Typography sx={{marginTop: 3}}align='left' variant="h6">Benutzername *</Typography>
+                        <Typography sx={{marginTop: 7}} align='left' variant="h6">E-Mail Adresse *</Typography>
                         <Typography sx={{marginTop: 6}} align='left' variant="h6">Vorname</Typography>
                         <Typography sx={{marginTop: 6}} align='left' variant="h6">Nachname</Typography>
                     </Box>
