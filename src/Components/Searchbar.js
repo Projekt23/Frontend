@@ -21,7 +21,7 @@ function Searchbar() {
             
             var element = document.getElementById('q-downshift-input')
             setSearchValue(element.value) ; 
-            navigate("/resultlist?q=" + element.value + "\"");
+            navigate("/Lexikon?q=" + element.value + "\"");
         }
     }
   return (

@@ -21,6 +21,7 @@ export default function Lexikon({setReload}) {
     const [ansicht, setAnsicht] = useState("all")
     const[startLetter, setStartLetter] = useState(null);
     const [favourites, setFavourites] = useState([])
+    const [favouriteIds, setFavouriteIds] = useState([])
     const [isExpanded, setIsExpanded] = useState(false)
     const location = useLocation()
 
@@ -72,7 +73,6 @@ export default function Lexikon({setReload}) {
         })
         setLexikonData(sortedData)
     }
-    
     function getAllFavourites(){
         const server = process.env.REACT_APP_API_BACKEND;
         
@@ -90,17 +90,19 @@ export default function Lexikon({setReload}) {
                 (data) => {
                     var favouritesArr = []
                     data.forEach(element => {
-                        favouritesArr.push(element["businessObjectId"])
+                        favouritesArr.push(String(element["businessObjectId"]))
                     });
                     setFavourites(data)
+                    setFavouriteIds(favouritesArr)
+                    console.log(favouritesArr)
                 },
             )
         }
 
         function favouriteCheck(){
-            
+            if (startLetter !== null){
             if(ansicht !=="favorites"){
-                return(
+                listData = (
                     <ReactiveList
                     componentId="SearchResult"
                     dataField="name"
@@ -114,53 +116,26 @@ export default function Lexikon({setReload}) {
                     }}
                     render={({ data, value }) => (
                        
-                        data.map(item => (
-                            
-                            <Accordion key={item._id} >
-                                <AccordionSummary
-                                    
-                                    expandIcon={<ExpandMoreIcon />}
-                                >
-                                    {/* {setsearchValue(value)} */}
-                                    {console.log(value)}
-                                    <Typography sx={{ width: '33%', flexShrink: 0 }} >
-                                        {item.name}
-                                    </Typography>
-                                    <div style={AccordionSummaryText}>
-                                        <div>
-                                            <Stack direction={"row"} spacing={1} alignItems="center">
-                                                <Typography>
-                                                    Synonyme:
-                                                </Typography>
-
-                                            </Stack>
-                                        </div>
-                                    </div>
-                                </AccordionSummary>
-                                <AccordionDetails>
-                                    <Divider />
-                                    <div style={AccordionDetailsText}>
-                                        <Typography variant={"h5"}>Begriffsabgrenzung</Typography>
-                                        <br />
-                                        <Typography key={item._id}> {item.description} </Typography>
-                                    </div>
-                                    <Divider />
-                                    <div style={AccordionFooter}>
-                                        <Button variant={"contained"} component={Link} to={{ pathname: "/result", hash: String(item._id) }}>Zur Detailseite</Button>
-                                        <div>
-                                          <Stack direction={"row"} spacing={1}>
-                                                <Chip label={item.label}></Chip>
-                                            </Stack> 
-                                        </div>
-                                    </div>
-                                </AccordionDetails>
-                            </Accordion>
-                        ))
-                    )}
+                        data.map(item => {
+                            if(startsWith(item.name, startLetter)){
+                                console.log(item)
+                                return(
+                                <LexikonList
+                                id = {item._id}
+                                key={item._id}
+                                name={item.name}
+                                details={item.description}
+                                favorite= {favouriteIds.includes(item._id)}
+                                expand = {isExpanded}
+                            />)}})
+                        )
+                    }
                 />)
         }
         else{
+            
             listData = favourites.map((object) => {
+                if(startsWith(object["businessObjectName"], startLetter)){
                 return <LexikonList
                     id = {object["businessObjectId"]}
                     key={object["businessObjectId"]}
@@ -168,10 +143,54 @@ export default function Lexikon({setReload}) {
                     details={object["businessObjectDescription"]}
                     favorite= {true}
                     expand = {isExpanded}
-                />}
-            ) 
+                />}}
+            ) }
+                }
+            else{
+                if(ansicht !=="favorites"){
+                    listData = 
+                        <ReactiveList
+                        componentId="SearchResult"
+                        dataField="name"
+                        size={10}
+                        className="result-list-container"
+                        showResultStats={false}
+                        pagination={true}
+                        paginationAt="bottom"
+                        react={{
+                            and: "q"
+                        }}
+                        render={({ data, value }) => (
+                            
+                            data.map(item => {
+                               return( <LexikonList
+                                id = {item._id}
+                                key={item._id}
+                                name={item.name}
+                                details={item.description}
+                                favorite= {favouriteIds.includes(item._id)}
+                                expand = {isExpanded}
+                            />)}
+                            ))
+                        }
+                    />
+                
+                }
+                
+            else{
+                listData = favourites.map((object) => {
+                    return <LexikonList
+                        id = {object["businessObjectId"]}
+                        key={object["businessObjectId"]}
+                        name={object["businessObjectName"]}
+                        details={object["businessObjectDescription"]}
+                        favorite= {true}
+                        expand = {isExpanded}
+                    />}
+                )
+            }}
         }
-    }
+    
     var listData;
     
 

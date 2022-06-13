@@ -6,12 +6,10 @@ import { Navigate, useNavigate } from "react-router";
 
 export default function ({handleSort, handleSort2, ansicht, setAnsicht, startLetter, setStartLetter, getAllFavourites, setIsExpanded, setReload}) {
     const letters = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
-    const [tempLetter, setTempLetter] = React.useState("a");
+    const [tempLetter, setTempLetter] = React.useState(null);
     const [entries, setEntries] = React.useState('all');
     const navigate = useNavigate();
-    useEffect(() => {
-        setStartLetter("a")
-    }, [])
+    
     
 
     const ansichtToggler = (event) => {
@@ -25,23 +23,30 @@ export default function ({handleSort, handleSort2, ansicht, setAnsicht, startLet
     const handleLetterChange = (event) => {
 
 
-
+        if(startLetter === event.target.value.toUpperCase()){
+            setStartLetter(null)
+            setTempLetter(null);
+            try {
+               document.getElementById(event.target.value).style.background='#004ea5'; 
+            } catch (error) {
     
-        setStartLetter(event.target.value.toUpperCase()); 
-        try {
-            document.getElementById(event.target.value).style.background="grey";
-        } catch (error) {
-            
+            }
+    
         }
-        if(event.target.value !== tempLetter){
-        try {
-            document.getElementById(tempLetter).style.background="#004ea5";
-        } catch (error) {
-            
-        }
-        }
+        else{
+            setStartLetter(event.target.value.toUpperCase()); 
+            try {
+                document.getElementById(event.target.value).style.background="grey";
+            } catch (error) {
+    
+            }
+    
+            try {
+                document.getElementById(tempLetter).style.background="#004ea5";
+            } catch (error) {
+    
+            }}
         
-        navigate("/Lexikon?q=\"" + event.target.value + "\"")
         setTempLetter(event.target.value);
         setReload("test")
     };
@@ -104,7 +109,7 @@ export default function ({handleSort, handleSort2, ansicht, setAnsicht, startLet
                 letters.map((letter) => {
                     if(letter === "a"){
                         return(
-                        <Button sx={{background: "grey"}} id={letter} value={letter} key={letter} variant="contained" onClick = {(event) => handleLetterChange(event)} style={alphabetButton}>
+                        <Button id={letter} value={letter} key={letter} variant="contained" onClick = {(event) => handleLetterChange(event)} style={alphabetButton}>
                         {letter.toUpperCase()}
                     </Button> )
                     }
