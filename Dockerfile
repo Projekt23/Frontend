@@ -4,7 +4,7 @@ WORKDIR /usr/src/app
 #Kopieren der package dependencies und konfigurationen
 COPY ["package.json", "package-lock.json*", "npm-shrinkwrap.json*", "./"]
 #Installieren der dependencies
-RUN npm install --silent && mv node_modules ../
+RUN npm install && mv node_modules ../
 #Kopieren des Source-Code in das app Verzeichnis
 COPY . .
 #Port 3000 oeffnen
