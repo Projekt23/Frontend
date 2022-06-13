@@ -125,15 +125,6 @@ export default function (props) {
                         </Typography>
                         <div style={AccordionSummaryText}>
                             <div>
-                                <Stack direction={"row"} spacing={1} alignItems="center">
-                                    <Typography sx={{color: 'text.secondary'}}>
-                                        Synonyme:
-                                    </Typography>
-                                    {props.synonyms.map(synonym => (
-                                        // <Typography key={synonym.id}>{synonym.name}</Typography>
-                                        <Chip key={synonym.id} label={synonym.name}/>
-                                    ))}
-                                </Stack>
                             </div>
                             {checkFavorite(fav, props.id)}
                         </div>
@@ -148,13 +139,7 @@ export default function (props) {
                         <Divider/>
                         <div style={AccordionFooter}>
                             <Button variant={"contained"} component={Link} to={{pathname: "/result", hash: String(props.id)}}>Zur Detailseite</Button>
-                            <div>
-                                <Stack direction={"row"} spacing={1}>
-                                    {props.labels.map(label => (
-                                        <Chip key={label.id} label={label.name} color={"primary"}/>
-                                    ))}
-                                </Stack>
-                            </div>
+
                         </div>
                     </AccordionDetails>
                 </Accordion>

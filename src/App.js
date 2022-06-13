@@ -86,7 +86,7 @@ const App = () =>
     const [userID, setUserID] = useState();
     const[loggedIn, setLoggedIn] = useState(false);
     const [theme, setTheme] = useState(true);
-    
+    const [reload, setReload] = useState(null)
     const [password, setPassword] = useState("");
     
     function checkLogin(){
@@ -120,7 +120,7 @@ const App = () =>
                     <Route path="/startseite" element={<Home/>}/>
                     {/* <Route path="/login" element={<Login setUserID = {setUserID}/>}/>
                     <Route path="/register" element={<Registierung setUserID = {setUserID}/>}/> */}
-                    <Route path="/lexikon" element={<Lexikon/>}/>
+                    <Route path="/lexikon" element={<Lexikon setReload = {setReload}/>} />
                     <Route path="/objekt_anlegen" element={<ObjektAnlegen />}/>
                     <Route path="/objekt_bearbeiten" element={<ObjektBearbeiten />}/>
                     <Route path="/settings" element={<Settings />}/>

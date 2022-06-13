@@ -35,7 +35,7 @@ export default function Bookmarks({bookmarkRows}) {
           <TableRow>
             <TableCell>Bezeichnung:</TableCell>
             <TableCell>Beschreibung:</TableCell>
-            <TableCell align="right">Favorit</TableCell>
+            {/* <TableCell align="right">Favorit</TableCell> */}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -48,10 +48,10 @@ export default function Bookmarks({bookmarkRows}) {
                 {row["businessObjectName"]}<Button onClick={() => navigate("/result#"+row["businessObjectId"])}><LaunchIcon></LaunchIcon></Button>
               </TableCell>
               <TableCell className={classes.ellipsis} >{row["businessObjectDescription"]}</TableCell>
-              <TableCell align="right">
+              {/* <TableCell align="right">
                 <IconButton aria-label="delete">
-                  <FavoriteIcon />
-                </IconButton></TableCell>
+                  {/* <FavoriteIcon /> */}
+                {/* </IconButton></TableCell> */} 
             </TableRow>
           ))}
         </TableBody>

@@ -50,10 +50,10 @@ export default function Home() {
             setboName(responseJSON["randomBo"]["boName"]);
             setboDescription(responseJSON["randomBo"]["boDescription"]);
             setboID(responseJSON["randomBo"]["boId"]);
-            console.log(responseJSON["lastSeen"])
             setlastSeen(getUnique(responseJSON["lastSeen"], "boId"))
 
             setChangeHistory(responseJSON["changeHistory"])
+            console.log(responseJSON["changeHistory"])
             }).catch(err => {
             console.log(err);
             });

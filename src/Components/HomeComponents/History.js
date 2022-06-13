@@ -10,7 +10,9 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import IconButton from '@mui/material/IconButton';
 import moment from 'moment';
-
+import LaunchIcon from '@mui/icons-material/Launch';
+import { Button } from '@mui/material';
+import { useNavigate } from 'react-router';
 
 
 function createData(designation, date, favorite) {
@@ -24,7 +26,7 @@ function createData(designation, date, favorite) {
 
 
 export default function History({lastSeen}) {
-  console.log(lastSeen)
+  const navigate = useNavigate();
   return (
 <TableContainer component={Paper}>
       <Table  aria-label="simple table">
@@ -32,7 +34,7 @@ export default function History({lastSeen}) {
           <TableRow>
             <TableCell>Bezeichnung:</TableCell>
             <TableCell>Datum:</TableCell>
-            <TableCell align="right">Favorit</TableCell>
+            {/* <TableCell align="right">Favorit</TableCell> */}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -42,10 +44,10 @@ export default function History({lastSeen}) {
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {row["boName"]}
+                {row["boName"]}<Button onClick={() => navigate("/result#"+row["boId"])}><LaunchIcon></LaunchIcon></Button>
               </TableCell>
               <TableCell >{timeCalculator(row["timestamp"])}</TableCell>
-              <TableCell align="right">{checkFavorite(row.favorite)}</TableCell>
+              {/* <TableCell align="right">{checkFavorite(row.favorite)}</TableCell> */}
             </TableRow>
           ))}
         </TableBody>

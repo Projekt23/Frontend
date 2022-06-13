@@ -2,12 +2,17 @@ import React, {useEffect, useState} from "react";
 import {Divider, FormControl, InputLabel, NativeSelect, Stack, ToggleButton, ToggleButtonGroup} from "@mui/material";
 import Button from "@mui/material/Button";
 import data from "./LexikonData";
+import { Navigate, useNavigate } from "react-router";
 
-export default function ({handleSort, handleSort2, ansicht, setAnsicht, startLetter, setStartLetter, getAllFavourites, setIsExpanded}) {
+export default function ({handleSort, handleSort2, ansicht, setAnsicht, startLetter, setStartLetter, getAllFavourites, setIsExpanded, setReload}) {
     const letters = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
-    const [tempLetter, setTempLetter] = React.useState(null);
+    const [tempLetter, setTempLetter] = React.useState("a");
     const [entries, setEntries] = React.useState('all');
-
+    const navigate = useNavigate();
+    useEffect(() => {
+        setStartLetter("a")
+    }, [])
+    
 
     const ansichtToggler = (event) => {
         getAllFavourites()
@@ -18,33 +23,27 @@ export default function ({handleSort, handleSort2, ansicht, setAnsicht, startLet
         setAlignment(newAlignment);
       };
     const handleLetterChange = (event) => {
-    if(startLetter === event.target.value.toUpperCase()){
-        setStartLetter(null)
-        setTempLetter(null);
-        try {
-           document.getElementById(event.target.value).style.background='#004ea5'; 
-        } catch (error) {
-            
-        }
-        
-    }
-    else{
+
+
+
+    
         setStartLetter(event.target.value.toUpperCase()); 
         try {
             document.getElementById(event.target.value).style.background="grey";
         } catch (error) {
             
         }
-        
+        if(event.target.value !== tempLetter){
         try {
             document.getElementById(tempLetter).style.background="#004ea5";
         } catch (error) {
             
         }
+        }
         
+        navigate("/Lexikon?q=\"" + event.target.value + "\"")
         setTempLetter(event.target.value);
-    }
-
+        setReload("test")
     };
       
     //Nativ Select call Sort Function in Lexikon
@@ -101,11 +100,24 @@ export default function ({handleSort, handleSort2, ansicht, setAnsicht, startLet
         <div>
             <Divider/>
             <div style={alphabetDiv}>
-                {letters.map((letter) => (
+            {
+                letters.map((letter) => {
+                    if(letter === "a"){
+                        return(
+                        <Button sx={{background: "grey"}} id={letter} value={letter} key={letter} variant="contained" onClick = {(event) => handleLetterChange(event)} style={alphabetButton}>
+                        {letter.toUpperCase()}
+                    </Button> )
+                    }
+                    else{
+                        return(
                             <Button id={letter} value={letter} key={letter} variant="contained" onClick = {(event) => handleLetterChange(event)} style={alphabetButton}>
                             {letter.toUpperCase()}
-                        </Button>
-                        ))}
+                        </Button>)
+                    }
+                }
+                )
+            }
+                          
             </div>
             <div style={sortingButtons}>
                 <ToggleButtonGroup
