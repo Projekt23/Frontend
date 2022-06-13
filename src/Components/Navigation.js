@@ -151,39 +151,61 @@ function Navigation({setTheme, theme, setUserID, password, setPassword}) {
                             display: {xs: 'block', md: 'none'},
                         }}
                     >
-                        {pages.map((page) => (
-                            <MenuItem key={page} onClick={handleCloseNavMenu} component={Link}
-                            to={`/${page}`}>
+                        
+                            <MenuItem key={"Startseite"} onClick={handleCloseNavMenu} component={Link}
+                            to={`/Startseite`}>
                                 <Typography sx={{textDecorationLine: 'none', "&:hover": { color: "white" }}} textAlign="center" variant="h6"
                                             noWrap
                                             
                                             color="textPrimary"
                                 >
-                                    {page}
+                                    Startseite
                                 </Typography>
                             </MenuItem>
-                        ))}
+                            <MenuItem key={"Lexikon"} onClick={handleCloseNavMenu} component={Link}
+                            to={`/Lexikon?q=\"\""`}>
+                                <Typography sx={{textDecorationLine: 'none', "&:hover": { color: "white" }}} textAlign="center" variant="h6"
+                                            noWrap
+                                            
+                                            color="textPrimary"
+                                >
+                                   Lexikon
+                                </Typography>
+                            </MenuItem>
                     </Menu>
                 </Box>
                 {/* Display only in Desktop Version -------------------------------------------------------------------------------------------------------------------*/}
                 <Box sx={{mr: 10, flexGrow: 0, display: {xs: 'none', md: 'flex'}}}>
-                    {pages.map((page) => (
                         <Button
-                            key={page}
+                            key="Startseite"
                             onClick={handleCloseNavMenu}
                             sx={{my: 2, color: 'white', display: 'block'}}
                             component={Link}
-                            to={`/${page}`}
+                            to={`/Startseite`}
                         >
                             <Typography sx={{textDecorationLine: 'none', "&:hover": { color: "white" }}} textAlign="center" variant="h6"
                                         noWrap
                                         
                                         color="white"
                             >
-                                {page}
+                                Startseite
                             </Typography>
                         </Button>
-                    ))}
+                         <Button
+                         key="Lexikon"
+                         onClick={handleCloseNavMenu}
+                         sx={{my: 2, color: 'white', display: 'block'}}
+                         component={Link}
+                         to={`/Lexikon?q=\"\""`}
+                     >
+                         <Typography sx={{textDecorationLine: 'none', "&:hover": { color: "white" }}} textAlign="center" variant="h6"
+                                     noWrap
+                                     
+                                     color="white"
+                         >
+                             Lexikon
+                         </Typography>
+                     </Button>
                 </Box><Box sx={{width: 0.5}}></Box>
                 {/* The searchbar is displayed in Mobile and Desktop Version -------------------------------------------------------------------------------------------------------------------*/}
                 <Box  sx={{minWidth: 200,  width: 1500}}>
