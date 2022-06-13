@@ -18,9 +18,10 @@ function Searchbar() {
     const redirect = () => {
         console.log("url = " + location.pathname)
         if (location.pathname.toLowerCase() !== "/resultlist") {
-            navigate("/resultlist");
-            var element = document.getElementById('q-downshift-input').value
+            
+            var element = document.getElementById('q-downshift-input')
             setSearchValue(element.value) ; 
+            navigate("/resultlist?q=" + element.value + "\"");
         }
     }
   return (
