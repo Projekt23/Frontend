@@ -11,7 +11,10 @@ import { Label } from '@material-ui/icons';
 import SearchResult from './SearchResult';
 import { func } from 'prop-types';
 import { Subscriptions } from '@mui/icons-material';
-
+import { useSearchParams } from 'react-router-dom';
+import LexikonList from './LexikonComponents/Lexikon.List';
+import { decodeToken } from "react-jwt";
+import { useState } from 'react';
 /*------------------------------------------------------------Styles of UserDropDownSettings------------------------------------------------------------------------------------*/
 const Styles = styled.div`
 
@@ -29,6 +32,8 @@ const Styles = styled.div`
 
 `;
 
+
+
 function getSearchValue(){
     var element = document.getElementById('q-downshift-input').value
     var value = element.value; 
@@ -42,9 +47,10 @@ const Resultlist = (props) => {
         e.preventDefault();
         navigate("/results#" + id);
     }
-
-    
-    
+    const [favourites, setFavourites] = useState([])
+    const [favouriteIds, setFavouriteIds] = useState([])
+    const [isExpanded, setIsExpanded] = useState(false)
+    const [searchParams, setSearchParams] = useSearchParams();
     const [expand, setExpand] = React.useState(props.expand);
     const toggleAcordion = () => {
         setExpand((prev) => !prev);
@@ -52,6 +58,7 @@ const Resultlist = (props) => {
 
     useEffect(() => {
         setExpand(props.expand)
+        getAllFavourites()
     }, [props.expand])
 
  
@@ -61,7 +68,30 @@ const Resultlist = (props) => {
         setExpanded(isExpanded ? panel : false);
     };
 
-
+    function getAllFavourites(){
+        const server = process.env.REACT_APP_API_BACKEND;
+        
+        var userId = decodeToken(localStorage.getItem("userID")).id;
+        fetch(server + '/favourite/all/' + userId, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
+            },
+        })
+            .then(res => res.json())
+            .then(
+                (data) => {
+                    var favouritesArr = []
+                    data.forEach(element => {
+                        favouritesArr.push(String(element["businessObjectId"]))
+                    });
+                    setFavourites(data)
+                    setFavouriteIds(favouritesArr)
+                },
+            )
+        }
     const AccordionSummaryText = {
         width: "100%",
         display: "flex",
@@ -84,7 +114,7 @@ const Resultlist = (props) => {
         <Styles>
             <Container sx={{ mt: 3 }} >
 
-                <Typography sx={{ mb: 1 }} align='left' variant="h4" component="h2"> Suchergebnisse:   </Typography>
+                <Typography sx={{ mb: 1 }} align='left' variant="h4" component="h2"> Suchergebnisse: "{searchParams.get("q")}"  </Typography>
                 <Divider sx={{ mb: 3 }}></Divider> 
 
          
@@ -100,50 +130,20 @@ const Resultlist = (props) => {
                     react={{
                         and: "q"
                     }}
-                    render={({ data, value }) => (
-                       
-                        data.map(item => (
-                            
-                            <Accordion key={item._id} >
-                                <AccordionSummary
-                                    
-                                    expandIcon={<ExpandMoreIcon />}
-                                >
-                                    {/* {setsearchValue(value)} */}
-                                    {console.log(value)}
-                                    <Typography sx={{ width: '33%', flexShrink: 0 }} >
-                                        {item.name}
-                                    </Typography>
-                                    <div style={AccordionSummaryText}>
-                                        <div>
-                                            <Stack direction={"row"} spacing={1} alignItems="center">
-                                                <Typography>
-                                                    Synonyme:
-                                                </Typography>
-
-                                            </Stack>
-                                        </div>
-                                    </div>
-                                </AccordionSummary>
-                                <AccordionDetails>
-                                    <Divider />
-                                    <div style={AccordionDetailsText}>
-                                        <Typography variant={"h5"}>Begriffsabgrenzung</Typography>
-                                        <br />
-                                        <Typography key={item._id}> {item.description} </Typography>
-                                    </div>
-                                    <Divider />
-                                    <div style={AccordionFooter}>
-                                        <Button variant={"contained"} component={Link} to={{ pathname: "/result", hash: String(item._id) }}>Zur Detailseite</Button>
-                                        <div>
-                                          <Stack direction={"row"} spacing={1}>
-                                                <Chip label={item.label}></Chip>
-                                            </Stack> 
-                                        </div>
-                                    </div>
-                                </AccordionDetails>
-                            </Accordion>
-                        ))
+                    render={({ data }) => (
+                        data.map(item => {
+                            console.log(item.description)
+                            return( <LexikonList
+                                id = {item._id}
+                                key={item._id}
+                                name={item.name}
+                                synonyms={[]}
+                                details={item.description}
+                                labels={item.label}
+                             favorite= {favouriteIds.includes(item._id)}
+                             expand = {isExpanded}
+                         />)}
+                         )
                     )}
                 />
             </Container>

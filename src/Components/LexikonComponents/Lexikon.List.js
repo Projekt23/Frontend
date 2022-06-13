@@ -28,7 +28,6 @@ export default function (props) {
     };
     function changeFavorite(favorite, accordionId) {
         if(favorite === true){
-
             setFav(false);
         }
         else{
@@ -93,6 +92,23 @@ export default function (props) {
         });
     }
 
+    function labelCheck(){
+       
+        if(props.labels !== null){
+            
+            props.labels.map(element => 
+           ( <Chip key={element} label={element} color={"primary"}/>)
+            
+        )
+    }
+    }
+    function synonymCheck(){
+        if(props.synonyms !== null){
+            props.synonyms.map(synonym => (
+            <Chip key={synonym.id} label={synonym.name} color={"primary"}/>
+        ))}
+    }
+
     const AccordionSummaryText = {
         width: "100%",
         display: "flex",
@@ -118,13 +134,18 @@ export default function (props) {
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon/>}
                         aria-controls={props.id}
-                        
                     >
                         <Typography sx={{width: '33%', flexShrink: 0}} key={props.id}>
                             {props.name}
                         </Typography>
                         <div style={AccordionSummaryText}>
                             <div>
+                            <Stack direction={"row"} spacing={1} alignItems="center">
+                                    <Typography sx={{color: 'text.secondary'}}>
+                                        Synonyme:
+                                    </Typography>
+                                    {synonymCheck()}
+                                </Stack>
                             </div>
                             {checkFavorite(fav, props.id)}
                         </div>
@@ -139,7 +160,11 @@ export default function (props) {
                         <Divider/>
                         <div style={AccordionFooter}>
                             <Button variant={"contained"} component={Link} to={{pathname: "/result", hash: String(props.id)}}>Zur Detailseite</Button>
-
+                            <div>
+                                <Stack direction={"row"} spacing={1}>
+                                    {labelCheck()}
+                                </Stack>
+                            </div>
                         </div>
                     </AccordionDetails>
                 </Accordion>
