@@ -38,8 +38,8 @@ export default function Bookmarks({bookmarkRows}) {
             {/* <TableCell align="right">Favorit</TableCell> */}
           </TableRow>
         </TableHead>
-        <TableBody>
-          {bookmarkRows.map((row) => (
+        <TableBody >
+          {bookmarkRows.slice(0, 3).map((row) => (
             <TableRow
               key={row["businessObjectId"]}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}

@@ -51,13 +51,7 @@ const SearchResult= () => {
 
     }, [])
 
-    useEffect(() => {
-        getResult()
-        getAllFavourites()
-
-
-
-    }, [favourites])
+    
     function getAllFavourites(){
         var id = decodeToken(localStorage.getItem("userID")).id;
         const server = process.env.REACT_APP_API_BACKEND;
@@ -86,7 +80,8 @@ const SearchResult= () => {
         })
         .then(response => {
         response.text().then(value => {
-
+            getResult()
+        getAllFavourites()
             }).catch(err => {
             console.log(err);
             });
@@ -105,6 +100,8 @@ const SearchResult= () => {
         })
         })
         .then(response => {
+            getResult()
+        getAllFavourites()
         response.text().then(value => {
             }).catch(err => {
             console.log(err);

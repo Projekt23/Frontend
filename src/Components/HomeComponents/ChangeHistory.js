@@ -28,7 +28,7 @@ export default function ChangeHistory({changeHistory}) {
 <TableContainer component={Paper}>
       <Table  aria-label="simple table">
         <TableBody>
-          {changeHistory.map((row) => (
+          {changeHistory.slice(0, 3).map((row) => (
             <TableRow
               key={row["boId"]}
               sx={{ '&:last-child td, &:last-child th': { border: 0 }}}

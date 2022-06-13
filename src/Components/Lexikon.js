@@ -43,17 +43,16 @@ export default function Lexikon({setReload}) {
         marginTop: "15px",
     }
     useEffect(() => {
-        if(location.hash.match("favourites")){
+         getAllFavourites()
+
+         if(location.hash.match("favourites")){
             setAnsicht("favorites")
         }
         
-        getAllFavourites()
+       
        
     }, [])
 
-    useEffect(() => {
-        getAllFavourites()
-    }, [])
     
 
     function startsWith(str, word) {
@@ -111,9 +110,7 @@ export default function Lexikon({setReload}) {
                     showResultStats={false}
                     pagination={true}
                     paginationAt="bottom"
-                    react={{
-                        and: "q"
-                    }}
+                    
                     render={({ data, value }) => (
                        
                         data.map(item => {
@@ -124,7 +121,9 @@ export default function Lexikon({setReload}) {
                                 id = {item._id}
                                 key={item._id}
                                 name={item.name}
+                                synonyms={[]}
                                 details={item.description}
+                                labels={item.label}
                                 favorite= {favouriteIds.includes(item._id)}
                                 expand = {isExpanded}
                             />)}})
@@ -137,11 +136,13 @@ export default function Lexikon({setReload}) {
             listData = favourites.map((object) => {
                 if(startsWith(object["businessObjectName"], startLetter)){
                 return <LexikonList
-                    id = {object["businessObjectId"]}
-                    key={object["businessObjectId"]}
-                    name={object["businessObjectName"]}
-                    details={object["businessObjectDescription"]}
-                    favorite= {true}
+                id = {object["businessObjectId"]}
+                key={object["businessObjectId"]}
+                name={object["businessObjectName"]}
+                synonyms = {[]}
+                details={object["businessObjectDescription"]}
+                labels = {[]}
+                favorite= {true}
                     expand = {isExpanded}
                 />}}
             ) }
@@ -157,9 +158,7 @@ export default function Lexikon({setReload}) {
                         showResultStats={false}
                         pagination={true}
                         paginationAt="bottom"
-                        react={{
-                            and: "q"
-                        }}
+                        
                         render={({ data, value }) => (
                             
                             data.map(item => {
@@ -167,7 +166,9 @@ export default function Lexikon({setReload}) {
                                 id = {item._id}
                                 key={item._id}
                                 name={item.name}
+                                synonyms={[]}
                                 details={item.description}
+                                labels={item.label}
                                 favorite= {favouriteIds.includes(item._id)}
                                 expand = {isExpanded}
                             />)}
@@ -180,11 +181,13 @@ export default function Lexikon({setReload}) {
             else{
                 listData = favourites.map((object) => {
                     return <LexikonList
-                        id = {object["businessObjectId"]}
-                        key={object["businessObjectId"]}
-                        name={object["businessObjectName"]}
-                        details={object["businessObjectDescription"]}
-                        favorite= {true}
+                    id = {object["businessObjectId"]}
+                    key={object["businessObjectId"]}
+                    name={object["businessObjectName"]}
+                    synonyms = {[]}
+                    details={object["businessObjectDescription"]}
+                    labels = {[]}
+                    favorite= {true}
                         expand = {isExpanded}
                     />}
                 )

@@ -52,7 +52,7 @@ export default function Home() {
             setboID(responseJSON["randomBo"]["boId"]);
             setlastSeen(getUnique(responseJSON["lastSeen"], "boId"))
 
-            setChangeHistory(responseJSON["changeHistory"])
+            setChangeHistory(getUnique(responseJSON["changeHistory"]))
             console.log(responseJSON["changeHistory"])
             }).catch(err => {
             console.log(err);

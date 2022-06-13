@@ -13,7 +13,6 @@ import './App.css';
 import Invite from './Components/SettingsComponents/Invite';
 import Settings from './Components/Settings';
 import {  ReactiveBase}  from "@appbaseio/reactivesearch";
-
 import {useNavigate} from "react-router-dom";
 import { isExpired, decodeToken } from "react-jwt";
 import { CssBaseline, Typography } from '@mui/material/';
@@ -120,7 +119,7 @@ const App = () =>
                     <Route path="/startseite" element={<Home/>}/>
                     {/* <Route path="/login" element={<Login setUserID = {setUserID}/>}/>
                     <Route path="/register" element={<Registierung setUserID = {setUserID}/>}/> */}
-                    <Route path="/lexikon" element={<Lexikon setReload = {setReload}/>} />
+                    <Route path="/lexikon" element={<Lexikon setReload={setReload}/>}/>
                     <Route path="/objekt_anlegen" element={<ObjektAnlegen />}/>
                     <Route path="/objekt_bearbeiten" element={<ObjektBearbeiten />}/>
                     <Route path="/settings" element={<Settings />}/>

@@ -38,7 +38,7 @@ export default function History({lastSeen}) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {lastSeen.map((row) => (
+          {lastSeen.slice(0, 3).map((row) => (
             <TableRow
               key={row["boId"]}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}

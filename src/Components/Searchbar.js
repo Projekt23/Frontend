@@ -15,14 +15,14 @@ function Searchbar() {
     const [searchValue, setSearchValue] = useState()
 
 
-    const redirect = () => {
+    const redirect = (value) => {
         console.log("url = " + location.pathname)
-        if (location.pathname.toLowerCase() !== "/resultlist") {
-            
-            var element = document.getElementById('q-downshift-input')
-            setSearchValue(element.value) ; 
-            navigate("/Lexikon?q=" + element.value + "\"");
+        if( value === ""){
+            navigate("/Lexikon?q=" + value );
+        }else{
+            navigate("/resultlist?q=" + value );
         }
+       
     }
   return (
     <Styles>
@@ -33,7 +33,14 @@ function Searchbar() {
         autosuggest={true}
         size={5}
         URLParams={true}
-        onValueSelected={redirect}
+        onValueSelected={
+            function(value){
+                console.log(value)
+                redirect(value)
+            }
+            
+           
+        }
         className="searchbar"
     />
     </Styles>
