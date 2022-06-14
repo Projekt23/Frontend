@@ -294,7 +294,7 @@ export default function ObjektAnlegen() {
                     <Typography variant={"h4"}>Objekt bearbeiten</Typography>
                     <Stack direction="row" spacing={2} style={ButtonStyle} alignItems={"center"}>
                         <Button variant={"contained"} style={{backgroundColor: "grey"}}
-                                onClick={TestButton}><CloseIcon/> Abbrechen</Button>
+                                onClick={() => navigate("/lexikon")}><CloseIcon/> Abbrechen</Button>
                         <Button variant={"contained"} onClick={updateObject}><SaveIcon/> Veröffentlichen</Button>
                     </Stack>
                 </Grid>
