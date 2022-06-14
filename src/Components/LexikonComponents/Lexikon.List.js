@@ -18,7 +18,7 @@ export default function (props) {
 
     useEffect(() => {
         setExpand(props.expand)
-    }, [props.expand])
+    }, [props.reload])
     
 
     const [expanded, setExpanded] = React.useState(false);
@@ -94,19 +94,27 @@ export default function (props) {
 
     function labelCheck(){
        
-        if(props.labels !== null){
-            
-            props.labels.map(element => 
-           ( <Chip key={element} label={element} color={"primary"}/>)
-            
+    if(props.labels === null)  {
+        return
+    }
+     return(
+        props.labels.map(element => 
+            ( <Chip key={element} label={element} color={"primary"}/>)
+         )
         )
     }
-    }
+    
     function synonymCheck(){
-        if(props.synonyms !== null){
-            props.synonyms.map(synonym => (
-            <Chip key={synonym.id} label={synonym.name} color={"primary"}/>
-        ))}
+      
+        if(props.synonyms === null)  {
+            return
+        }
+         return(
+            props.synonyms.map(synonym => 
+                ( <Chip key={synonym.id} label={synonym.name} color={"primary"}/>)
+             )
+            )
+       
     }
 
     const AccordionSummaryText = {

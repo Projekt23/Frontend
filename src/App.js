@@ -15,8 +15,10 @@ import Settings from './Components/Settings';
 import {  ReactiveBase}  from "@appbaseio/reactivesearch";
 import {useNavigate} from "react-router-dom";
 import { isExpired, decodeToken } from "react-jwt";
-import { CssBaseline, Typography } from '@mui/material/';
+import { CssBaseline, Divider, Typography } from '@mui/material/';
 import SearchResult from './Components/SearchResult';
+import { BottomNavigation } from '@mui/material';
+import {BottomNavigationAction} from '@mui/material/';
 
 // Test Data
 
@@ -85,7 +87,6 @@ const App = () =>
     const [userID, setUserID] = useState();
     const[loggedIn, setLoggedIn] = useState(false);
     const [theme, setTheme] = useState(true);
-    const [reload, setReload] = useState(null)
     const [password, setPassword] = useState("");
     
     function checkLogin(){
@@ -119,7 +120,7 @@ const App = () =>
                     <Route path="/startseite" element={<Home/>}/>
                     {/* <Route path="/login" element={<Login setUserID = {setUserID}/>}/>
                     <Route path="/register" element={<Registierung setUserID = {setUserID}/>}/> */}
-                    <Route path="/lexikon" element={<Lexikon setReload={setReload}/>}/>
+                    <Route path="/lexikon" element={<Lexikon/>}/>
                     <Route path="/objekt_anlegen" element={<ObjektAnlegen />}/>
                     <Route path="/objekt_bearbeiten" element={<ObjektBearbeiten />}/>
                     <Route path="/settings" element={<Settings />}/>
@@ -174,7 +175,12 @@ const App = () =>
         <ThemeProvider theme={theme ?  lightTheme : darkTheme}>
             <CssBaseline/>
                     {checkLogin()}
-                    
+            <BottomNavigation
+            showLabels
+            
+            >
+            <BottomNavigationAction label="© 2022 - Projekt23" />
+            </BottomNavigation>
         </ThemeProvider>
     )}
 export default App;

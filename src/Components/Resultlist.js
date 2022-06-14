@@ -114,11 +114,8 @@ const Resultlist = (props) => {
         <Styles>
             <Container sx={{ mt: 3 }} >
 
-                <Typography sx={{ mb: 1 }} align='left' variant="h4" component="h2"> Suchergebnisse: "{searchParams.get("q")}"  </Typography>
+                <Typography sx={{ mb: 1 }} align='left' variant="h4" component="h2"> Suchergebnisse: {searchParams.get("q")}  </Typography>
                 <Divider sx={{ mb: 3 }}></Divider> 
-
-         
-               
                 <ReactiveList
                     componentId="SearchResult"
                     dataField="name"
@@ -132,7 +129,6 @@ const Resultlist = (props) => {
                     }}
                     render={({ data }) => (
                         data.map(item => {
-                            console.log(item.description)
                             return( <LexikonList
                                 id = {item._id}
                                 key={item._id}
@@ -140,8 +136,8 @@ const Resultlist = (props) => {
                                 synonyms={[]}
                                 details={item.description}
                                 labels={item.label}
-                             favorite= {favouriteIds.includes(item._id)}
-                             expand = {isExpanded}
+                                favorite= {favouriteIds.includes(item._id)}
+                                expand = {isExpanded}
                          />)}
                          )
                     )}

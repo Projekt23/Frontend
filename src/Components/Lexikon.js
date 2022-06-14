@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Stack, Typography} from "@mui/material";
+import {Box, Stack, Typography} from "@mui/material";
 import LexikonSort from "./LexikonComponents/Lexikon.Sort";
 import style from "./LexikonComponents/Lexikon.module.css";
 import LexikonList from "./LexikonComponents/Lexikon.List";
@@ -14,9 +14,11 @@ import { Container, Accordion, AccordionSummary,   Chip, AccordionDetails,  } fr
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Divider from '@mui/material/Divider';
 import styled from 'styled-components';
+import { DataSearch } from "@appbaseio/reactivesearch";
 
-export default function Lexikon({setReload}) {
+export default function Lexikon() {
 
+    const [reload, setReload] = useState(100)
     const [lexikonData, setLexikonData] = useState([])
     const [ansicht, setAnsicht] = useState("all")
     const[startLetter, setStartLetter] = useState(null);
@@ -93,61 +95,12 @@ export default function Lexikon({setReload}) {
                     });
                     setFavourites(data)
                     setFavouriteIds(favouritesArr)
-                    console.log(favouritesArr)
                 },
             )
         }
 
         function favouriteCheck(){
-            if (startLetter !== null){
-            if(ansicht !=="favorites"){
-                listData = (
-                    <ReactiveList
-                    componentId="SearchResult"
-                    dataField="name"
-                    size={10}
-                    className="result-list-container"
-                    showResultStats={false}
-                    pagination={true}
-                    paginationAt="bottom"
-                    
-                    render={({ data, value }) => (
-                       
-                        data.map(item => {
-                            if(startsWith(item.name, startLetter)){
-                                console.log(item)
-                                return(
-                                <LexikonList
-                                id = {item._id}
-                                key={item._id}
-                                name={item.name}
-                                synonyms={[]}
-                                details={item.description}
-                                labels={item.label}
-                                favorite= {favouriteIds.includes(item._id)}
-                                expand = {isExpanded}
-                            />)}})
-                        )
-                    }
-                />)
-        }
-        else{
             
-            listData = favourites.map((object) => {
-                if(startsWith(object["businessObjectName"], startLetter)){
-                return <LexikonList
-                id = {object["businessObjectId"]}
-                key={object["businessObjectId"]}
-                name={object["businessObjectName"]}
-                synonyms = {[]}
-                details={object["businessObjectDescription"]}
-                labels = {[]}
-                favorite= {true}
-                    expand = {isExpanded}
-                />}}
-            ) }
-                }
-            else{
                 if(ansicht !=="favorites"){
                     listData = 
                         <ReactiveList
@@ -158,6 +111,9 @@ export default function Lexikon({setReload}) {
                         showResultStats={false}
                         pagination={true}
                         paginationAt="bottom"
+                        react={{
+                            and: "w"
+                        }}
                         
                         render={({ data, value }) => (
                             
@@ -171,12 +127,13 @@ export default function Lexikon({setReload}) {
                                 labels={item.label}
                                 favorite= {favouriteIds.includes(item._id)}
                                 expand = {isExpanded}
+                                reload = {reload}
                             />)}
                             ))
                         }
                     />
+                    }
                 
-                }
                 
             else{
                 listData = favourites.map((object) => {
@@ -189,10 +146,11 @@ export default function Lexikon({setReload}) {
                     labels = {[]}
                     favorite= {true}
                         expand = {isExpanded}
+                        reload = {reload}
                     />}
                 )
             }}
-        }
+        
     
     var listData;
     
@@ -212,8 +170,18 @@ export default function Lexikon({setReload}) {
 
                 </Button>
             </div>
-            <LexikonSort handleSort={handleSort} handleSort2={handleSort2} ansicht={ansicht} setAnsicht={setAnsicht} startLetter = {startLetter} setStartLetter ={setStartLetter} getAllFavourites = {getAllFavourites} setIsExpanded = {setIsExpanded} setReload = {setReload}/>
+            <LexikonSort handleSort={handleSort} handleSort2={handleSort2} ansicht={ansicht} setAnsicht={setAnsicht} startLetter = {startLetter} setStartLetter ={setStartLetter} getAllFavourites = {getAllFavourites} setIsExpanded = {setIsExpanded} setReload = {setReload} reload={reload}/>
             {favouriteCheck()}
             {listData}
+            
+            <Box 	sx={{ display: 'none' }}>
+            <DataSearch
+                componentId="w"
+                onQueryChange={function(prevQuery, nextQuery){
+                    console.log('prevQuery', reload);
+                }}
+                URLParams={true}
+                dataField="name"
+            /></Box>
         </div>)
 }

@@ -37,7 +37,7 @@ const SearchResult= () => {
     const [labels, setLabels] = useState([]);
     const [contextList, setContextList] = useState([]);
     const [boId, setBoId] = useState("");
-    const [clicked, setClicked] = useState();
+    const [clicked, setClicked] = useState(100);
     const [favourites, setFavourites] = useState([]);
 
     const navigate = useNavigate();
@@ -50,7 +50,13 @@ const SearchResult= () => {
 
 
     }, [])
+    useEffect(() => {
+        getResult()
+        getAllFavourites()
 
+
+
+    }, [clicked])
     
     function getAllFavourites(){
         var id = decodeToken(localStorage.getItem("userID")).id;
@@ -222,7 +228,7 @@ const SearchResult= () => {
                                     <Button variant="outlined"
                                         key= {row.id}
                                         sx={{ marginRight: 2 }}
-                                        onClick = {() => {navigate("/result#" + row.id); getResult()}}>
+                                        onClick = {() => {setClicked(clicked + 1); navigate("/result#" + row.id); getResult()}}>
                                         {row.name}
                                     </Button>
                                 ))}
@@ -253,7 +259,7 @@ const SearchResult= () => {
                                     <Button variant="contained"
                                         key= {row.id}
                                         sx={{ marginRight: 2 }}
-                                        onClick = {() => {navigate("/result#" + row.id); getResult()}}>
+                                        onClick = {() => {setClicked(clicked + 1);navigate("/result#" + row.id); getResult()}}>
                                         {row.name}
                                     </Button>
                                 ))}

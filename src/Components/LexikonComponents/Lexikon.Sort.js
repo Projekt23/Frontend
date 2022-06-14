@@ -3,8 +3,9 @@ import {Divider, FormControl, InputLabel, NativeSelect, Stack, ToggleButton, Tog
 import Button from "@mui/material/Button";
 import data from "./LexikonData";
 import { Navigate, useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 
-export default function ({handleSort, handleSort2, ansicht, setAnsicht, startLetter, setStartLetter, getAllFavourites, setIsExpanded, setReload}) {
+export default function ({handleSort, handleSort2, ansicht, setAnsicht, startLetter, setStartLetter, getAllFavourites, setIsExpanded, setReload, reload}) {
     const letters = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
     const [tempLetter, setTempLetter] = React.useState(null);
     const [entries, setEntries] = React.useState('all');
@@ -26,10 +27,11 @@ export default function ({handleSort, handleSort2, ansicht, setAnsicht, startLet
         if(startLetter === event.target.value.toUpperCase()){
             setStartLetter(null)
             setTempLetter(null);
+            navigate("/Lexikon?w=\"" + "\"")
             try {
                document.getElementById(event.target.value).style.background='#004ea5'; 
             } catch (error) {
-    
+            
             }
     
         }
@@ -40,15 +42,13 @@ export default function ({handleSort, handleSort2, ansicht, setAnsicht, startLet
             } catch (error) {
     
             }
-    
+            navigate("/Lexikon?w=\"" + event.target.value + "\"")
+            setTempLetter(event.target.value);
             try {
                 document.getElementById(tempLetter).style.background="#004ea5";
             } catch (error) {
     
             }}
-        
-        setTempLetter(event.target.value);
-        setReload("test")
     };
       
     //Nativ Select call Sort Function in Lexikon
@@ -68,10 +68,12 @@ export default function ({handleSort, handleSort2, ansicht, setAnsicht, startLet
 
     const expandAll = () => {
         setIsExpanded(true)
+        setReload(reload + 1)
     };
 
     const shrinkAll = () => {
         setIsExpanded(false)
+        setReload(reload - 1)
     };
     const alphabetButton = {
         maxWidth: "50px",
@@ -115,7 +117,7 @@ export default function ({handleSort, handleSort2, ansicht, setAnsicht, startLet
                     }
                     else{
                         return(
-                            <Button id={letter} value={letter} key={letter} variant="contained" onClick = {(event) => handleLetterChange(event)} style={alphabetButton}>
+                            <Button id={letter}  value={letter} key={letter} variant="contained" onClick = {(event) => handleLetterChange(event)} style={alphabetButton}>
                             {letter.toUpperCase()}
                         </Button>)
                     }

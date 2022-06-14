@@ -1,15 +1,29 @@
 import React, {useEffect, useState} from "react";
 import style from "./LexikonComponents/Lexikon.module.css";
-import {Autocomplete, Card, Divider, Stack, TextField, Typography} from "@mui/material";
+import {Autocomplete, Paper, Box, Card, Divider, Stack, TextField, Typography} from "@mui/material";
 import InfoIcon from '@mui/icons-material/Info';
 import CloseIcon from '@mui/icons-material/Close';
 import SaveIcon from '@mui/icons-material/Save';
 import Button from "@mui/material/Button";
 import {Grid} from "@material-ui/core";
 import {decodeToken} from "react-jwt";
-
+import { DataSearch } from "@appbaseio/reactivesearch";
+import CancelIcon from "@mui/icons-material/Cancel";
 import {useNavigate} from "react-router-dom";
 import {useLocation} from "react-router";
+import {Chip} from "@mui/material";
+import styled from 'styled-components';
+
+const Styles = styled.div`
+    .searchbar{
+        color: black;
+    }
+`;
+
+
+const PaperStyle = {
+    padding: "20px",
+}
 
 const CardStyle = {
     padding: "20px",
@@ -34,13 +48,12 @@ const ButtonStyle = {
 }
 
 export default function ObjektAnlegen() {
-
-
+    const [selectedKontext, setSelectedKontext] = useState([])
+    const [kontextChips, setKontextChips] = useState([])
     const [Labels, setLabels] = useState([])
     const [Objects, setObjects] = useState([])
     const navigate = useNavigate();
-
-    //current Object
+    const [selectedSynonyms, setSelectedSynonyms] = useState([]);
     const location = useLocation();
     const [currentBusinessObjectName, setCurrentBusinessObjectName] = useState("");
     const [currentSynonyms, setCurrentSynonyms] = useState([]);
@@ -51,7 +64,7 @@ export default function ObjektAnlegen() {
     const [currentContextList, setCurrentContextList] = useState([]);
     const [currentContextListID, setCurrentContextListID] = useState([]);
     const [currentBoId, setCurrentBoId] = useState("");
-
+    const [synonymChips, setSynonymChips] = useState([])
     useEffect(() => {
         const server = process.env.REACT_APP_API_BACKEND;
         var userId = decodeToken(localStorage.getItem("userID")).id;
@@ -70,10 +83,10 @@ export default function ObjektAnlegen() {
                 response.text().then(value => {
                     var responseJSON = JSON.parse(value);
                     setCurrentBusinessObjectName(responseJSON["name"])
-                    setCurrentSynonyms(responseJSON["synonyms"])
+                    setSynonymChips(responseJSON["synonyms"])
                     setCurrentDescription(responseJSON["description"])
                     setCurrentLabels(responseJSON["labels"])
-                    setCurrentContextList(responseJSON["contextList"])
+                    setKontextChips(responseJSON["contextList"])
                     setCurrentBoId(responseJSON["id"])
                 }).catch(err => {
                     console.log(err);
@@ -98,21 +111,7 @@ export default function ObjektAnlegen() {
                 },
             )
 
-        //Get Objekt Data
-        fetch(server + '/businessobject/all', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
-            },
-        })
-            .then(res => res.json())
-            .then(
-                (objects) => {
-                    setObjects(objects);
-                },
-            )
+        
     }, [])
 
     const LabelData = Labels.map((labels) => {
@@ -148,7 +147,9 @@ export default function ObjektAnlegen() {
                 synonyme.id
             )));
     };
-
+    const handleSynonymDelete = (e, value) => {
+        setSynonymChips(synonymChips.filter((synonym) => synonym.value !== value))
+      }
     const handleContextChange = (event, value) => {
         setCurrentContextList(value);
         setCurrentContextListID(
@@ -172,7 +173,12 @@ export default function ObjektAnlegen() {
     const handleDescriptionChange = (event) => {
         setCurrentDescription(event.target.value);
     };
-
+    const handleKontextSelection = (value, name) => {
+        var selectedKontextIds = []
+        selectedKontextIds.push(value)
+        kontextChips.push({"value" : value, "name" : name})
+        
+        setSelectedKontext(selectedKontextIds)};
 
     function TestButton() {
         console.log("name", currentBusinessObjectName);
@@ -184,14 +190,32 @@ export default function ObjektAnlegen() {
         //console.log("contextIds", currentContextList);
         //console.log('currentObjectData',CurrentObjectData);
     }
-
-    function TestData() {
+    const handleKontextDelete = (e, value) => {
+        setKontextChips(kontextChips.filter((kontext) => kontext.value !== value))
+      }
+    function updateObject() {
         // handleDescriptionChange()
         // handleNameChange()
         // handleSynonymeChange()
         // handleLabelChange()
         // handleContextChange()
-
+        console.log(synonymChips)
+        var synonymIds = []
+        synonymChips.map((element) => {
+            synonymIds.push(element.value)
+            
+        }
+        
+        )
+        var kontextIds = []
+        kontextChips.map((element) => {
+            kontextIds.push(element.value)
+            
+        }
+        
+        )
+        
+        console.log(synonymIds)
         const server = process.env.REACT_APP_API_BACKEND;
         var id = decodeToken(localStorage.getItem("userID")).id;
         var bID = currentBoId;
@@ -206,9 +230,9 @@ export default function ObjektAnlegen() {
             body: JSON.stringify({
                 "name": currentBusinessObjectName,
                 "description": currentDescription,
-                "synonymIds": currentSynonymsID,
+                "synonymIds": synonymIds,
                 "labels": currentLabelsID,
-                "contextIds": currentContextListID
+                "contextIds": kontextIds
             })
         })
             .then(response => {
@@ -249,10 +273,16 @@ export default function ObjektAnlegen() {
         }
     }
 
-
+    const handleSynonymSelection = (value, name) => {
+        var selectedSynonymIds = []
+        selectedSynonymIds.push(value)
+        synonymChips.push({"value" : value, "name" : name})
+        
+        setSelectedSynonyms(selectedSynonymIds)};
     //Input Field function
     const [value, setValue] = React.useState('');
     return (
+        <Styles>
         <div className={style.containerMain}>
             <div className={style.headerRow}>
                 <Grid
@@ -265,7 +295,7 @@ export default function ObjektAnlegen() {
                     <Stack direction="row" spacing={2} style={ButtonStyle} alignItems={"center"}>
                         <Button variant={"contained"} style={{backgroundColor: "grey"}}
                                 onClick={TestButton}><CloseIcon/> Abbrechen</Button>
-                        <Button variant={"contained"} onClick={TestData}><SaveIcon/> Veröffentlichen</Button>
+                        <Button variant={"contained"} onClick={updateObject}><SaveIcon/> Veröffentlichen</Button>
                     </Stack>
                 </Grid>
 
@@ -311,28 +341,35 @@ export default function ObjektAnlegen() {
                         </Stack>
                     </Grid>
                 </Card>
-                <Card style={CardStyle}>
-                    <Stack direction="column" spacing={2}>
-                        <Typography variant={"h6"}>Synonyme </Typography>
-                        <Autocomplete
-                            fullWidth={true}
-                            multiple
-                            id="synonyms"
-                            options={ObjectData}
-                            getOptionLabel={(option) => option.name}
-                            value={currentSynonyms}
-                            isOptionEqualToValue={(option, value) => option.id === value.id}
-                            filterSelectedOptions
-                            onChange={handleSynonymeChange}
-                            renderInput={(params) => (
-                                <TextField
-                                    {...params}
-                                    label="Synonyme für das Objekt auswählen"
-                                />
-                            )}
+                <Paper style={PaperStyle} >
+                        <Typography color= "textPrimary" variant={"h6"}>Synonyme </Typography>
+
+
+                        <Box><DataSearch
+                        
+                        componentId="x"
+                        dataField="name"
+                        placeholder="Search..."
+                        autosuggest={true}
+                        size={5}
+                        className="searchbar"
+                        onValueSelected={(value, cause, source) => {
+                            if (cause === 'SUGGESTION_SELECT') {
+                              handleSynonymSelection(source._id, value);
+                                
+                            }
+                            
+                          }}
                         />
-                    </Stack>
-                </Card>
+                        
+                        </Box>
+
+                        {synonymChips.map((object) => {
+                            return(  <Chip style={{marginTop: 10, mr: 10}} id =  {object.value}
+                                label = {object.name} deleteIcon={<CancelIcon onMouseDown = {(e) => e.stopPropagation()}></CancelIcon>} onDelete={(e) => handleSynonymDelete(e, object.value)}
+                            />)}
+                        )} 
+                 </Paper>   
                 <Card style={CardStyle}>
                     <Grid
                         container
@@ -376,29 +413,37 @@ export default function ObjektAnlegen() {
                         </div>
                     </Grid>
                 </Card>
-                <Card style={CardStyle}>
-                    <Stack direction={"column"} spacing={2}>
-                        <Typography variant={"h6"}>Kontext</Typography>
-                        <Autocomplete
-                            fullWidth={true}
-                            multiple
-                            id="context"
-                            options={ObjectData}
-                            getOptionLabel={(option) => option.name}
-                            value={currentContextList}
-                            isOptionEqualToValue={(option, value) => option.name === value.name}
-                            filterSelectedOptions
-                            onChange={handleContextChange}
-                            renderInput={(params) => (
-                                <TextField
-                                    {...params}
-                                    label="Objekte im gleichen Kontext auswählen"
-                                />
-                            )}
+                <Paper style={PaperStyle} >
+                        <Typography color= "textPrimary" variant={"h6"}>Kontext </Typography>
+
+
+                        <Box><DataSearch
+                        
+                        componentId="c"
+                        dataField="name"
+                        placeholder="Search..."
+                        autosuggest={true}
+                        size={5}
+                        className="searchbar"
+                        onValueSelected={(value, cause, source) => {
+                            if (cause === 'SUGGESTION_SELECT') {
+                              handleKontextSelection(source._id, value);
+                                
+                            }
+                            
+                          }}
                         />
-                    </Stack>
-                </Card>
+                        
+                        </Box>
+
+                        {kontextChips.map((object) => {
+                            return(  <Chip style={{marginTop: 10, mr: 10}} id =  {object.value}
+                                label = {object.name} deleteIcon={<CancelIcon onMouseDown = {(e) => e.stopPropagation()}></CancelIcon>} onDelete={(e) => handleKontextDelete(e, object.value)}
+                            />)}
+                        )} 
+                 </Paper>   
             </Stack>
         </div>
+        </Styles>
     )
 }
