@@ -5,9 +5,9 @@ import data from "./LexikonData";
 import { Navigate, useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 
-export default function ({handleSort, handleSort2, ansicht, setAnsicht, startLetter, setStartLetter, getAllFavourites, setIsExpanded, setReload, reload}) {
+export default function ({handleSort, handleSort2, ansicht, setAnsicht, startLetter, setStartLetter, getAllFavourites, setIsExpanded, setReload, reload, favouriteCheck}) {
     const letters = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
-    const [tempLetter, setTempLetter] = React.useState(null);
+    const [tempLetter, setTempLetter] = React.useState("");
     const [entries, setEntries] = React.useState('all');
     const navigate = useNavigate();
     
@@ -25,8 +25,8 @@ export default function ({handleSort, handleSort2, ansicht, setAnsicht, startLet
 
 
         if(startLetter === event.target.value.toUpperCase()){
-            setStartLetter(null)
-            setTempLetter(null);
+            setStartLetter("")
+            setTempLetter("");
             navigate("/Lexikon?w=\"" + "\"")
             try {
                document.getElementById(event.target.value).style.background='#004ea5'; 
@@ -42,6 +42,7 @@ export default function ({handleSort, handleSort2, ansicht, setAnsicht, startLet
             } catch (error) {
     
             }
+            
             navigate("/Lexikon?w=\"" + event.target.value + "\"")
             setTempLetter(event.target.value);
             try {
@@ -49,6 +50,7 @@ export default function ({handleSort, handleSort2, ansicht, setAnsicht, startLet
             } catch (error) {
     
             }}
+            
     };
       
     //Nativ Select call Sort Function in Lexikon

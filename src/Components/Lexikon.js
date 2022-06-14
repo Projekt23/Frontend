@@ -21,7 +21,7 @@ export default function Lexikon() {
     const [reload, setReload] = useState(100)
     const [lexikonData, setLexikonData] = useState([])
     const [ansicht, setAnsicht] = useState("all")
-    const[startLetter, setStartLetter] = useState(null);
+    const[startLetter, setStartLetter] = useState("");
     const [favourites, setFavourites] = useState([])
     const [favouriteIds, setFavouriteIds] = useState([])
     const [isExpanded, setIsExpanded] = useState(false)
@@ -115,7 +115,7 @@ export default function Lexikon() {
                             and: "w"
                         }}
                         
-                        render={({ data, value }) => (
+                        render={({ data }) => (
                             
                             data.map(item => {
                                return( <LexikonList
@@ -137,6 +137,7 @@ export default function Lexikon() {
                 
             else{
                 listData = favourites.map((object) => {
+                    if(startsWith(object["businessObjectName"], startLetter)){
                     return <LexikonList
                     id = {object["businessObjectId"]}
                     key={object["businessObjectId"]}
@@ -148,7 +149,7 @@ export default function Lexikon() {
                         expand = {isExpanded}
                         reload = {reload}
                     />}
-                )
+                    })
             }}
         
     
