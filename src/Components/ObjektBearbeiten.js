@@ -298,7 +298,6 @@ export default function ObjektAnlegen() {
                         <Button variant={"contained"} onClick={updateObject}><SaveIcon/> Veröffentlichen</Button>
                     </Stack>
                 </Grid>
-
             </div>
             <Divider style={{marginBottom: 15}}/>
             <Stack direction="column" spacing={2}>
