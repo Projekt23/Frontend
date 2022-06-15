@@ -174,6 +174,7 @@ export default function ObjektAnlegen() {
     }
 
     function generateDescription() {
+        console.log(selectedName)
         if (selectedName !== "") {
             const serverKI = "http://88.214.57.111:5001";
             console.log(serverKI+ '/descriptgen/generatedescription');
@@ -188,15 +189,21 @@ export default function ObjektAnlegen() {
                      "term": selectedName
                 })
             }).then(responseKI => {
+                
+                if(responseKI.status === 200){
                 responseKI.text().then(value => {
                     console.log(JSON.parse(value))
                     const generatedDescription = JSON.parse(value);
                     console.log(generatedDescription.summary)
                     setSelectedDescription(generatedDescription.summary);
-                }).catch(err => {
+                })}
+            else{
+                alert("Keine Beschreibung gefunden")
+            }
+            }).catch(err => {
                     console.log(err);
                 });
-            });
+            ;
         } else {
             alert("Bitte Objekt Namen einfügen und erneut versuchen")
         }

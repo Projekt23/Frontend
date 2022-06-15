@@ -57,10 +57,8 @@ function Navigation({setTheme, theme, setUserID, password, setPassword}) {
               }
         }
     }
-    const [value, setValue] = React.useState('');
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
-    const [searchValue, setsearchValue] = React.useState();
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
     };
@@ -75,24 +73,12 @@ function Navigation({setTheme, theme, setUserID, password, setPassword}) {
         setAnchorElUser(null);
     };
 
-    function search({searchValue}){
-
-        // ------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        // hier muss die Suche hin
-        console.log(searchValue);
-        // ------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    }
-
     function Logout(){
         setUserID(null)
         setPassword(null)
         localStorage.removeItem("userID")
         handleCloseUserMenu()
     }
-
-
-
-
 
     useEffect(() => {
         // write your code here, it's like componentWillMount

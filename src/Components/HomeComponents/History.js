@@ -19,11 +19,7 @@ function createData(designation, date, favorite) {
   return {designation, date, favorite};
 }
 
-
-
 // Hier muss noch aufruf backend stattfinden. // String, String, Bool
-
-
 
 export default function History({lastSeen}) {
   const navigate = useNavigate();

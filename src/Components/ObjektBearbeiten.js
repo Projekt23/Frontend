@@ -20,7 +20,6 @@ const Styles = styled.div`
     }
 `;
 
-
 const PaperStyle = {
     padding: "20px",
 }
@@ -69,7 +68,6 @@ export default function ObjektAnlegen() {
         const server = process.env.REACT_APP_API_BACKEND;
         var userId = decodeToken(localStorage.getItem("userID")).id;
 
-
         //Get Current Object
         fetch(server + '/businessobject/' + location.hash.replace('#', "") + '?userId=' + userId + '', {
             method: 'GET',
@@ -92,7 +90,6 @@ export default function ObjektAnlegen() {
                     console.log(err);
                 });
             });
-
         reload();
 
         //Get Label Data
@@ -110,8 +107,6 @@ export default function ObjektAnlegen() {
                     setLabels(labels);
                 },
             )
-
-        
     }, [])
 
     const LabelData = Labels.map((labels) => {
@@ -186,33 +181,21 @@ export default function ObjektAnlegen() {
         console.log("synonymIds", currentSynonymsID,)
         console.log("Kontext", currentContextListID,)
         console.log("Labels", currentLabelsID,)
-        //console.log("labels", currentLabels,);
-        //console.log("contextIds", currentContextList);
-        //console.log('currentObjectData',CurrentObjectData);
     }
     const handleKontextDelete = (e, value) => {
         setKontextChips(kontextChips.filter((kontext) => kontext.value !== value))
       }
     function updateObject() {
-        // handleDescriptionChange()
-        // handleNameChange()
-        // handleSynonymeChange()
-        // handleLabelChange()
-        // handleContextChange()
         console.log(synonymChips)
         var synonymIds = []
         synonymChips.map((element) => {
             synonymIds.push(element.value)
-            
         }
-        
         )
         var kontextIds = []
         kontextChips.map((element) => {
             kontextIds.push(element.value)
-            
         }
-        
         )
         
         console.log(synonymIds)
@@ -355,14 +338,10 @@ export default function ObjektAnlegen() {
                         onValueSelected={(value, cause, source) => {
                             if (cause === 'SUGGESTION_SELECT') {
                               handleSynonymSelection(source._id, value);
-                                
                             }
-                            
                           }}
                         />
-                        
                         </Box>
-
                         {synonymChips.map((object) => {
                             return(  <Chip style={{marginTop: 10, mr: 10}} id =  {object.value}
                                 label = {object.name} deleteIcon={<CancelIcon onMouseDown = {(e) => e.stopPropagation()}></CancelIcon>} onDelete={(e) => handleSynonymDelete(e, object.value)}
@@ -414,10 +393,7 @@ export default function ObjektAnlegen() {
                 </Card>
                 <Paper style={PaperStyle} >
                         <Typography color= "textPrimary" variant={"h6"}>Kontext </Typography>
-
-
                         <Box><DataSearch
-                        
                         componentId="c"
                         dataField="name"
                         placeholder="Search..."
@@ -427,14 +403,10 @@ export default function ObjektAnlegen() {
                         onValueSelected={(value, cause, source) => {
                             if (cause === 'SUGGESTION_SELECT') {
                               handleKontextSelection(source._id, value);
-                                
                             }
-                            
                           }}
                         />
-                        
                         </Box>
-
                         {kontextChips.map((object) => {
                             return(  <Chip style={{marginTop: 10, mr: 10}} id =  {object.value}
                                 label = {object.name} deleteIcon={<CancelIcon onMouseDown = {(e) => e.stopPropagation()}></CancelIcon>} onDelete={(e) => handleKontextDelete(e, object.value)}

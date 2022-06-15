@@ -4,7 +4,7 @@ import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Button from "@mui/material/Button";
 import {Link} from "react-router-dom";
-
+import {useNavigate} from "react-router-dom";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import IconButton from "@mui/material/IconButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -20,7 +20,7 @@ export default function (props) {
         setExpand(props.expand)
     }, [props.reload])
     
-
+    const navigate = useNavigate();
     const [expanded, setExpanded] = React.useState(false);
     const [fav, setFav] = React.useState(props.favorite);
     const handleChange = (panel) => (event, isExpanded) => {
@@ -167,7 +167,7 @@ export default function (props) {
                         </div>
                         <Divider/>
                         <div style={AccordionFooter}>
-                            <Button variant={"contained"} component={Link} to={{pathname: "/result", hash: String(props.id)}}>Zur Detailseite</Button>
+                            <Button variant={"contained"} onClick={() => navigate("/result#" + String(props.id))}>Zur Detailseite</Button>
                             <div>
                                 <Stack direction={"row"} spacing={1}>
                                     {labelCheck()}
