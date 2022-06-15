@@ -172,19 +172,7 @@ export default function ObjektAnlegen() {
             });
         }); 
     }
-    function getUnique(arr, index) {
 
-        const unique = arr
-             .map(e => e[index])
-      
-             // store the keys of the unique objects
-             .map((e, i, final) => final.indexOf(e) === i && i)
-      
-             // eliminate the dead keys & store unique objects
-            .filter(e => arr[e]).map(e => arr[e]);      
-      
-         return unique;
-      }
     function generateDescription() {
         if (selectedName !== "") {
             const serverKI = "http://88.214.57.111:5001";
@@ -229,7 +217,7 @@ export default function ObjektAnlegen() {
                     <Typography color= "textPrimary" variant={"h4"}>Objekt anlegen</Typography>
                     <Stack direction="row" spacing={2} style={ButtonStyle} alignItems={"center"}>
                         <Button variant={"contained"} onClick={() => navigate("/lexikon")} style={{backgroundColor: "grey"}}><CloseIcon/> Abbrechen</Button>
-                        <Button variant={"contained"} onClick={() => PublishData}><SaveIcon/> Veröffentlichen</Button>
+                        <Button variant={"contained"} onClick={PublishData}><SaveIcon/> Veröffentlichen</Button>
                     </Stack>
                 </Grid>
 
