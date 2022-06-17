@@ -73,7 +73,7 @@ const Login = ({setUserID, password, setPassword}) => {
                     if(response.status === 200){
                         setUserID(value)
                         localStorage.setItem("userID", value)
-                        if(saveUsername === true || (!(localStorage.getItem("userName") === null || localStorage.getItem("userName") === ""))){
+                        if(saveUsername === true ){
                             
                             localStorage.setItem("userName", userName)
                         }

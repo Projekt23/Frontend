@@ -9,6 +9,7 @@ import {useNavigate} from "react-router-dom";
 import { isExpired, decodeToken } from "react-jwt";
 
 const Registierung= ({setUserID}) => {
+    const [saveUsername, setSaveUsername] = useState(false);
     const [userName, setUserName] = useState("");
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
@@ -64,7 +65,7 @@ const Registierung= ({setUserID}) => {
                     <TextField variant="standard" fullWidth style = {textfieldStyle} label='Nachname' onChange={(event) => setLastName(event.target.value)}/>
                     <TextField variant="standard" fullWidth style = {textfieldStyle} type="password" label='Passwort erstellen * ' placeholder='Passwort erstellen...' onChange={(event) => setPassword(event.target.value)}/>
                     <TextField variant="standard" fullWidth style = {textfieldStyle} type="password" label='Passwort wiederholen *' placeholder='Passwort wiederholen...' onChange={(event) => setConfirmPassword(event.target.value)}/>
-                    <FormControlLabel control={<Checkbox size="small"/>} label="Benutzername merken"/>
+                    <FormControlLabel control={<Checkbox size="small" onChange={(event) => {setSaveUsername(event.target.checked)}}/>} label="Benutzername merken"/>
                     
                     
                 </Grid>
@@ -73,10 +74,7 @@ const Registierung= ({setUserID}) => {
                     <ColorButton sx={{bgcolor: '#004ea5'}} type="submit" variant="contained" fullWidth onClick={postRegister}>Anmelden</ColorButton>
                     <div style={linksStyle}>
                         <Typography variant="caption">
-                            <Link href="#">Passwort vergessen?</Link>
-                        </Typography>
-                        <Typography variant="caption">
-                            <Link href="/login"> Zum Login wechseln</Link>
+                            <Link component="button" onClick={()=> navigate("/login")}> Zum Login wechseln</Link>
                         </Typography>
                     </div>
                 </Grid>
@@ -88,7 +86,7 @@ const Registierung= ({setUserID}) => {
                 <Card style={{padding : 20, width: "25%", margin: "80px auto", textAlign: 'center'}}>
                     <Typography>Sie benötigen eine Einladung</Typography>
                     <Typography variant="caption">
-                        <Link href="/login"> Zum Login wechseln</Link>
+                        <Link component="button" onClick={()=> navigate("/login")}> Zum Login wechseln</Link>
                     </Typography>
                 </Card>
             )
@@ -98,10 +96,14 @@ const Registierung= ({setUserID}) => {
             <Card style={{padding : 20, width: "25%", margin: "80px auto", textAlign: 'center'}}>
                     <Typography>Der Token ist ungültig</Typography>
                     <Typography variant="caption">
-                        <Link href="/login"> Zum Login wechseln</Link>
+                        <Link component="button" onClick={()=> navigate("/login")}> Zum Login wechseln</Link>
                     </Typography>
                 </Card>)
         }
+    }
+    function checkSaveUsername(){
+            
+        return !(localStorage.getItem("userName") === null || localStorage.getItem("userName") === "");
     }
     function postRegister(){
         var registerBody;
@@ -131,6 +133,13 @@ const Registierung= ({setUserID}) => {
                 setUserID(value)
                 localStorage.setItem("userID", value)
                 navigate("/startseite")
+                if(saveUsername === true){
+                            
+                    localStorage.setItem("userName", userName)
+                }
+                else{
+                    localStorage.removeItem("userName")
+                }
             }
             
             }).catch(err => {
