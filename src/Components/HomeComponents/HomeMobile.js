@@ -78,7 +78,7 @@ export default function HomeMobile({boName,boDescription,boID,username,bookmarkR
                 }} >
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignContent: 'center', mb: 1 }}>
                             <Typography  marginTop={1} align='left' variant="h5" component="h3" sx={{ fontWeight: 'bold' }}> Wussten Sie schon? </Typography>
-                            <Button to={{pathname: "/result", hash: String(boID)}} variant="contained">Detailseite</Button>
+                            <Button component={Link} to={{ pathname: "/result", hash: String(boID) }} variant="contained">Zur Detailseite</Button>
                         </Box>
                     <DidYouKnow boName = {boName} boDescription = {boDescription}/></Item>
         </Container >
