@@ -39,7 +39,70 @@ const Registierung= ({setUserID}) => {
         return paperStyleMobile
         }
         }
-
+        function checkToken(){
+            console.log(window.location.hash)
+            if(isExpired(window.location.hash) === false){
+                return(
+            <Card style={checkResponsive()}>
+            <Grid
+                container
+                direction="column"
+                justifyContent="space-between"
+                alignItems="center"
+                style={gridStyle}
+            >
+                <Grid item direction="row" alignContent="center" >
+                    <div style={logoStyle}>
+                        <img src="logo-lila.png" alt="logo" width="50px" height="50px"/>
+                        <Typography variant="h4" paddingLeft="5px">Projekt 23</Typography>
+                    </div>
+                </Grid>
+                <Grid item>
+                    <Typography variant="h5" secondary>Registrierung</Typography>
+                    <TextField variant="standard" fullWidth style = {textfieldStyle} label='Benutzername * ' onChange={(event) => setUserName(event.target.value)}/>
+                    <TextField variant="standard" fullWidth style = {textfieldStyle} label='Vorname' onChange={(event) => setFirstName(event.target.value)}/>
+                    <TextField variant="standard" fullWidth style = {textfieldStyle} label='Nachname' onChange={(event) => setLastName(event.target.value)}/>
+                    <TextField variant="standard" fullWidth style = {textfieldStyle} type="password" label='Passwort erstellen * ' placeholder='Passwort erstellen...' onChange={(event) => setPassword(event.target.value)}/>
+                    <TextField variant="standard" fullWidth style = {textfieldStyle} type="password" label='Passwort wiederholen *' placeholder='Passwort wiederholen...' onChange={(event) => setConfirmPassword(event.target.value)}/>
+                    <FormControlLabel control={<Checkbox size="small"/>} label="Benutzername merken"/>
+                    
+                    
+                </Grid>
+                <Typography id="errorTxt" color="red">{" "}</Typography>
+                <Grid item style={divloginbtn}>
+                    <ColorButton sx={{bgcolor: '#004ea5'}} type="submit" variant="contained" fullWidth onClick={postRegister}>Anmelden</ColorButton>
+                    <div style={linksStyle}>
+                        <Typography variant="caption">
+                            <Link href="#">Passwort vergessen?</Link>
+                        </Typography>
+                        <Typography variant="caption">
+                            <Link href="/login"> Zum Login wechseln</Link>
+                        </Typography>
+                    </div>
+                </Grid>
+            </Grid>
+        </Card>)
+        }
+        else if(window.location.hash === ""){
+            return(
+                <Card style={{padding : 20, width: "25%", margin: "80px auto", textAlign: 'center'}}>
+                    <Typography>Sie benötigen eine Einladung</Typography>
+                    <Typography variant="caption">
+                        <Link href="/login"> Zum Login wechseln</Link>
+                    </Typography>
+                </Card>
+            )
+        }
+        else{
+            return(
+            <Card style={{padding : 20, width: "25%", margin: "80px auto", textAlign: 'center'}}>
+                    <Typography>Der Token ist ungültig</Typography>
+                    <Typography variant="caption">
+                        <Link href="/login"> Zum Login wechseln</Link>
+                    </Typography>
+                </Card>)
+        }
+    }
     function postRegister(){
         var registerBody;
         
@@ -94,45 +157,8 @@ const Registierung= ({setUserID}) => {
 
     return(
         <>
-        <Card style={checkResponsive()}>
-            <Grid
-                container
-                direction="column"
-                justifyContent="space-between"
-                alignItems="center"
-                style={gridStyle}
-            >
-                <Grid item direction="row" alignContent="center" >
-                    <div style={logoStyle}>
-                        <img src="logo-lila.png" alt="logo" width="50px" height="50px"/>
-                        <Typography variant="h4" paddingLeft="5px">Projekt 23</Typography>
-                    </div>
-                </Grid>
-                <Grid item>
-                    <Typography variant="h5" secondary>Registrierung</Typography>
-                    <TextField variant="standard" fullWidth style = {textfieldStyle} label='Benutzername * ' onChange={(event) => setUserName(event.target.value)}/>
-                    <TextField variant="standard" fullWidth style = {textfieldStyle} label='Vorname' onChange={(event) => setFirstName(event.target.value)}/>
-                    <TextField variant="standard" fullWidth style = {textfieldStyle} label='Nachname' onChange={(event) => setLastName(event.target.value)}/>
-                    <TextField variant="standard" fullWidth style = {textfieldStyle} type="password" label='Passwort erstellen * ' placeholder='Passwort erstellen...' onChange={(event) => setPassword(event.target.value)}/>
-                    <TextField variant="standard" fullWidth style = {textfieldStyle} type="password" label='Passwort wiederholen *' placeholder='Passwort wiederholen...' onChange={(event) => setConfirmPassword(event.target.value)}/>
-                    <FormControlLabel control={<Checkbox size="small"/>} label="Benutzername merken"/>
-                    
-                    
-                </Grid>
-                <Typography id="errorTxt" color="red">{" "}</Typography>
-                <Grid item style={divloginbtn}>
-                    <ColorButton sx={{bgcolor: '#004ea5'}} type="submit" variant="contained" fullWidth onClick={postRegister}>Anmelden</ColorButton>
-                    <div style={linksStyle}>
-                        <Typography variant="caption">
-                            <Link href="#">Passwort vergessen?</Link>
-                        </Typography>
-                        <Typography variant="caption">
-                            <Link href="/login"> Zum Login wechseln</Link>
-                        </Typography>
-                    </div>
-                </Grid>
-            </Grid>
-        </Card>
+        {checkToken()}
+       
         
     </>
     )

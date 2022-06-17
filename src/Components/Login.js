@@ -82,10 +82,15 @@ const Login = ({setUserID, password, setPassword}) => {
                         }
                         navigate("/startseite")
                     }
-                    else{
-                        setERROR("Login fehlerhaft")
+                    else if(response.status === 403){
+                        setERROR("Passwort fehlerhaft")
                     }
-                    
+                    else if(response.status === 404 && loginMethod === "user"){
+                        setERROR("Benutzername fehlerhaft")
+                    }
+                    else if(response.status === 404 && loginMethod === "mail"){
+                        setERROR("Email-Adresse fehlerhaft")
+                    }
                     }).catch(err => {
                     console.log(err);
                     });
@@ -118,13 +123,19 @@ const Login = ({setUserID, password, setPassword}) => {
                 </Grid>
                 <Grid item >
                     <Typography variant="h5" secondary>Anmeldung </Typography>
+                    
                     <TextField
                         variant="standard"
                         fullWidth style={textfieldStyle}
-                        label='Benutzername *'
+                        label='Benutzername oder Email *'
                         defaultValue={localStorage.getItem("userName")}
-                        placeholder='Benutzername eingeben ...'
+                        placeholder='Benutzername oder Email eingeben ...'
                         onChange={(event) => setUserName(event.target.value)}
+                        onKeyPress={(ev) => {
+                            if (ev.key === 'Enter') {
+                                postLogin(userName, password)
+                            }
+                          }}
                     />
                     <TextField
                         variant="standard"
@@ -133,10 +144,15 @@ const Login = ({setUserID, password, setPassword}) => {
                         label='Passwort *'
                         placeholder='Passwort eingeben ...'
                         onChange={(event) => setPasswordF(event.target.value)}
+                        onKeyPress={(ev) => {
+                            if (ev.key === 'Enter') {
+                                postLogin(userName, password)
+                            }
+                          }}
                     />
                     <FormControlLabel
                         control={<Checkbox defaultChecked={checkSaveUsername()}
-                        onChange={(event) => {setSaveUsername(event.target.checked)}} size="small"/>} label="Benutzername merken" 
+                        onChange={(event) => {setSaveUsername(event.target.checked)}} size="small"/>} label="Benutzername oder Email merken" 
                     ></FormControlLabel><Typography  variant="caption">* Pflichtfeld </Typography><Typography color = "red" >{ERROR}</Typography>
                 </Grid>
                 
@@ -155,12 +171,12 @@ const Login = ({setUserID, password, setPassword}) => {
                     
                     <div style={linksStyle}>
                         <Typography variant="caption">
-                            <Link href="#">Passwort vergessen?</Link>
+                            <Link>Passwort vergessen?</Link>
                         </Typography>
                         
                         <Typography variant="caption">
                             Neu hier?
-                            <Link href="/register"> Anmeldelink anfordern</Link>
+                            <Link> Anmeldelink anfordern</Link>
                         </Typography>
                     </div>
                 </Grid>
