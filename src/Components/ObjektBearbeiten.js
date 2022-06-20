@@ -197,8 +197,12 @@ export default function ObjektAnlegen() {
             kontextIds.push(element.value)
         }
         )
-        
-        console.log(synonymIds)
+        if(synonymIds === [null]){
+            synonymIds = []
+        }
+        if(kontextIds === [null]){
+            kontextIds = []
+        }
         const server = process.env.REACT_APP_API_BACKEND;
         var id = decodeToken(localStorage.getItem("userID")).id;
         var bID = currentBoId;
@@ -262,8 +266,7 @@ export default function ObjektAnlegen() {
         synonymChips.push({"value" : value, "name" : name})
         
         setSelectedSynonyms(selectedSynonymIds)};
-    //Input Field function
-    const [value, setValue] = React.useState('');
+ 
     return (
         <Styles>
         <div className={style.containerMain}>
@@ -278,7 +281,7 @@ export default function ObjektAnlegen() {
                     <Stack direction="row" spacing={2} style={ButtonStyle} alignItems={"center"}>
                         <Button variant={"contained"} style={{backgroundColor: "grey"}}
                                 onClick={() => navigate("/lexikon")}><CloseIcon/> Abbrechen</Button>
-                        <Button variant={"contained"} onClick={updateObject}><SaveIcon/> Veröffentlichen</Button>
+                        <Button variant={"contained"} onClick={() => updateObject()}><SaveIcon/> Veröffentlichen</Button>
                     </Stack>
                 </Grid>
             </div>
