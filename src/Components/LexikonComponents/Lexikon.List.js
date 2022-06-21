@@ -167,7 +167,7 @@ export default function (props) {
                         </div>
                         <Divider/>
                         <div style={AccordionFooter}>
-                            <Button variant={"contained"} onClick={() => navigate("/result#" + String(props.id))}>Zur Detailseite</Button>
+                            <Button variant={"contained"} href= {("/result#" + String(props.id))} >Zur Detailseite</Button>
                             <div>
                                 <Stack direction={"row"} spacing={1}>
                                     {labelCheck()}

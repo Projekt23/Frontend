@@ -40,7 +40,7 @@ export default function History({lastSeen}) {
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {row["boName"]}<Button onClick={() => navigate("/result#"+row["boId"])}><LaunchIcon></LaunchIcon></Button>
+                {row["boName"]}<Button href= {("/result#"+row["boId"])} ><LaunchIcon></LaunchIcon></Button>
               </TableCell>
               <TableCell >{timeCalculator(row["timestamp"])}</TableCell>
               {/* <TableCell align="right">{checkFavorite(row.favorite)}</TableCell> */}

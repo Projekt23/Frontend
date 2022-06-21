@@ -34,7 +34,7 @@ export default function ChangeHistory({changeHistory}) {
               sx={{ '&:last-child td, &:last-child th': { border: 0 }}}
             >
               <TableCell component="th" scope="row">
-                {row["boName"]}<Button onClick={() => navigate("/result#"+row["boId"])}><LaunchIcon></LaunchIcon></Button>
+                {row["boName"]}<Button href={("/result#"+row["boId"])} ><LaunchIcon></LaunchIcon></Button>
               </TableCell>
               <TableCell >{row["userName"]}</TableCell>
               <TableCell align="right">{timeCalculator(row["timestamp"])}</TableCell>

@@ -45,7 +45,7 @@ export default function Bookmarks({bookmarkRows}) {
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {row["businessObjectName"]}<Button onClick={() => navigate("/result#"+row["businessObjectId"])}><LaunchIcon></LaunchIcon></Button>
+                {row["businessObjectName"]}<Button href={("/result#"+row["businessObjectId"])} ><LaunchIcon></LaunchIcon></Button>
               </TableCell>
               <TableCell className={classes.ellipsis} >{row["businessObjectDescription"]}</TableCell>
               <TableCell align="right">
