@@ -176,7 +176,7 @@ export default function ObjektAnlegen() {
     function generateDescription() {
         console.log(selectedName)
         if (selectedName !== "") {
-            const serverKI = "http://88.214.57.111:5001";
+            const serverKI = process.env.REACT_APP_API_BACKEND;
             console.log(serverKI+ '/descriptgen/generatedescription');
             fetch(serverKI + '/descriptgen/generatedescription', {
                 method: 'POST',
