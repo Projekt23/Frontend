@@ -176,7 +176,7 @@ export default function ObjektAnlegen() {
     function generateDescription() {
         console.log(selectedName)
         if (selectedName !== "") {
-            const serverKI = process.env.REACT_APP_API_BACKEND;
+            const serverKI = process.env.REACT_APP_API_KI;
             console.log(serverKI+ '/descriptgen/generatedescription');
             fetch(serverKI + '/descriptgen/generatedescription', {
                 method: 'POST',
