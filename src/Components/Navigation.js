@@ -149,7 +149,7 @@ function Navigation({setTheme, theme, setUserID, password, setPassword}) {
                                 </Typography>
                             </MenuItem>
                             <MenuItem key={"Lexikon"} onClick={handleCloseNavMenu} component={Link}
-                            to={`/Lexikon?w=\"\"`}>
+                            to={`/Lexikon`}>
                                 <Typography sx={{textDecorationLine: 'none', "&:hover": { color: "white" }}} textAlign="center" variant="h6"
                                             noWrap
                                             
@@ -182,7 +182,7 @@ function Navigation({setTheme, theme, setUserID, password, setPassword}) {
                          onClick={handleCloseNavMenu}
                          sx={{my: 2, color: 'white', display: 'block'}}
                          component={Link}
-                         to={`/Lexikon?w=\"\"`}
+                         to={`/Lexikon`}
                      >
                          <Typography sx={{textDecorationLine: 'none', "&:hover": { color: "white" }}} textAlign="center" variant="h6"
                                      noWrap

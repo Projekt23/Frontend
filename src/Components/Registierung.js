@@ -71,7 +71,7 @@ const Registierung= ({setUserID}) => {
                 </Grid>
                 <Typography id="errorTxt" color="red">{" "}</Typography>
                 <Grid item style={divloginbtn}>
-                    <ColorButton sx={{bgcolor: '#004ea5'}} type="submit" variant="contained" fullWidth onClick={postRegister}>Anmelden</ColorButton>
+                    <ColorButton sx={{bgcolor: '#004ea5'}} type="submit" variant="contained" fullWidth onClick={postRegister}>Registrieren</ColorButton>
                     <div style={linksStyle}>
                         <Typography variant="caption">
                             <Link component="button" onClick={()=> navigate("/login")}> Zum Login wechseln</Link>
