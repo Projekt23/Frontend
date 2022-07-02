@@ -21,6 +21,8 @@ export default function Invite() {
         console.log(email)
         if(email !== "" && email !== null){
         const server = process.env.REACT_APP_API_BACKEND;
+
+        //GET to invite the user
         fetch(server+'/auth/mail?mail=' + email.replace('@', "%40"), {
             method: 'GET',
             headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS' },

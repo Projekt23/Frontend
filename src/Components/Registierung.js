@@ -27,11 +27,11 @@ const Registierung= ({setUserID}) => {
         marginBottom: "15px"
     }));
     React.useEffect(() => {
-        /* Inside of a "useEffect" hook add an event listener that updates
-           the "width" state variable when the window size changes */
         window.addEventListener("resize", () => setWidth(window.innerWidth));
       }, []);
 
+
+      //function to check what the window width is and depending on this set the styles
       function checkResponsive(){
         if(window.innerWidth > 1000){
         return paperStyle
@@ -107,7 +107,7 @@ const Registierung= ({setUserID}) => {
     }
     function postRegister(){
         var registerBody;
-        
+        //check that the userToken is not expired and is correct
         if(isExpired(window.location.hash) === false){
         if(firstName !== "" && lastName !== "" && userName !== "" && password !=="" && password === confirmPassword){
         var myDecodedToken = decodeToken(window.location.hash);
@@ -120,7 +120,7 @@ const Registierung= ({setUserID}) => {
             "password": password,
             "email": myDecodedToken["email"]
         })
-    
+    //POST for the Register
     const server = process.env.REACT_APP_API_BACKEND;
     fetch(server+'/auth/register/' , {
         method: 'POST',
@@ -130,11 +130,12 @@ const Registierung= ({setUserID}) => {
         .then(response => {
         response.text().then(value => {
             if(response.status === 200){
+                //if it was successfull, log the user in
                 setUserID(value)
                 localStorage.setItem("userID", value)
                 navigate("/startseite")
                 if(saveUsername === true){
-                            
+                    //if the user wants to save the username, save it in the localStorage
                     localStorage.setItem("userName", userName)
                 }
                 else{

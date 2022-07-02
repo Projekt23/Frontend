@@ -10,7 +10,6 @@ import { Box } from '@mui/system';
 
 const Login = ({setUserID, password, setPassword}) => {
     const [userName, setUserName] = useState(localStorage.getItem("userName"));
-    
     const [saveUsername, setSaveUsername] = useState(false);
     const gridStyle = {height: "100%", width: "100%"}
     const paperStyle = {padding: 20, height: '65vh', width: "25%", margin: "80px auto"}
@@ -23,11 +22,8 @@ const Login = ({setUserID, password, setPassword}) => {
     const [ERROR, setERROR] = useState(" ");
     const [width, setWidth] = React.useState(window.innerWidth);
 
-    function setPasswordF(pwd){
-        setPassword(pwd)
-    }
-
-
+    
+    //function to check what the window width is and depending on this set the styles
     function checkResponsive(){
         if(window.innerWidth > 1590){
         return paperStyle
@@ -37,15 +33,19 @@ const Login = ({setUserID, password, setPassword}) => {
         }
         }
         React.useEffect(() => {
-            /* Inside of a "useEffect" hook add an event listener that updates
-               the "width" state variable when the window size changes */
             window.addEventListener("resize", () => setWidth(window.innerWidth));
           }, []);
+    //function for the login
     function postLogin(){
         var loginMethod;
         var loginBody;
-        
+
+
+        //check that the username and password is not empty
         if(userName !== "" && password !== ""){
+
+
+            //check if it is an username or an emailaddress and depending on that set the login MEthod (for the REST API)
             if(userName.includes("@") && userName.includes(".")){
                 loginMethod = "mail"
                 loginBody = JSON.stringify({
@@ -60,7 +60,9 @@ const Login = ({setUserID, password, setPassword}) => {
                     "password": password
                 })
             }
-        
+
+
+            //POST for the Login
             const server = process.env.REACT_APP_API_BACKEND;
             fetch(server+'/auth/login/' + loginMethod, {
                 method: 'POST',
@@ -70,9 +72,11 @@ const Login = ({setUserID, password, setPassword}) => {
                 .then(response => {
                 response.text().then(value => {
                     console.log(value)
+                    //if the login is accepted, set the userID in the localStorage
                     if(response.status === 200){
                         setUserID(value)
                         localStorage.setItem("userID", value)
+                        //if the user wants to save the username, save it in the localStorage
                         if(saveUsername === true ){
                             
                             localStorage.setItem("userName", userName)
@@ -97,6 +101,9 @@ const Login = ({setUserID, password, setPassword}) => {
                 });
             }
         }
+
+
+        //check if the user wanted to save the username at the last login
         function checkSaveUsername(){
             
             return !(localStorage.getItem("userName") === null || localStorage.getItem("userName") === "");
@@ -143,7 +150,7 @@ const Login = ({setUserID, password, setPassword}) => {
                         type="password"
                         label='Passwort *'
                         placeholder='Passwort eingeben ...'
-                        onChange={(event) => setPasswordF(event.target.value)}
+                        onChange={(event) => setPassword(event.target.value)}
                         onKeyPress={(ev) => {
                             if (ev.key === 'Enter') {
                                 postLogin(userName, password)
@@ -219,7 +226,7 @@ const Login = ({setUserID, password, setPassword}) => {
                         type="password"
                         label='Passwort *'
                         placeholder='Passwort eingeben ...'
-                        onChange={(event) => setPasswordF(event.target.value)}
+                        onChange={(event) => setPassword(event.target.value)}
                         onKeyPress={(ev) => {
                             if (ev.key === 'Enter') {
                                 postLogin(userName, password)

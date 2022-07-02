@@ -7,6 +7,8 @@ import {Link} from 'react-router-dom';
 import {ListItem, ListItemText, ListItemButton} from "@mui/material"
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
+
+//the navigationMenu in the settings
 export default function SettingsNav() {
     const Item = styled(Paper)(({ theme }) => ({
         backgroundColor: theme.palette.mode === 'dark' ? 'primary' : 'primary',

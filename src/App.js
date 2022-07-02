@@ -20,14 +20,12 @@ import SearchResult from './Components/SearchResult';
 import { BottomNavigation } from '@mui/material';
 import {BottomNavigationAction} from '@mui/material/';
 
-// Test Data
-
 import Registierung from './Components/Registierung';
 
 import { Box } from '@mui/system';
 
 
-
+// defines all themes that are used
 const darkTheme = createTheme({
     palette: {
         background: {
@@ -89,8 +87,10 @@ const App = () =>
     const [theme, setTheme] = useState(true);
     const [password, setPassword] = useState("");
     
+    //function to check if no user is logged in: userID is not in the localStorgae of the browser or there is something in the localStorage with the key "userID"which is not a correct jwt token
     function checkLogin(){
         if(localStorage.getItem("userID") === null || decodeToken(localStorage.getItem("userID")) === null || (decodeToken(localStorage.getItem("userID")).username === undefined && decodeToken(localStorage.getItem("userID")).email === undefined && decodeToken(localStorage.getItem("userID")).id === undefined)){
+            //define the routes, if no user is logged in
             return (
                 <Routes>
                         <Route index element={<Login setUserID = {setUserID} password = {password} setPassword = {setPassword}/>} />
@@ -102,6 +102,7 @@ const App = () =>
         }
         
         else{
+            //define the routes, if a user is ogged in
             return  (
             <>
             
@@ -137,6 +138,7 @@ const App = () =>
 
             
     }
+    //set the theme depending on what is in the localStorage
     const themeStart = () => {
         if (localStorage.getItem('theme') ==="dark") {
             setTheme(false);
@@ -155,7 +157,7 @@ const App = () =>
         }
     }
     useEffect(() => {
-        // write your code here, it's like componentWillMount
+        //set the theme at the start depending on what is in the localStorage
         if(localStorage.getItem('theme') === 'light' || localStorage.getItem('theme') === null){
             localStorage.setItem('theme', 'light');
             themeStart()

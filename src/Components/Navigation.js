@@ -23,23 +23,8 @@ import Searchbar  from './Searchbar';
 
 function Navigation({setTheme, theme, setUserID, password, setPassword}) {
     const pages = ['Startseite', 'Lexikon'];
-    const themeStart = () => {
-        if (localStorage.getItem('theme') ==="dark") {
-            setTheme(false);
-            localStorage.setItem('theme', "dark");
-        } else if(localStorage.getItem('theme') ==="light") {
-            setTheme(true);
-            localStorage.setItem('theme', "light");
-        }else{
-            localStorage.setItem('theme', "standard");
-            if(window.matchMedia("(prefers-color-scheme: dark)").matches === false){
-                setTheme(true);
-              }
-              else{
-                setTheme(false);
-              }
-        }
-    }
+
+    //function to change the theme
     const themeToggler = (event) => {
         if (event.target.value ==="dark") {
             setTheme(false);
@@ -57,6 +42,9 @@ function Navigation({setTheme, theme, setUserID, password, setPassword}) {
               }
         }
     }
+
+    //---------------------------------------------------------------------------------
+    //functions and useStates for the navbar
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const handleOpenNavMenu = (event) => {
@@ -72,7 +60,9 @@ function Navigation({setTheme, theme, setUserID, password, setPassword}) {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
+    //---------------------------------------------------------------------------------
 
+    //function to logout: setting userId and password null and remove the userID from the localStorage
     function Logout(){
         setUserID(null)
         setPassword(null)
@@ -81,13 +71,13 @@ function Navigation({setTheme, theme, setUserID, password, setPassword}) {
     }
 
     useEffect(() => {
-        // write your code here, it's like componentWillMount
         themeStart();
     }, [])
     
     return (
         <AppBar sx={{bgcolor: '#004ea5',  height: '65px'}} position="static" >
             <Toolbar disableGutters >
+                {/*--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/}
                 {/* Display only in Desktop Version -------------------------------------------------------------------------------------------------------------------*/}
                 <Typography
                     variant="h6"
@@ -96,6 +86,7 @@ function Navigation({setTheme, theme, setUserID, password, setPassword}) {
                    
                 ><Avatar src="logo-white.png" variant="square" component={Link} to='/Startseite' />
                 </Typography>
+                {/*--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/}
                 {/* Display only in Mobile Version -------------------------------------------------------------------------------------------------------------------*/}
                 <Box>
                     <Typography
@@ -105,6 +96,7 @@ function Navigation({setTheme, theme, setUserID, password, setPassword}) {
                         sx={{mr: 2, ml: 2, flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
                         <Avatar src="logo-white.png" variant="square" component={Link} to='/Startseite' />
                     </Typography></Box>
+                {/*--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/}
                 {/* Display only in Mobile Version -------------------------------------------------------------------------------------------------------------------*/}
                 <Box sx={{ flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
                     <IconButton
@@ -117,7 +109,8 @@ function Navigation({setTheme, theme, setUserID, password, setPassword}) {
                     >
                         <MenuIcon/>
                     </IconButton>
-                    {/* Display only in Mobile Version -------------------------------------------------------------------------------------------------------------------*/}
+                    {/*--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/}
+                {/* Display only in Mobile Version -------------------------------------------------------------------------------------------------------------------*/}
                     <Menu
                         id="menu-appbar"
                         anchorEl={anchorElNav}
@@ -160,6 +153,7 @@ function Navigation({setTheme, theme, setUserID, password, setPassword}) {
                             </MenuItem>
                     </Menu>
                 </Box>
+                {/*--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/}
                 {/* Display only in Desktop Version -------------------------------------------------------------------------------------------------------------------*/}
                 <Box sx={{mr: 10, flexGrow: 0, display: {xs: 'none', md: 'flex'}}}>
                         <Button
@@ -193,6 +187,7 @@ function Navigation({setTheme, theme, setUserID, password, setPassword}) {
                          </Typography>
                      </Button>
                 </Box><Box sx={{width: 0.5}}></Box>
+                {/*--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/}
                 {/* The searchbar is displayed in Mobile and Desktop Version -------------------------------------------------------------------------------------------------------------------*/}
                 <Box  sx={{minWidth: 200,  width: 1500}}>
                     <Searchbar></Searchbar>
@@ -204,6 +199,8 @@ function Navigation({setTheme, theme, setUserID, password, setPassword}) {
                 <Box sx={{width: 1}}>
                     <ThemeProvider theme={localStorage.getItem("theme") === "light" ? lightTheme : darkTheme}/>
                 </Box>
+                {/*--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/}
+                {/*--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/}
                 {/* The Profile Settings Button and Menu is displayed in Mobile and Desktop Version -------------------------------------------------------------------------------------------------------------------*/}
                 <Box sx={{flexGrow: 1 }} >
                     <IconButton
@@ -275,6 +272,7 @@ function Navigation({setTheme, theme, setUserID, password, setPassword}) {
                         </MenuItem>
                     </Menu>
                 </Box>
+                {/*--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/}
             </Toolbar>
         </AppBar>
     )
