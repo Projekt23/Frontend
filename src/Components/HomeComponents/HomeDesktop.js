@@ -10,7 +10,7 @@ import { Grid, Paper, Container, Typography, Divider } from "@mui/material";
 import Button from '@mui/material/Button';
 import History from './History';
 
-
+//exports the HomeDesktop component whitch is adapted for desktop devices
 export default function HomeDesktop({boName,boDescription,boID,username,bookmarkRows, lastSeen, changeHistory}) {
     const Item = styled(Paper)(({ theme }) => ({
         backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',

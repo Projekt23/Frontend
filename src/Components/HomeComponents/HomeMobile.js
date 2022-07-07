@@ -10,7 +10,7 @@ import Button from '@mui/material/Button';
 import History from './History';
 import { Link } from "react-router-dom";
 
-
+//exports the HomeMobile component whitch is adapted for mobile devices
 export default function HomeMobile({boName,boDescription,boID,username,bookmarkRows, lastSeen, changeHistory}) {
 
     const Item = styled(Paper)(({ theme }) => ({
