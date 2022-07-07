@@ -33,14 +33,7 @@ const Styles = styled.div`
 `;
 
 
-
-function getSearchValue(){
-    var element = document.getElementById('q-downshift-input').value
-    var value = element.value; 
-    console.log(value)
-    return value;
-}
-
+//shows searchresults 
 const Resultlist = (props) => {
     const navigate = useNavigate()
     const redirect = (e, id) => {
@@ -56,18 +49,20 @@ const Resultlist = (props) => {
         setExpand((prev) => !prev);
     };
 
+    // set all cards to expanded
     useEffect(() => {
         setExpand(props.expand)
         getAllFavourites()
     }, [props.expand])
 
- 
+    //state of the card which is expanded or not expanden 
     const [expanded, setExpanded] = React.useState(false);
     const [fav, setFav] = React.useState(props.favorite);
     const handleChange = (panel) => (event, isExpanded) => {
         setExpanded(isExpanded ? panel : false);
     };
 
+    // get all favorites to set the favorite buttons
     function getAllFavourites(){
         const server = process.env.REACT_APP_API_BACKEND;
         

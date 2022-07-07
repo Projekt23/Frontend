@@ -9,12 +9,13 @@ const Styles = styled.div`
     }
 `;
 
+//Reactive search Searchbar Coponent
 function Searchbar() {
     const navigate = useNavigate()
     const location = useLocation()
     const [searchValue, setSearchValue] = useState()
 
-
+    // function for redirecting on ResultList Component after pressing enter or hitting the searchbutton
     const redirect = (value) => {
         console.log("url = " + location.pathname)
         if( value === ""){
@@ -35,7 +36,6 @@ function Searchbar() {
         URLParams={true}
         onValueSelected={
             function(value){
-                console.log(value)
                 redirect(value)
             }
             

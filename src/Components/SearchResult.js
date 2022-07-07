@@ -58,6 +58,7 @@ const SearchResult= () => {
 
     }, [clicked])
     
+    //get all favorites 
     function getAllFavourites(){
         var id = decodeToken(localStorage.getItem("userID")).id;
         const server = process.env.REACT_APP_API_BACKEND;
@@ -77,6 +78,7 @@ const SearchResult= () => {
         )
     }
 
+    //if button favorite is clicked to defavor a BO -> Delete
     function deleteFavorite(){
         const server = process.env.REACT_APP_API_BACKEND;
         var userId = decodeToken(localStorage.getItem("userID")).id;
@@ -94,6 +96,7 @@ const SearchResult= () => {
         });
     }
 
+    //if button favorite is clicked to favor-> Post
     function setFavorite(){
         const server = process.env.REACT_APP_API_BACKEND;
         var userId = decodeToken(localStorage.getItem("userID")).id;
